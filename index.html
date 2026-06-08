@@ -140,15 +140,15 @@ nav{position:sticky;top:0;z-index:50;background:rgba(11,21,33,.9);backdrop-filte
 .card li::before{content:"›";color:var(--teal);font-family:var(--fm);flex-shrink:0;margin-top:-1px}
 
 /* ══ PLATFORM STRIP ══ */
-.plat-strip{margin-top:32px;background:var(--bg-card);border:1px solid var(--line);border-radius:var(--r);padding:20px 28px;display:flex;align-items:center;gap:28px;flex-wrap:wrap}
-.plat-label{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);white-space:nowrap}
-.plat-items{display:flex;align-items:center;gap:0;flex:1;flex-wrap:wrap}
-.plat-item{display:flex;align-items:center;gap:12px;flex:1;min-width:160px;padding:8px 20px;color:var(--ink)}
-.plat-item svg{color:var(--teal);flex-shrink:0}
-.plat-name{font-family:var(--fd);font-size:.9rem;font-weight:600;color:var(--ink)}
-.plat-desc{font-size:.78rem;color:var(--muted);margin-top:1px}
-.plat-sep{width:1px;height:36px;background:var(--line);flex-shrink:0}
-@media(max-width:640px){.plat-items{flex-direction:column;align-items:flex-start}.plat-sep{display:none}.plat-item{padding:6px 0}}
+.plat-strip{margin-top:32px;background:var(--bg-card);border:1px solid var(--line);border-radius:var(--r);padding:28px 32px}
+.plat-label{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:22px}
+.plat-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.plat-col{display:flex;flex-direction:column;align-items:center;text-align:center;padding:8px 20px;border-right:1px solid var(--line)}
+.plat-col:last-child{border-right:none}
+.plat-ico{width:38px;height:38px;border-radius:9px;background:color-mix(in srgb,var(--teal) 11%,var(--bg-light));display:grid;place-items:center;margin-bottom:12px}
+.plat-name{font-family:var(--fd);font-size:.9rem;font-weight:600;color:var(--ink);margin-bottom:4px}
+.plat-desc{font-size:.78rem;color:var(--muted)}
+@media(max-width:560px){.plat-3{grid-template-columns:1fr}.plat-col{border-right:none;border-bottom:1px solid var(--line);padding:14px 0}.plat-col:last-child{border-bottom:none}}
 
 /* ══ STACK ══ */
 .sc3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
@@ -403,29 +403,36 @@ footer a:hover{color:var(--teal)}
       <!-- Platform strip -->
       <div class="plat-strip fade">
         <div class="plat-label" data-i18n="pl.label">Geräte-Support inklusive</div>
-        <div class="plat-items">
-          <div class="plat-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
-            <div>
-              <div class="plat-name">Windows</div>
-              <div class="plat-desc" data-i18n="pl.win">Einrichten, absichern, warten</div>
+        <div class="plat-3">
+          <!-- Windows -->
+          <div class="plat-col">
+            <div class="plat-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#0078D4">
+                <path d="M3 5.557 10.651 4.5V11.5H3zm8.5-1.187L21 3v8.5H11.5zM3 12.5h7.651V19.5L3 18.443zm8.5 0H21V21l-9.5-1.37z"/>
+              </svg>
             </div>
+            <div class="plat-name">Windows</div>
+            <div class="plat-desc" data-i18n="pl.win">Einrichten, absichern, warten</div>
           </div>
-          <div class="plat-sep"></div>
-          <div class="plat-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18A9 9 0 0 0 12 3z"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M12 3a11.5 11.5 0 0 1 0 18"/><path d="M12 3a11.5 11.5 0 0 0 0 18"/></svg>
-            <div>
-              <div class="plat-name">macOS</div>
-              <div class="plat-desc" data-i18n="pl.mac">Migrieren, einbinden, betreuen</div>
+          <!-- macOS -->
+          <div class="plat-col">
+            <div class="plat-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#1d1d1f">
+                <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.46 2.208 3.09 3.792 3.029 1.52-.065 2.09-.987 3.925-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.208-4.853-.026-3.022 2.496-4.515 2.612-4.749-1.443-2.09-3.65-2.324-4.415-2.376-2-.13-3.676 1.079-4.602 1.079zm3.378-3.066c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702z"/>
+              </svg>
             </div>
+            <div class="plat-name">macOS</div>
+            <div class="plat-desc" data-i18n="pl.mac">Migrieren, einbinden, betreuen</div>
           </div>
-          <div class="plat-sep"></div>
-          <div class="plat-item">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/><circle cx="12" cy="12" r="4"/></svg>
-            <div>
-              <div class="plat-name">Linux</div>
-              <div class="plat-desc" data-i18n="pl.lin">Installieren, konfigurieren, supporten</div>
+          <!-- Linux -->
+          <div class="plat-col">
+            <div class="plat-ico">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#333">
+                <path d="M12.504 0c-.155 0-.315.008-.48.021C7.578.332 8.699 4.814 8.639 6.3c-.075 1.09-.3 1.95-1.048 3.018-.885 1.09-1.752 3.12-2.109 4.699-.222.961-.228 1.946-.114 2.888l.1.597c.025.097.067.187.117.271.25.413.564.748 1.003 1.063 1.28.942 2.987 1.458 4.2 1.458.263 0 .515-.024.755-.068 1.45-.27 3.01.24 4.428.24 1.17 0 2.73-.515 4.2-1.458.44-.315.754-.65 1.003-1.063.05-.084.092-.174.117-.271l.099-.597c.115-.942.109-1.927-.112-2.888-.358-1.578-1.224-3.609-2.109-4.699-.749-1.068-.973-1.928-1.048-3.018-.06-1.486 1.061-5.968-3.185-6.279C12.819.008 12.659 0 12.504 0zM9 16.5c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1zm6 0c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1zM12 9c-1.657 0-3-1.119-3-2.5S10.343 4 12 4s3 1.119 3 2.5S13.657 9 12 9z"/>
+              </svg>
             </div>
+            <div class="plat-name">Linux</div>
+            <div class="plat-desc" data-i18n="pl.lin">Installieren, konfigurieren, supporten</div>
           </div>
         </div>
       </div>

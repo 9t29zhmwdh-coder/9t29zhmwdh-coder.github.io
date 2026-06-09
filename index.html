@@ -658,12 +658,14 @@ function loadSys(){
   document.getElementById('s-la').textContent=navigator.language||'—';
   document.getElementById('s-cp').textContent=navigator.hardwareConcurrency?navigator.hardwareConcurrency+(lang==='de'?' Kerne':' cores'):'—';
   var c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
-  if(c){
+  function updateConn(){
     var parts=[];
     if(c.downlink&&c.downlink>0)parts.push('~'+c.downlink+' Mbps');
     if(c.rtt!=null&&c.rtt>0)parts.push(c.rtt+' ms');
     document.getElementById('s-cn').textContent=parts.length?parts.join(' · '):(lang==='de'?'nicht verfügbar':'unavailable');
-  }else{document.getElementById('s-cn').textContent=lang==='de'?'nicht verfügbar':'unavailable';}
+  }
+  if(c){updateConn();c.addEventListener('change',updateConn);}
+  else{document.getElementById('s-cn').textContent=lang==='de'?'nicht verfügbar':'unavailable';}
   var ipEl=document.getElementById('s-ip');
   var apis=['https://api.ipify.org?format=json','https://api.seeip.org/jsonip','https://ipapi.co/json/'];
   function tryIP(i){if(i>=apis.length){ipEl.textContent=lang==='de'?'nicht ermittelbar':'unavailable';return;}

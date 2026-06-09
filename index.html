@@ -525,7 +525,13 @@ footer a:hover{color:var(--teal)}
               <div class="sr"><span class="sl2" data-i18n="sy.tz">Zeitzone</span><span class="sv" id="s-tz">—</span></div>
               <div class="sr"><span class="sl2" data-i18n="sy.la">Sprache</span><span class="sv" id="s-la">—</span></div>
               <div class="sr"><span class="sl2" data-i18n="sy.cp">CPU-Kerne</span><span class="sv" id="s-cp">—</span></div>
-              <div class="sr"><span class="sl2" data-i18n="sy.cn">Verbindung</span><span class="sv" id="s-cn">—</span></div>
+              <div class="sr sr-btn" id="sr-spd" onclick="toggleSpeedtest()" style="cursor:pointer;justify-content:center;align-items:center;flex-direction:row;gap:7px;user-select:none;transition:background .2s">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--dev);flex-shrink:0"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                <span class="sl2" style="font-size:.7rem;letter-spacing:.08em" data-i18n="sy.cn">Speedtest</span>
+              </div>
+            </div>
+            <div id="spd-wrap" style="display:none;margin-top:10px;border-radius:9px;overflow:hidden;border:1px solid rgba(239,233,221,.09)">
+              <iframe id="spd-frame" src="" width="100%" height="450" frameborder="0" scrolling="no" allow="autoplay" style="display:block"></iframe>
             </div>
           </div>
           <div class="nd-panel" id="nd-dns">
@@ -657,29 +663,24 @@ function loadSys(){
   document.getElementById('s-tz').textContent=(Intl&&Intl.DateTimeFormat)?Intl.DateTimeFormat().resolvedOptions().timeZone:'—';
   document.getElementById('s-la').textContent=navigator.language||'—';
   document.getElementById('s-cp').textContent=navigator.hardwareConcurrency?navigator.hardwareConcurrency+(lang==='de'?' Kerne':' cores'):'—';
-  var c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
-  var cnEl=document.getElementById('s-cn');
-  cnEl.innerHTML='<span class="spin"></span>';
-  (function(){
-    var t0=performance.now();
-    var url='https://raw.githubusercontent.com/9t29zhmwdh-coder/NetDashboard/master/screenshot.png?_='+Date.now();
-    fetch(url,{cache:'no-store'})
-      .then(function(r){return r.blob();})
-      .then(function(b){
-        var secs=(performance.now()-t0)/1000;
-        var mbps=(b.size*8/secs/1e6).toFixed(1);
-        var rtt=c&&c.rtt>0?' · '+c.rtt+' ms':'';
-        cnEl.textContent='~'+mbps+' Mbps'+rtt;
-      })
-      .catch(function(){
-        cnEl.textContent=c&&c.rtt>0?c.rtt+' ms RTT':(lang==='de'?'nicht verfügbar':'unavailable');
-      });
-  })();
   var ipEl=document.getElementById('s-ip');
   var apis=['https://api.ipify.org?format=json','https://api.seeip.org/jsonip','https://ipapi.co/json/'];
   function tryIP(i){if(i>=apis.length){ipEl.textContent=lang==='de'?'nicht ermittelbar':'unavailable';return;}
     fetch(apis[i]).then(function(r){return r.json();}).then(function(d){ipEl.textContent=d.ip||d.query||'—';}).catch(function(){tryIP(i+1);});}
   tryIP(0);
+}
+function toggleSpeedtest(){
+  var wrap=document.getElementById('spd-wrap');
+  var frame=document.getElementById('spd-frame');
+  var btn=document.getElementById('sr-spd');
+  if(wrap.style.display==='none'){
+    wrap.style.display='block';
+    if(!frame.src)frame.src='https://embed.speedtest.net/widget/mini.html?theme=dark&lang='+(lang==='de'?'de':'en');
+    btn.style.background='rgba(91,138,245,.12)';
+  }else{
+    wrap.style.display='none';
+    btn.style.background='';
+  }
 }
 loadSys();
 

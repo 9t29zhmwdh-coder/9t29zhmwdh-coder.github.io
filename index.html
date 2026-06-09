@@ -657,7 +657,18 @@ function loadSys(){
   document.getElementById('s-tz').textContent=(Intl&&Intl.DateTimeFormat)?Intl.DateTimeFormat().resolvedOptions().timeZone:'—';
   document.getElementById('s-la').textContent=navigator.language||'—';
   document.getElementById('s-cp').textContent=navigator.hardwareConcurrency?navigator.hardwareConcurrency+(lang==='de'?' Kerne':' cores'):'—';
-  (function(){var ua=navigator.userAgent;var t;if(/iPad/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1)){t=lang==='de'?'Tablet':'Tablet';}else if(/Mobi|Android|iPhone/.test(ua)){t=lang==='de'?'Mobil':'Mobile';}else{t='Desktop';}document.getElementById('s-dv').textContent=t;})();
+  (function(){
+    var ua=navigator.userAgent;
+    var dvEl=document.getElementById('s-dv');
+    if(/iPad/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1)){dvEl.textContent='Tablet';return;}
+    if(/Mobi|Android|iPhone/.test(ua)){dvEl.textContent=lang==='de'?'Mobil':'Mobile';return;}
+    dvEl.textContent='Desktop';
+    if(navigator.getBattery){
+      navigator.getBattery().then(function(b){
+        if(b.level<1||b.charging===false){dvEl.textContent='Laptop';}
+      }).catch(function(){});
+    }
+  })();
   var ipEl=document.getElementById('s-ip');
   var apis=['https://api.ipify.org?format=json','https://api.seeip.org/jsonip','https://ipapi.co/json/'];
   function tryIP(i){if(i>=apis.length){ipEl.textContent=lang==='de'?'nicht ermittelbar':'unavailable';return;}

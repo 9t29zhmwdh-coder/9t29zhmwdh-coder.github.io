@@ -7,6 +7,11 @@
 
 Personal portfolio and tooling showcase by Rafael Yilmaz. Built as a GitHub Pages site.
 
+![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-brightgreen?logo=github)
+![Platform](https://img.shields.io/badge/Platform-Web-lightgrey?logo=googlechrome)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+
 ---
 
 ## Projects

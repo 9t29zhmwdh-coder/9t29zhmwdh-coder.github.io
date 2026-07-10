@@ -3,6 +3,8 @@
   <h1>RayStudio</h1>
 </div>
 
+[🇩🇪 Deutsche Version](README.de.md)
+
 **RayStudio: Portfolio & Developer Tools · raystudio.ch**
 
 Personal portfolio and tooling showcase by Rafael Yilmaz. Built as a GitHub Pages site.

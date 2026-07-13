@@ -940,8 +940,29 @@ document.querySelectorAll('.rl-tab').forEach(function(tab){
 });
 function rlFetch(path){
   return fetch('https://api.github.com'+path,{headers:{Accept:'application/vnd.github+json'}})
-    .then(function(r){return r.ok?r.json():null;})
-    .catch(function(){return null;});
+    .then(function(r){
+      if(r.ok)return r.json().then(function(data){return{status:r.status,data:data};});
+      return{status:r.status,data:null};
+    })
+    .catch(function(){return{status:0,data:null};});
+}
+// Cache each repo's rendered badge HTML for a while: the widget auto-loads
+// on every page view, and GitHub's unauthenticated limit (60/hour per IP)
+// is shared with everything else on the visitor's network. Without this,
+// repeat page loads burn through that quota for no reason, since none of
+// this data changes minute to minute anyway.
+var RL_CACHE_TTL_MS=15*60*1000;
+function rlCacheGet(key){
+  try{
+    var raw=localStorage.getItem('rl_cache_'+key);
+    if(!raw)return null;
+    var parsed=JSON.parse(raw);
+    if(Date.now()-parsed.ts>RL_CACHE_TTL_MS)return null;
+    return parsed.html;
+  }catch(e){return null;}
+}
+function rlCacheSet(key,html){
+  try{localStorage.setItem('rl_cache_'+key,JSON.stringify({html:html,ts:Date.now()}));}catch(e){}
 }
 var RL_OVERVIEW=['entra-access-graph-engine','azure-policy-drift-detector','NetScanX','LogLens'];
 var RL_LICENSE=['entra-access-graph-engine','NetSweep','private-model-orchestrator','BugRadar'];
@@ -949,16 +970,22 @@ function rlLoadOverview(){
   var body=document.getElementById('rl-p0-body');body.innerHTML='';
   RL_OVERVIEW.forEach(function(name){
     var row=document.createElement('div');row.className='rl-row';
-    row.innerHTML='<span class="rl-name" title="'+esc(name)+'">'+esc(name)+'</span><span class="rl-badges"><span class="spin"></span></span>';
+    var cached=rlCacheGet('overview:'+name);
+    row.innerHTML='<span class="rl-name" title="'+esc(name)+'">'+esc(name)+'</span><span class="rl-badges">'+(cached||'<span class="spin"></span>')+'</span>';
     body.appendChild(row);
+    if(cached)return;
     Promise.all([rlFetch('/repos/9t29zhmwdh-coder/'+name),rlFetch('/repos/9t29zhmwdh-coder/'+name+'/actions/runs?per_page=1')])
       .then(function(res){
-        var repo=res[0],runs=res[1];
+        var repo=res[0].data,runs=res[1].data;
         var badges='';
         if(repo&&repo.language)badges+='<span class="db">'+esc(repo.language)+'</span>';
         var ciOk=runs&&runs.workflow_runs&&runs.workflow_runs[0]&&runs.workflow_runs[0].conclusion==='success';
         if(ciOk)badges+='<span class="dt" data-i18n="rl.ci">'+T[lang]['rl.ci']+'</span>';
-        row.querySelector('.rl-badges').innerHTML=badges||'<span class="dn">…</span>';
+        var html=badges||'<span class="dn">…</span>';
+        row.querySelector('.rl-badges').innerHTML=html;
+        // Only cache a real result; a fetch failure (rate limit, network)
+        // should try again next load, not freeze "…" for 15 minutes.
+        if(badges)rlCacheSet('overview:'+name,html);
       });
   });
 }
@@ -966,12 +993,21 @@ function rlLoadLicensing(){
   var body=document.getElementById('rl-p1-body');body.innerHTML='';
   RL_LICENSE.forEach(function(name){
     var row=document.createElement('div');row.className='rl-row';
-    row.innerHTML='<span class="rl-name" title="'+esc(name)+'">'+esc(name)+'</span><span class="rl-badges"><span class="spin"></span></span>';
+    var cached=rlCacheGet('licensing:'+name);
+    row.innerHTML='<span class="rl-name" title="'+esc(name)+'">'+esc(name)+'</span><span class="rl-badges">'+(cached||'<span class="spin"></span>')+'</span>';
     body.appendChild(row);
+    if(cached)return;
     rlFetch('/repos/9t29zhmwdh-coder/'+name+'/contents/LICENSE.COMMERCIAL').then(function(res){
-      var dual=!!res;
+      if(res.status!==200&&res.status!==404){
+        // Rate-limited or network error, not a confirmed answer either way.
+        // Show the neutral fallback but don't cache a guess.
+        row.querySelector('.rl-badges').innerHTML='<span class="dn">…</span>';
+        return;
+      }
+      var dual=res.status===200;
       var badge=dual?'<span class="dp" data-i18n="rl.dual">'+T[lang]['rl.dual']+'</span>':'<span class="dn">MIT</span>';
       row.querySelector('.rl-badges').innerHTML=badge;
+      rlCacheSet('licensing:'+name,badge);
     });
   });
 }

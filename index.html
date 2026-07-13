@@ -168,19 +168,35 @@ nav{position:sticky;top:0;z-index:50;background:rgba(11,21,33,.9);backdrop-filte
 
 /* ══ DEVELOPER ══ */
 .dev-hdr{margin-bottom:36px}
-.dev-split{display:grid;grid-template-columns:.95fr 1.05fr;gap:36px;align-items:center}
-.dev-left{display:flex;flex-direction:column;gap:14px}
+.wrap-wide{max-width:1320px}
+.dev-split{display:flex;flex-direction:column;gap:28px}
+.dev-left{display:flex;flex-direction:column;gap:14px;max-width:74ch}
 .badges{display:flex;gap:6px;flex-wrap:wrap}
 .db,.dp{font-family:var(--fm);font-size:.67rem;padding:3px 8px;border-radius:4px;font-weight:500;letter-spacing:.04em}
 .db{background:rgba(91,138,245,.12);color:var(--dev);border:1px solid rgba(91,138,245,.22)}
 .dp{background:rgba(124,91,245,.1);color:#9b78f5;border:1px solid rgba(124,91,245,.18)}
 .dev-left h3{font-family:var(--fd);font-size:1.35rem;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
-.dev-left p{font-size:.88rem;color:var(--ink-2);line-height:1.6;max-width:44ch}
-.dev-screen{border-radius:10px;border:1px solid var(--line);box-shadow:var(--sh);width:100%;display:block;max-height:380px;object-fit:cover;object-position:top}
+.dev-left p{font-size:.88rem;color:var(--ink-2);line-height:1.6;max-width:70ch}
 .feat-wrap{display:flex;flex-wrap:wrap;gap:6px}
 .ftag{font-family:var(--fm);font-size:.69rem;padding:3px 8px;border-radius:4px;background:var(--bg-soft);border:1px solid var(--line);color:var(--ink-2)}
+.dev-links{display:flex;gap:22px;flex-wrap:wrap}
 .gh-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-size:.84rem;font-weight:500;color:var(--dev);transition:gap .18s}
 .gh-link:hover{gap:10px}
+.widget-pair{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+@media(max-width:900px){.widget-pair{grid-template-columns:1fr}}
+.rl-tab{flex:1;padding:10px 5px;text-align:center;font-family:var(--fm);font-size:.7rem;letter-spacing:.04em;color:rgba(239,233,221,.42);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;user-select:none}
+.rl-tab:hover{color:rgba(239,233,221,.78)}
+.rl-tab.active{color:#e0a06b;border-bottom-color:#e0a06b}
+.rl-panel{display:none;padding:16px}
+.rl-panel.active{display:block}
+.rl-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:8px;font-family:var(--fm);font-size:.62rem;color:rgba(239,233,221,.38);letter-spacing:.1em;text-transform:uppercase}
+.rl-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-top:1px dashed rgba(239,233,221,.09)}
+.rl-row:first-child{border-top:none}
+.rl-name{font-family:var(--fm);font-size:.72rem;color:#efe9dd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rl-badges{display:flex;gap:5px;flex:none}
+.dt,.dn{font-family:var(--fm);font-size:.63rem;padding:2px 7px;border-radius:4px;font-weight:500;letter-spacing:.03em;white-space:nowrap}
+.dt{background:rgba(63,142,126,.14);color:var(--teal);border:1px solid rgba(63,142,126,.3)}
+.dn{background:rgba(239,233,221,.06);color:rgba(239,233,221,.55);border:1px solid rgba(239,233,221,.14)}
 
 /* ══ NETDASH WIDGET ══ */
 .netdash{background:var(--bg-d2);border:1px solid rgba(239,233,221,.13);border-radius:13px;overflow:hidden;box-shadow:0 18px 56px rgba(0,0,0,.38)}
@@ -591,37 +607,45 @@ footer a:hover{color:var(--teal)}
 
 <!-- ══ DEVELOPER · BEIGE ══ -->
 <section id="dev" class="sec sl">
-  <div class="wrap">
+  <div class="wrap wrap-wide">
     <!-- full width header -->
     <div class="dev-hdr">
       <span class="sl-lbl fade" data-i18n="dv.lbl">03 / RayStudio Developer Tools</span>
       <h2 class="fade" data-i18n="dv.h2">Eigene Tools. Konkrete Probleme gelöst.</h2>
       <p class="sub fade" data-i18n="dv.sub">Kleine, eigenständige Apps. Jede löst ein konkretes Problem, das mir selbst begegnet ist.</p>
     </div>
-    <!-- split: info+screenshot | widget · aligned center -->
+    <!-- text full width, then two live widgets side by side -->
     <div class="dev-split">
       <div class="dev-left">
         <div class="badges">
           <span class="db">C# · WPF</span><span class="db">.NET 8</span><span class="dp">Windows App</span>
+          <span class="db">HTML · JS</span><span class="dp" data-i18n="rl.nobk">Kein Backend</span>
         </div>
-        <h3>NetDashboard</h3>
-        <p data-i18n="dv.desc">Netzwerk- &amp; Mail-Toolkit für Windows. DNS-Abfragen, Mail-Server-Erkennung via DNS, Verbindungstest und vollständige Systeminfo, alles in einem Interface.</p>
-        <img class="dev-screen" src="https://raw.githubusercontent.com/9t29zhmwdh-coder/NetDashboard/master/screenshot.png" alt="NetDashboard" loading="lazy"/>
+        <h3>NetDashboard &amp; RepoLedger</h3>
+        <p data-i18n="dv.desc2">NetDashboard: Netzwerk- &amp; Mail-Toolkit für Windows. RepoLedger: kostenloses GitHub-Portfolio-Dashboard für alle, CI-Status, offene PRs und Lizenzierung auf einen Blick, komplett im Browser, ohne eigenen Server.</p>
         <div class="feat-wrap">
           <span class="ftag" data-i18n="df1">Mail-Check via DNS</span>
           <span class="ftag" data-i18n="df2">DNS A/MX/TXT/NS</span>
-          <span class="ftag" data-i18n="df3">Ping · Port · Trace</span>
           <span class="ftag" data-i18n="df4">Mein System</span>
+          <span class="ftag" data-i18n="rl.f1">CI &amp; Security</span>
+          <span class="ftag" data-i18n="rl.f2">Lizenzierung</span>
           <span class="ftag">DE · EN · FR</span>
         </div>
-        <a class="gh-link" href="https://github.com/9t29zhmwdh-coder/NetDashboard" target="_blank" rel="noopener">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
-          <span data-i18n="dv.gh">Auf GitHub ansehen</span>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
+        <div class="dev-links">
+          <a class="gh-link" href="https://github.com/9t29zhmwdh-coder/NetDashboard" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <span data-i18n="rl.ghnd">NetDashboard auf GitHub</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a class="gh-link" href="https://github.com/9t29zhmwdh-coder/RepoLedger" target="_blank" rel="noopener">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <span data-i18n="rl.ghrl">RepoLedger auf GitHub</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
       </div>
-      <!-- live widget -->
-      <div id="live">
+      <!-- two live widgets side by side -->
+      <div class="widget-pair" id="live">
         <div class="netdash">
           <div class="nd-bar">
             <div class="nd-dots"><span></span><span></span><span></span></div>
@@ -662,6 +686,27 @@ footer a:hover{color:var(--teal)}
               <button class="ndr" id="m-btn" onclick="runMail()"><span data-i18n="nd.ck">Prüfen</span></button>
             </div>
             <div class="nd-out" id="m-out"><p class="nd-empty" data-i18n="nd.me">E-Mail-Adresse oder Domain eingeben.</p></div>
+          </div>
+        </div>
+
+        <div class="netdash">
+          <div class="nd-bar">
+            <div class="nd-dots"><span></span><span></span><span></span></div>
+            <div class="nd-title">RepoLedger · Live Preview</div>
+          </div>
+          <div class="nd-tabs">
+            <div class="rl-tab active" data-rltab="0" data-i18n="rl.tab1">Übersicht</div>
+            <div class="rl-tab" data-rltab="1" data-i18n="rl.tab2">Licensing</div>
+          </div>
+          <div class="rl-panel active" id="rl-p0">
+            <div class="rl-head"><span data-i18n="rl.repo">Repo Name</span><span data-i18n="rl.ghcheck">GitHub Qualitätscheck</span></div>
+            <div id="rl-p0-body"><span class="spin"></span></div>
+            <div class="sy-note" data-i18n="rl.note1" style="font-size:.62rem;color:rgba(239,233,221,.42);margin-top:10px;letter-spacing:.03em">Live aus der öffentlichen GitHub-API, direkt im Browser des Besuchers.</div>
+          </div>
+          <div class="rl-panel" id="rl-p1">
+            <div class="rl-head"><span data-i18n="rl.repo">Repo Name</span><span data-i18n="rl.lic">Lizenz</span></div>
+            <div id="rl-p1-body"><span class="spin"></span></div>
+            <div class="sy-note" data-i18n="rl.note2" style="font-size:.62rem;color:rgba(239,233,221,.42);margin-top:10px;letter-spacing:.03em">Erkennt MIT + Commercial-Zusatz pro Repo.</div>
           </div>
         </div>
       </div>
@@ -756,7 +801,7 @@ footer a:hover{color:var(--teal)}
 
 <script>
 /* ══ i18n ══ */
-var T={de:{"nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Ablauf","nav.contact":"Kontakt","nav.cta":"Anfragen","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Sauber gebaut.","h1b":"Einfach genutzt.","hero.lead":"Microsoft 365, Entra ID und Cloud richtig aufgesetzt und abgesichert. Dazu Netzwerk, Smart Home, NAS und eigene Developer-Tools, alles aus einer Hand. Handwerklich sauber.","hero.c1":"ICT-Leistungen","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"mit Zweck gebaut","hm2b":"Schweizer","hm2":"Qualität","ict.lbl":"01 / ICT-Leistungen","ict.h2":"Drei Disziplinen.\nEin Ansprechpartner.","ict.sub":"Von der Glasfaser-Dose bis zum letzten Access Point. Alles aufeinander abgestimmt, sauber verkabelt, verständlich erklärt.","c1.tag":"Netzwerk · WLAN","c1.h":"Internet & Netzwerk","c1.p":"Stabiles Netz vom Keller bis in den Garten. Getrennte Zonen für Gäste und IoT. Kein Funkloch.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Flächendeckendes WiFi 6/7","c1.l3":"Gast & IoT VLANs","c1.l4":"WireGuard VPN Fernzugang","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Home Assistant auf Raspberry Pi 5, lokal ohne Cloud-Zwang, ohne Abo. Apple HomeKit Integration inklusive.","c2.l1":"Licht, Heizung, Storen zentral","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Läuft lokal, nicht in der Cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Speicher & Cloud","c3.p":"Eigenes NAS zu Hause und M365 richtig aufgesetzt: MFA, Backup, eigene Domain.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Automatische Foto & Dokument-Sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-Party-Backup","pl.label":"Geräte-Support inklusive","pl.win":"Einrichten, absichern, M365 & Entra ID","pl.mac":"Migrieren, einbinden, betreuen","pl.lin":"Server, Docker & Automationen","st.lbl":"02 / Stack","st.h2":"Womit ich täglich arbeite.","st.c1":"Netzwerk","st.c2":"Automation","st.c3":"Developer","dv.lbl":"03 / RayStudio Developer Tools","dv.h2":"Eigene Tools. Konkrete Probleme gelöst.","dv.sub":"Kleine, eigenständige Apps. Jede löst ein konkretes Problem, das mir selbst begegnet ist.","dv.desc":"Netzwerk- & Mail-Toolkit für Windows. DNS-Abfragen, Mail-Server-Erkennung via DNS, Verbindungstest und vollständige Systeminfo.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"Mein System","dv.gh":"Auf GitHub ansehen","nd.ti":"NetDashboard · Live Preview","nd.t1":"Mein System","nd.t2":"DNS-Check","nd.t3":"Mail-Check","nd.q":"Abfragen","nd.ck":"Prüfen","nd.de":"Domain eingeben und Abfragen klicken.","nd.me":"E-Mail-Adresse oder Domain eingeben.","mt.h":"Weitere Tools aus dem Studio","mt1.p":"Lokaler KI-Mail-Organizer: IMAP-Sync, automatische Kategorisierung, Review-Workflow.","mt2.p":"Offline KI-Lebensplaner: Termine, Aufgaben und Fristen, lokal und privat.","mt3.p":"Speicher-Audit & Cleanup für NAS, SharePoint, OneDrive for Business und DFS.","mt4.p":"KI-gestützte Log-Suche und Root-Cause-Analyse, lokal und ohne Cloud.","mt.all":"Alle Projekte auf GitHub","mt.std":"Alle Repos folgen öffentlichen Engineering-Standards","mt.sec":"CodeQL & Dependabot aktiv auf allen Repos","sy.ip":"Öffentliche IP","sy.os":"Betriebssystem","sy.br":"Browser","sy.sc":"Bildschirm","sy.tz":"Zeitzone","sy.la":"Sprache","sy.cp":"CPU-Kerne","sy.cn":"Verbindung","sy.dv":"Geräteart","sy.note":"Alles lokal aus deinem Browser gelesen. Nichts wird gesendet oder gespeichert.","pr.lbl":"04 / Ablauf","pr.h2":"Kein Verkaufsgespräch. Kein Aufwand.","p1h":"Anfrage","p1p":"Beschreib dein Anliegen ausführlich: Was hast du, was willst du erreichen, was funktioniert nicht. Je mehr Details, desto besser.","p2h":"Prüfung","p2p":"Ich analysiere deine Situation. Sind alle Infos da, bekommst du direkt eine kostenlose Einschätzung. Fehlt etwas, melde ich mich kurz.","p3h":"Empfehlung","p3p":"Du bekommst eine klare, unverbindliche Empfehlung: Welches Setup passt, was sinnvoll ist. Komplett kostenlos, ohne Verpflichtung.","p4h":"Offerte","p4p":"Optional: Wenn du willst, erstelle ich ein konkretes Angebot über <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"05 / Kontakt","co.h2":"Kontaktaufnahme. Kein Aufwand.","co.p":"Beschreib kurz, was du vorhast: Netzwerk, Smart Home, NAS oder eine Frage zu meinen Tools.","co.msg":"Nachricht via GitHub","co.gh":"GitHub Profil","ft.s":"Systeme laufen","ft.pv":"Datenschutz"},en:{"nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Process","nav.contact":"Contact","nav.cta":"Enquire","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Built clean.","h1b":"Simply works.","hero.lead":"Microsoft 365, Entra ID and cloud, set up properly and secured. Plus network, Smart Home, NAS and my own developer tools, all from one source. No shortcuts.","hero.c1":"ICT Services","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"built with purpose","hm2b":"Swiss","hm2":"quality","ict.lbl":"01 / ICT Services","ict.h2":"Three disciplines.\nOne contact.","ict.sub":"From the fibre socket to the last access point. Everything coordinated, neatly cabled, clearly explained.","c1.tag":"Network · WLAN","c1.h":"Internet & Network","c1.p":"Stable network from basement to garden. Separate zones for guests and IoT. No dead spots.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Full WiFi 6/7 coverage","c1.l3":"Guest & IoT VLANs","c1.l4":"WireGuard VPN remote access","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Home Assistant on Raspberry Pi 5, local, no cloud, no subscription. Apple HomeKit included.","c2.l1":"Lights, heating, blinds centralised","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Runs at home, not in the cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Storage & Cloud","c3.p":"Your own NAS at home and M365 set up properly: MFA, backup, own domain.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Auto photo & document sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-party backup","pl.label":"Device support included","pl.win":"Set up, secure, M365 & Entra ID","pl.mac":"Migrate, integrate, support","pl.lin":"Servers, Docker & automations","st.lbl":"02 / Stack","st.h2":"What I work with daily.","st.c1":"Network","st.c2":"Automation","st.c3":"Developer","dv.lbl":"03 / RayStudio Developer Tools","dv.h2":"Own tools. Real problems solved.","dv.sub":"Small standalone apps. Each one fixes a specific problem I ran into myself.","dv.desc":"Network & mail toolkit for Windows. DNS queries, mail server detection via DNS, connection test and full system info.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"My System","dv.gh":"View on GitHub","nd.ti":"NetDashboard · Live Preview","nd.t1":"My System","nd.t2":"DNS Check","nd.t3":"Mail Check","nd.q":"Query","nd.ck":"Check","nd.de":"Enter a domain and click Query.","nd.me":"Enter an email address or domain.","mt.h":"More tools from the studio","mt1.p":"Local AI email organizer: IMAP sync, automatic categorization, review workflow.","mt2.p":"Offline AI life planner: events, tasks and deadlines, local and private.","mt3.p":"Storage audit & cleanup for NAS, SharePoint, OneDrive for Business and DFS.","mt4.p":"AI-powered log search and root-cause analysis, local and cloud-free.","mt.all":"All projects on GitHub","mt.std":"All repos follow public engineering standards","mt.sec":"CodeQL & Dependabot active across all repos","sy.ip":"Public IP","sy.os":"Operating System","sy.br":"Browser","sy.sc":"Screen","sy.tz":"Timezone","sy.la":"Language","sy.cp":"CPU Cores","sy.cn":"Connection","sy.dv":"Device type","sy.note":"All read locally in your browser. Nothing is sent or stored.","pr.lbl":"04 / How it works","pr.h2":"No sales pitch. No hassle.","p1h":"Request","p1p":"Describe your situation in detail: what you have, what you want to achieve, what isn't working. The more detail, the better.","p2h":"Review","p2p":"I analyse your situation. If all info is there, you get a free assessment straight away. If something is missing, I'll reach out.","p3h":"Recommendation","p3p":"You get a clear, non-binding recommendation: which setup fits, what makes sense. Completely free, no obligation.","p4h":"Quote","p4p":"Optional: if you want, I can provide a concrete offer via <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"05 / Contact","co.h2":"Get in touch. No hassle.","co.p":"Tell me what you have in mind: network, Smart Home, NAS, or just a question about one of my tools.","co.msg":"Message via GitHub","co.gh":"GitHub Profile","ft.s":"systems operational","ft.pv":"Privacy"}};
+var T={de:{"nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Ablauf","nav.contact":"Kontakt","nav.cta":"Anfragen","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Sauber gebaut.","h1b":"Einfach genutzt.","hero.lead":"Microsoft 365, Entra ID und Cloud richtig aufgesetzt und abgesichert. Dazu Netzwerk, Smart Home, NAS und eigene Developer-Tools, alles aus einer Hand. Handwerklich sauber.","hero.c1":"ICT-Leistungen","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"mit Zweck gebaut","hm2b":"Schweizer","hm2":"Qualität","ict.lbl":"01 / ICT-Leistungen","ict.h2":"Drei Disziplinen.\nEin Ansprechpartner.","ict.sub":"Von der Glasfaser-Dose bis zum letzten Access Point. Alles aufeinander abgestimmt, sauber verkabelt, verständlich erklärt.","c1.tag":"Netzwerk · WLAN","c1.h":"Internet & Netzwerk","c1.p":"Stabiles Netz vom Keller bis in den Garten. Getrennte Zonen für Gäste und IoT. Kein Funkloch.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Flächendeckendes WiFi 6/7","c1.l3":"Gast & IoT VLANs","c1.l4":"WireGuard VPN Fernzugang","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Home Assistant auf Raspberry Pi 5, lokal ohne Cloud-Zwang, ohne Abo. Apple HomeKit Integration inklusive.","c2.l1":"Licht, Heizung, Storen zentral","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Läuft lokal, nicht in der Cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Speicher & Cloud","c3.p":"Eigenes NAS zu Hause und M365 richtig aufgesetzt: MFA, Backup, eigene Domain.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Automatische Foto & Dokument-Sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-Party-Backup","pl.label":"Geräte-Support inklusive","pl.win":"Einrichten, absichern, M365 & Entra ID","pl.mac":"Migrieren, einbinden, betreuen","pl.lin":"Server, Docker & Automationen","st.lbl":"02 / Stack","st.h2":"Womit ich täglich arbeite.","st.c1":"Netzwerk","st.c2":"Automation","st.c3":"Developer","dv.lbl":"03 / RayStudio Developer Tools","dv.h2":"Eigene Tools. Konkrete Probleme gelöst.","dv.sub":"Kleine, eigenständige Apps. Jede löst ein konkretes Problem, das mir selbst begegnet ist.","dv.desc":"Netzwerk- & Mail-Toolkit für Windows. DNS-Abfragen, Mail-Server-Erkennung via DNS, Verbindungstest und vollständige Systeminfo.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"Mein System","dv.gh":"Auf GitHub ansehen","nd.ti":"NetDashboard · Live Preview","nd.t1":"Mein System","nd.t2":"DNS-Check","nd.t3":"Mail-Check","nd.q":"Abfragen","nd.ck":"Prüfen","nd.de":"Domain eingeben und Abfragen klicken.","nd.me":"E-Mail-Adresse oder Domain eingeben.","mt.h":"Weitere Tools aus dem Studio","mt1.p":"Lokaler KI-Mail-Organizer: IMAP-Sync, automatische Kategorisierung, Review-Workflow.","mt2.p":"Offline KI-Lebensplaner: Termine, Aufgaben und Fristen, lokal und privat.","mt3.p":"Speicher-Audit & Cleanup für NAS, SharePoint, OneDrive for Business und DFS.","mt4.p":"KI-gestützte Log-Suche und Root-Cause-Analyse, lokal und ohne Cloud.","mt.all":"Alle Projekte auf GitHub","mt.std":"Alle Repos folgen öffentlichen Engineering-Standards","mt.sec":"CodeQL & Dependabot aktiv auf allen Repos","sy.ip":"Öffentliche IP","sy.os":"Betriebssystem","sy.br":"Browser","sy.sc":"Bildschirm","sy.tz":"Zeitzone","sy.la":"Sprache","sy.cp":"CPU-Kerne","sy.cn":"Verbindung","sy.dv":"Geräteart","sy.note":"Alles lokal aus deinem Browser gelesen. Nichts wird gesendet oder gespeichert.","rl.nobk":"Kein Backend","dv.desc2":"NetDashboard: Netzwerk- &amp; Mail-Toolkit für Windows. RepoLedger: kostenloses GitHub-Portfolio-Dashboard für alle, CI-Status, offene PRs und Lizenzierung auf einen Blick, komplett im Browser, ohne eigenen Server.","rl.f1":"CI &amp; Security","rl.f2":"Lizenzierung","rl.ghnd":"NetDashboard auf GitHub","rl.ghrl":"RepoLedger auf GitHub","rl.tab1":"Übersicht","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Qualitätscheck","rl.lic":"Lizenz","rl.note1":"Live aus der öffentlichen GitHub-API, direkt im Browser des Besuchers.","rl.note2":"Erkennt MIT + Commercial-Zusatz pro Repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"04 / Ablauf","pr.h2":"Kein Verkaufsgespräch. Kein Aufwand.","p1h":"Anfrage","p1p":"Beschreib dein Anliegen ausführlich: Was hast du, was willst du erreichen, was funktioniert nicht. Je mehr Details, desto besser.","p2h":"Prüfung","p2p":"Ich analysiere deine Situation. Sind alle Infos da, bekommst du direkt eine kostenlose Einschätzung. Fehlt etwas, melde ich mich kurz.","p3h":"Empfehlung","p3p":"Du bekommst eine klare, unverbindliche Empfehlung: Welches Setup passt, was sinnvoll ist. Komplett kostenlos, ohne Verpflichtung.","p4h":"Offerte","p4p":"Optional: Wenn du willst, erstelle ich ein konkretes Angebot über <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"05 / Kontakt","co.h2":"Kontaktaufnahme. Kein Aufwand.","co.p":"Beschreib kurz, was du vorhast: Netzwerk, Smart Home, NAS oder eine Frage zu meinen Tools.","co.msg":"Nachricht via GitHub","co.gh":"GitHub Profil","ft.s":"Systeme laufen","ft.pv":"Datenschutz"},en:{"nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Process","nav.contact":"Contact","nav.cta":"Enquire","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Built clean.","h1b":"Simply works.","hero.lead":"Microsoft 365, Entra ID and cloud, set up properly and secured. Plus network, Smart Home, NAS and my own developer tools, all from one source. No shortcuts.","hero.c1":"ICT Services","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"built with purpose","hm2b":"Swiss","hm2":"quality","ict.lbl":"01 / ICT Services","ict.h2":"Three disciplines.\nOne contact.","ict.sub":"From the fibre socket to the last access point. Everything coordinated, neatly cabled, clearly explained.","c1.tag":"Network · WLAN","c1.h":"Internet & Network","c1.p":"Stable network from basement to garden. Separate zones for guests and IoT. No dead spots.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Full WiFi 6/7 coverage","c1.l3":"Guest & IoT VLANs","c1.l4":"WireGuard VPN remote access","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Home Assistant on Raspberry Pi 5, local, no cloud, no subscription. Apple HomeKit included.","c2.l1":"Lights, heating, blinds centralised","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Runs at home, not in the cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Storage & Cloud","c3.p":"Your own NAS at home and M365 set up properly: MFA, backup, own domain.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Auto photo & document sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-party backup","pl.label":"Device support included","pl.win":"Set up, secure, M365 & Entra ID","pl.mac":"Migrate, integrate, support","pl.lin":"Servers, Docker & automations","st.lbl":"02 / Stack","st.h2":"What I work with daily.","st.c1":"Network","st.c2":"Automation","st.c3":"Developer","dv.lbl":"03 / RayStudio Developer Tools","dv.h2":"Own tools. Real problems solved.","dv.sub":"Small standalone apps. Each one fixes a specific problem I ran into myself.","dv.desc":"Network & mail toolkit for Windows. DNS queries, mail server detection via DNS, connection test and full system info.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"My System","dv.gh":"View on GitHub","nd.ti":"NetDashboard · Live Preview","nd.t1":"My System","nd.t2":"DNS Check","nd.t3":"Mail Check","nd.q":"Query","nd.ck":"Check","nd.de":"Enter a domain and click Query.","nd.me":"Enter an email address or domain.","mt.h":"More tools from the studio","mt1.p":"Local AI email organizer: IMAP sync, automatic categorization, review workflow.","mt2.p":"Offline AI life planner: events, tasks and deadlines, local and private.","mt3.p":"Storage audit & cleanup for NAS, SharePoint, OneDrive for Business and DFS.","mt4.p":"AI-powered log search and root-cause analysis, local and cloud-free.","mt.all":"All projects on GitHub","mt.std":"All repos follow public engineering standards","mt.sec":"CodeQL & Dependabot active across all repos","sy.ip":"Public IP","sy.os":"Operating System","sy.br":"Browser","sy.sc":"Screen","sy.tz":"Timezone","sy.la":"Language","sy.cp":"CPU Cores","sy.cn":"Connection","sy.dv":"Device type","sy.note":"All read locally in your browser. Nothing is sent or stored.","rl.nobk":"No backend","dv.desc2":"NetDashboard: network &amp; mail toolkit for Windows. RepoLedger: free GitHub portfolio dashboard for everyone, CI status, open PRs and licensing at a glance, entirely in the browser, no server of its own.","rl.f1":"CI &amp; Security","rl.f2":"Licensing","rl.ghnd":"NetDashboard on GitHub","rl.ghrl":"RepoLedger on GitHub","rl.tab1":"Overview","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Quality Check","rl.lic":"License","rl.note1":"Live from the public GitHub API, directly in the visitor's browser.","rl.note2":"Detects MIT + a commercial add-on per repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"04 / How it works","pr.h2":"No sales pitch. No hassle.","p1h":"Request","p1p":"Describe your situation in detail: what you have, what you want to achieve, what isn't working. The more detail, the better.","p2h":"Review","p2p":"I analyse your situation. If all info is there, you get a free assessment straight away. If something is missing, I'll reach out.","p3h":"Recommendation","p3p":"You get a clear, non-binding recommendation: which setup fits, what makes sense. Completely free, no obligation.","p4h":"Quote","p4p":"Optional: if you want, I can provide a concrete offer via <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"05 / Contact","co.h2":"Get in touch. No hassle.","co.p":"Tell me what you have in mind: network, Smart Home, NAS, or just a question about one of my tools.","co.msg":"Message via GitHub","co.gh":"GitHub Profile","ft.s":"systems operational","ft.pv":"Privacy"}};
 
 var lang=(navigator.language||'de').toLowerCase().startsWith('en')?'en':'de';
 function applyLang(l){
@@ -883,6 +928,55 @@ window.runMail=function(){
     .finally(function(){btn.disabled=false;});
 };
 document.getElementById('m-inp').addEventListener('keydown',function(e){if(e.key==='Enter')runMail();});
+
+/* ══ REPOLEDGER WIDGET ══ */
+document.querySelectorAll('.rl-tab').forEach(function(tab){
+  tab.addEventListener('click',function(){
+    document.querySelectorAll('.rl-tab').forEach(function(t){t.classList.remove('active');});
+    document.querySelectorAll('.rl-panel').forEach(function(p){p.classList.remove('active');});
+    tab.classList.add('active');
+    document.getElementById('rl-p'+tab.dataset.rltab).classList.add('active');
+  });
+});
+function rlFetch(path){
+  return fetch('https://api.github.com'+path,{headers:{Accept:'application/vnd.github+json'}})
+    .then(function(r){return r.ok?r.json():null;})
+    .catch(function(){return null;});
+}
+var RL_OVERVIEW=['entra-access-graph-engine','azure-policy-drift-detector','NetScanX','LogLens'];
+var RL_LICENSE=['entra-access-graph-engine','NetSweep','private-model-orchestrator','BugRadar'];
+function rlLoadOverview(){
+  var body=document.getElementById('rl-p0-body');body.innerHTML='';
+  RL_OVERVIEW.forEach(function(name){
+    var row=document.createElement('div');row.className='rl-row';
+    row.innerHTML='<span class="rl-name" title="'+esc(name)+'">'+esc(name)+'</span><span class="rl-badges"><span class="spin"></span></span>';
+    body.appendChild(row);
+    Promise.all([rlFetch('/repos/9t29zhmwdh-coder/'+name),rlFetch('/repos/9t29zhmwdh-coder/'+name+'/actions/runs?per_page=1')])
+      .then(function(res){
+        var repo=res[0],runs=res[1];
+        var badges='';
+        if(repo&&repo.language)badges+='<span class="db">'+esc(repo.language)+'</span>';
+        var ciOk=runs&&runs.workflow_runs&&runs.workflow_runs[0]&&runs.workflow_runs[0].conclusion==='success';
+        if(ciOk)badges+='<span class="dt" data-i18n="rl.ci">'+T[lang]['rl.ci']+'</span>';
+        row.querySelector('.rl-badges').innerHTML=badges||'<span class="dn">…</span>';
+      });
+  });
+}
+function rlLoadLicensing(){
+  var body=document.getElementById('rl-p1-body');body.innerHTML='';
+  RL_LICENSE.forEach(function(name){
+    var row=document.createElement('div');row.className='rl-row';
+    row.innerHTML='<span class="rl-name" title="'+esc(name)+'">'+esc(name)+'</span><span class="rl-badges"><span class="spin"></span></span>';
+    body.appendChild(row);
+    rlFetch('/repos/9t29zhmwdh-coder/'+name+'/contents/LICENSE.COMMERCIAL').then(function(res){
+      var dual=!!res;
+      var badge=dual?'<span class="dp" data-i18n="rl.dual">'+T[lang]['rl.dual']+'</span>':'<span class="dn">MIT</span>';
+      row.querySelector('.rl-badges').innerHTML=badge;
+    });
+  });
+}
+rlLoadOverview();
+rlLoadLicensing();
 
 /* ══ CARD HOVER → TOPOLOGY HIGHLIGHT ══ */
 var topoSvg=document.getElementById('topo-svg');

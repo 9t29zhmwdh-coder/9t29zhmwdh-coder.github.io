@@ -11,6 +11,7 @@ Personal portfolio and tooling showcase by Rafael Yilmaz. Built as a GitHub Page
 
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-brightgreen?logo=github)
 ![Platform](https://img.shields.io/badge/Platform-Web-lightgrey?logo=googlechrome)
+[![Visits](https://hits.sh/raystudio.ch.svg?view=today-total&style=flat-square&label=visits&color=blueviolet)](https://hits.sh/raystudio.ch/)
 
 ![RayStudio website](docs/screenshot.png)
 

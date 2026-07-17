@@ -794,7 +794,10 @@ footer a:hover{color:var(--teal)}
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <div class="fstatus" data-i18n="ft.s">Systeme laufen</div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div class="fstatus" data-i18n="ft.s">Systeme laufen</div>
+    <img id="visits-badge" alt="" height="20" style="vertical-align:middle">
+  </div>
   <div>RayStudio · ICT &amp; Developer</div>
   <div><a href="https://github.com/9t29zhmwdh-coder" target="_blank" rel="noopener">GitHub</a> &nbsp;·&nbsp; <a href="https://github.com/9t29zhmwdh-coder/9t29zhmwdh-coder.github.io/blob/main/PRIVACY.md" target="_blank" rel="noopener" data-i18n="ft.pv">Datenschutz</a> &nbsp;·&nbsp; © <span id="ry-yr">2026</span></div>
 </footer>
@@ -820,6 +823,11 @@ function applyLang(l){
     'm-inp':l==='de'?'benutzer@domain.ch':'user@domain.ch'
   };
   Object.keys(ph).forEach(function(id){var e=document.getElementById(id);if(e)e.placeholder=ph[id];});
+  var visitsBadge=document.getElementById('visits-badge');
+  if(visitsBadge && visitsBadge.getAttribute('data-lang')!==l){
+    visitsBadge.src='https://hits.sh/www.raystudio.ch.svg?style=flat-square&label='+(l==='de'?'besucher':'visitors')+'&color=3F8E7E&labelColor=1a1a1a';
+    visitsBadge.setAttribute('data-lang',l);
+  }
 }
 applyLang(lang);
 document.getElementById('lang-toggle').addEventListener('click',function(){applyLang(lang==='de'?'en':'de');});

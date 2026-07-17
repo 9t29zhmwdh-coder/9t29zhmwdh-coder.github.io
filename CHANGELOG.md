@@ -7,7 +7,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [0.1.4] - 2026-07-17
 ### Added
-- Visits badge (hits.sh, today/total) next to the existing badges in README.md. No login/account needed; counts increment on page requests, resetting the "today" half at GMT midnight.
+- Count badge (hits.sh, single cumulative number) next to the existing badges in README.md. No login/account needed.
+- Live visitor counter in the site footer, next to "Systeme laufen" / "systems operational", both languages. Same hits.sh counter (`www.raystudio.ch` key), rendered as an image (fetch() isn't usable here since hits.sh doesn't send CORS headers).
 
 ## [0.1.3] - 2026-07-12
 ### Added

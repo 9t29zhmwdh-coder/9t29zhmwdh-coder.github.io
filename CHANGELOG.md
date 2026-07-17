@@ -5,6 +5,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-07-17
+### Added
+- Visits badge (hits.sh, today/total) next to the existing badges in README.md. No login/account needed; counts increment on page requests, resetting the "today" half at GMT midnight.
+
 ## [0.1.3] - 2026-07-12
 ### Added
 - Third pill in the "more tools" footer, linking to entra-access-graph-engine's live CodeQL code-scanning page, alongside the existing "all projects" and "engineering standards" links.

@@ -32,7 +32,7 @@ All open-source tools built by RayStudio:
 | [LifeSort](https://github.com/9t29zhmwdh-coder/LifeSort) | AI-powered file organizer: auto-sort, dedupe, cleanup |
 | [BugRadar](https://github.com/9t29zhmwdh-coder/BugRadar) | Real-time log analysis and incident detection |
 | [LogLens](https://github.com/9t29zhmwdh-coder/LogLens) | AI-powered log search and root-cause analysis |
-| [MailPilot](https://github.com/9t29zhmwdh-coder/MailPilot) | Local AI email organizer: offline categorization, IMAP sync |
+| [MailLoom](https://github.com/9t29zhmwdh-coder/MailLoom) | Local AI email organizer: offline categorization, IMAP sync |
 | [ClarityDesk](https://github.com/9t29zhmwdh-coder/ClarityDesk) | Universal display interpreter with OCR and local AI |
 
 ### Windows (.NET / WPF)
@@ -49,7 +49,7 @@ All open-source tools built by RayStudio:
 |---|---|
 | [CodeWhisper](https://github.com/9t29zhmwdh-coder/CodeWhisper) | macOS AI code assistant with NSServices integration for Xcode |
 | [SiliconMark](https://github.com/9t29zhmwdh-coder/SiliconMark) | Apple Silicon LLM benchmark suite |
-| [SwiftAgent](https://github.com/9t29zhmwdh-coder/SwiftAgent) | Swift agent framework for local LLMs |
+| [EmissaryKit](https://github.com/9t29zhmwdh-coder/EmissaryKit) | Swift agent framework for local LLMs |
 | [private-model-orchestrator](https://github.com/9t29zhmwdh-coder/private-model-orchestrator) | On-device AI model management across Apple device fleets |
 
 ### Microsoft 365 / Azure / Entra ID Security
@@ -67,7 +67,7 @@ All open-source tools built by RayStudio:
 
 | Tool | Description |
 |---|---|
-| [NetScanX](https://github.com/9t29zhmwdh-coder/NetScanX) | Cross-platform network discovery and diagnostic toolkit |
+| [NetFathom](https://github.com/9t29zhmwdh-coder/NetFathom) | Cross-platform network discovery and diagnostic toolkit |
 | [eventhub-otlp-mapper](https://github.com/9t29zhmwdh-coder/eventhub-otlp-mapper) | Maps Azure EventHub messages to OpenTelemetry Traces and Metrics |
 
 ### Web / Self-Hosted

@@ -5,9 +5,15 @@
 
 [🇬🇧 English Version](README.md)
 
-**RayStudio: Portfolio & Developer Tools · raystudio.ch**
+**Der Quellcode von [raystudio.ch](https://raystudio.ch), wo die Tools aus diesem Account vorgestellt werden.**
 
-Persönliches Portfolio und Tool-Showcase von Rafael Yilmaz. Als GitHub Pages bereitgestellt.
+Die Seite selbst ist die Sache; dieses Repository ist das, woraus sie gebaut
+wird. Eine statische GitHub-Pages-Seite, deutsch und englisch, ausgeliefert
+durch einen Push auf den Standardbranch.
+
+**Nichts für dich, wenn** du wegen der Tools hier bist. Die liegen in den
+übrigen Repositories dieses Accounts, oder auf der Seite selbst, die sich
+leichter liest als eine Repository-Liste.
 
 ![RayStudio Website](docs/screenshot.png)
 

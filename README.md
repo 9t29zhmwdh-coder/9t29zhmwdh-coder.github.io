@@ -5,9 +5,15 @@
 
 [🇩🇪 Deutsche Version](README.de.md)
 
-**RayStudio: Portfolio & Developer Tools · raystudio.ch**
+**The source of [raystudio.ch](https://raystudio.ch), where the tools in this account are presented.**
 
-Personal portfolio and tooling showcase by Rafael Yilmaz. Built as a GitHub Pages site.
+The site itself is the point; this repository is what it is built from. A
+static GitHub Pages site, German and English, deployed by pushing to the
+default branch.
+
+**Not for you if** you came looking for the tools. They live in the other
+repositories in this account, or on the site itself, which is easier to read
+than a repository listing.
 
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-brightgreen?logo=github)
 ![Platform](https://img.shields.io/badge/Platform-Web-lightgrey?logo=googlechrome)

@@ -5,6 +5,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-07-31
+
+### Changed
+
+- Both READMEs now say plainly that this repository is the source of raystudio.ch and that the site, not the repository, is the thing worth looking at. Anyone here for the tools is pointed at the other repositories or at the site, which reads better than a repository listing.
+
+---
+
 ## [0.1.5] - 2026-07-30
 
 ### Changed

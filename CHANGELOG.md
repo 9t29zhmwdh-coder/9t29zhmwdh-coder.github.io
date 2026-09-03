@@ -5,6 +5,25 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-03
+
+### Added
+
+- Two new sections between the ICT services and the stack: `02 / Netzwerk & Internetsicherheit` and `03 / Smart Home mit Home Assistant`. The first explains DNS filtering with AdGuard Home or Pi-hole, the gateway rules that keep a device from slipping past that filter, and separate networks for guests and smart devices. The second explains what Home Assistant actually does for a household, with HomeKit as a side note rather than the headline. Both carry a recreated example dashboard, labelled as such: no live data and no real device names, because a genuine screenshot of either would put internal addresses and device names into a public repository.
+- An "Im Klartext" box in every section that says in everyday language what the section means for the reader. The technical keyword lists stay untouched underneath, so the page reads for someone who knows nothing and for someone who knows the products.
+
+### Changed
+
+- The prose across all sections is roughly half as long and no longer leans on jargon. Entra ID, VLAN, access point, MFA and IoT no longer appear in running text, only in the keyword lists where they belong. The page addresses the reader informally throughout, as it already did.
+- Section numbering and the light/dark alternation were renumbered for the two additions: stack is now 04, developer tools 05, process 06, contact 07.
+
+### Fixed
+
+- The sticky header no longer flickers while scrolling. `body{overflow-x:hidden}` had turned the body into a scroll container, which detached the sticky header from the viewport; combined with the `backdrop-filter` blur and the fixed noise overlay behind it, the browser recomposited the bar on every scroll frame. The page now uses `overflow-x:clip`, the header and the overlay each get their own compositing layer, and the missing `-webkit-backdrop-filter` was added for Safari.
+- Clicking a navigation link no longer hides the start of a section behind the header, via `scroll-padding-top` and `scroll-margin-top`.
+
+---
+
 ## [0.1.6] - 2026-07-31
 
 ### Changed

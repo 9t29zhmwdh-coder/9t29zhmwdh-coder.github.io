@@ -18,6 +18,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- Content no longer flashes empty when jumping across the page. Every `.fade` element sat at `opacity:0` until an IntersectionObserver fired, and the reveal then took 0.65s plus up to 0.21s of stagger. After an End key press, an anchor click or a fast swipe, the destination therefore built up over roughly a second while the visitor looked at empty colour fields. The rule is now unambiguous: anything still below the viewport fades in as before, anything already on screen and not yet revealed is set without a transition. Because the switch happens synchronously inside the scroll event and forces a layout pass before the transition is restored, the change is committed in the same frame the browser is about to paint. Setting the class alone was not enough; no style recalculation happened before the class was removed again, so the browser animated anyway.
+
 - The sticky header no longer flickers. `contain:paint` and `backdrop-filter` sat on the same element, and `contain:paint` establishes a new backdrop root, which is precisely the surface the blur is supposed to sample. On top of that the page alternates seven times between dark and light sections, so the translucent bar changed colour at every boundary. The header is now opaque and drops the blur along with the GPU hints that were meant to work around the flicker; its bottom edge fades in after the first scroll instead.
 
 ## [0.2.0] - 2026-09-03

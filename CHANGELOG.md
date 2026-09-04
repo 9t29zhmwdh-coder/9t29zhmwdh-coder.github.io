@@ -5,6 +5,23 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-04
+
+### Added
+
+- A menu button on screens narrower than 960px. Below that width the navigation bar was hidden with `display:none` and nothing took its place, so all seven sections were unreachable on a phone except by scrolling the full page. The button opens a panel with the same targets as the desktop bar plus the enquiry call to action, carries `aria-expanded` and `aria-controls`, closes on Escape, on a tap on any entry, and when the window grows back past 960px.
+
+### Changed
+
+- The topology diagram is labelled in plain words instead of trade abbreviations: ISP became Internet, AP became WLAN, NAS became Speicher, and the centre node reads Router rather than Cloud Gateway. Terms that are common currency in German stay as they are: Switch, Router and Smart Home. Each node also carries the same icon its tooltip already used, and the labels sit outside the circles so whole words fit. The labels went into the translation table, so the language switch now takes them along; they were hard-coded in the SVG before and stayed German in the English version.
+- `applyLang` writes to `textContent` for SVG elements. `innerHTML` on SVG nodes is not available in every browser this site targets, and the diagram labels are the first translated elements inside an SVG.
+
+### Fixed
+
+- Content no longer flashes empty when jumping across the page. Every `.fade` element sat at `opacity:0` until an IntersectionObserver fired, and the reveal then took 0.65s plus up to 0.21s of stagger. After an End key press, an anchor click or a fast swipe, the destination therefore built up over roughly a second while the visitor looked at empty colour fields. The rule is now unambiguous: anything still below the viewport fades in as before, anything already on screen and not yet revealed is set without a transition. Because the switch happens synchronously inside the scroll event and forces a layout pass before the transition is restored, the change is committed in the same frame the browser is about to paint. Setting the class alone was not enough; no style recalculation happened before the class was removed again, so the browser animated anyway.
+
+- The sticky header no longer flickers. `contain:paint` and `backdrop-filter` sat on the same element, and `contain:paint` establishes a new backdrop root, which is precisely the surface the blur is supposed to sample. On top of that the page alternates seven times between dark and light sections, so the translucent bar changed colour at every boundary. The header is now opaque and drops the blur along with the GPU hints that were meant to work around the flicker; its bottom edge fades in after the first scroll instead.
+
 ## [0.2.0] - 2026-09-03
 
 ### Added

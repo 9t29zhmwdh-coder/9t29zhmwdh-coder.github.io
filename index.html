@@ -46,12 +46,15 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opa
 [data-stagger] .fade:nth-child(4){transition-delay:.21s}
 
 /* ══ NAV ══ */
-nav{position:sticky;top:0;z-index:50;background:rgba(11,21,33,.9);
-  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--ld);
-  /* eigene GPU-Ebene, sonst flackert der Blur beim Scrollen ueber den animierten Sektionen */
-  transform:translateZ(0);will-change:transform;backface-visibility:hidden;contain:paint}
-@media(prefers-reduced-transparency:reduce){nav{-webkit-backdrop-filter:none;backdrop-filter:none;background:#0b1521}}
+/* Deckend statt durchscheinend. Die Seite wechselt siebenmal zwischen dunklem und hellem
+   Grund; ein backdrop-filter faerbt die Kopfzeile bei jedem Wechsel mit um und muss dabei
+   pro Frame neu abtasten, was zusammen mit contain:paint (eigene Zeichenwurzel) das
+   Flackern erzeugt hat. Ohne Blur entfaellt beides. */
+nav{position:sticky;top:0;z-index:50;background:var(--bg-dark);
+  border-bottom:1px solid transparent;
+  transition:border-color .25s ease,box-shadow .25s ease}
+nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,0,.8)}
+@media(prefers-reduced-motion:reduce){nav{transition:none}}
 .nav-i{display:flex;align-items:center;justify-content:space-between;padding:13px var(--mx)}
 .nav-logo{display:flex;align-items:center;gap:9px;font-family:var(--fd);font-weight:600;font-size:.95rem;color:#efe9dd}
 .nav-logo img{width:28px;height:28px;border-radius:6px}
@@ -63,6 +66,41 @@ nav{position:sticky;top:0;z-index:50;background:rgba(11,21,33,.9);
 .lang-btn:hover{border-color:var(--teal);color:var(--teal)}
 .nav-cta{font-family:var(--fd);font-size:.84rem;font-weight:500;padding:7px 15px;background:var(--teal);color:#fff;border-radius:8px;transition:background .2s,transform .15s}
 .nav-cta:hover{background:var(--teal-d);transform:translateY(-1px)}
+
+/* Mobiles Menue: ab 960px ersetzt der Knopf die Linkleiste, der CTA rutscht ins Panel */
+.nav-burger{display:none;width:36px;height:34px;padding:0;cursor:pointer;
+  border:1px solid var(--lsd);border-radius:7px;background:transparent;color:#efe9dd;
+  flex-direction:column;align-items:center;justify-content:center;transition:border-color .2s}
+.nav-burger:hover{border-color:var(--teal)}
+.nav-burger:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.nav-burger span{display:block;width:16px;height:1.6px;background:currentColor;border-radius:2px;
+  transition:transform .26s ease,opacity .18s ease}
+.nav-burger span+span{margin-top:4px}
+.nav-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(5.6px) rotate(45deg)}
+.nav-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-5.6px) rotate(-45deg)}
+.nav-sheet{display:none;position:absolute;left:0;right:0;top:100%;
+  background:var(--bg-dark);border-bottom:1px solid var(--ld);
+  flex-direction:column;padding:6px 0 14px;
+  transform:translateY(-8px);opacity:0;visibility:hidden;
+  transition:transform .26s ease,opacity .2s ease,visibility .26s;
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.9)}
+.nav-sheet[data-open="true"]{transform:none;opacity:1;visibility:visible}
+.nav-sheet a{padding:12px var(--mx);font-size:.92rem;color:rgba(239,233,221,.72);
+  border-bottom:1px solid rgba(239,233,221,.05);transition:color .2s,background .2s}
+.nav-sheet a:hover,.nav-sheet a:focus-visible{color:#efe9dd;background:rgba(239,233,221,.04);outline:none}
+.nav-sheet .sheet-cta{margin:12px var(--mx) 0;padding:11px;text-align:center;
+  background:var(--teal);color:#fff;border-radius:8px;border-bottom:none;
+  font-family:var(--fd);font-size:.9rem;font-weight:500}
+.nav-sheet .sheet-cta:hover{background:var(--teal-d);color:#fff}
+@media(max-width:960px){
+  .nav-burger{display:flex}
+  .nav-sheet{display:flex}
+  .nav-i .nav-cta{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .nav-burger span,.nav-sheet{transition:none}
+}
 
 /* ══ HERO ══ */
 .hero{background:var(--bg-dark);padding:68px 0 76px;overflow:hidden;position:relative}
@@ -111,6 +149,11 @@ nav{position:sticky;top:0;z-index:50;background:rgba(11,21,33,.9);
 .t-node-gw{fill:color-mix(in srgb,#3F8E7E 16%,#F8F5EF);stroke:#3F8E7E;stroke-width:2}
 .t-lbl{font-family:"JetBrains Mono","Courier New",monospace;font-size:10px;fill:#7A7E85;text-transform:uppercase;letter-spacing:.07em;text-anchor:middle;pointer-events:none}
 .t-lbl-gw{font-family:"JetBrains Mono","Courier New",monospace;font-size:9.5px;fill:#3F8E7E;font-weight:500;text-anchor:middle;pointer-events:none}
+/* Beschriftung sitzt ausserhalb des Knotens, damit ganze Woerter Platz haben */
+.t-lbl-out{font-size:10.5px;fill:var(--ink-2);dominant-baseline:auto}
+.t-lbl-gw.t-lbl-out{font-size:11px;fill:#3F8E7E}
+.t-ico{fill:none;stroke:#1C1F24;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;transition:opacity .25s}
+.t-ico-gw{stroke:#2d6b5e}
 /* green dots */
 .g-dot{fill:#3F8E7E;opacity:.9} .g-dot2{fill:#3F8E7E;opacity:.45}
 /* red dots (card-hover activated) */
@@ -338,6 +381,7 @@ footer a:hover{color:var(--teal)}
 .t-node.n-hot{stroke:var(--teal);stroke-width:2.8;filter:drop-shadow(0 0 8px rgba(63,142,126,.8))}
 .t-link.l-hot{stroke:var(--teal);stroke-width:2.4;opacity:1;animation-duration:1.4s;filter:drop-shadow(0 0 3px rgba(63,142,126,.7))}
 .topo-svg.node-active .t-node:not(.n-hot):not(.t-node-gw){opacity:.5}
+.topo-svg.node-active .t-ico:not(.t-ico-gw){opacity:.5}
 .topo-svg.node-active .t-lbl{opacity:.7}
 
 /* tooltip pop-in */
@@ -526,7 +570,20 @@ footer a:hover{color:var(--teal)}
     <div class="nr">
       <button class="lang-btn" id="lang-toggle">EN</button>
       <a href="#contact" class="nav-cta" data-i18n="nav.cta">Anfragen</a>
+      <button class="nav-burger" id="nav-burger" aria-expanded="false" aria-controls="nav-sheet" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+  </div>
+  <div class="nav-sheet" id="nav-sheet" data-open="false">
+    <a href="#ict"       data-i18n="nav.ict">ICT</a>
+    <a href="#security"  data-i18n="nav.sec">Sicherheit</a>
+    <a href="#smarthome" data-i18n="nav.ha">Smart Home</a>
+    <a href="#stack"     data-i18n="nav.st">Stack</a>
+    <a href="#dev"       data-i18n="nav.dev">Developer</a>
+    <a href="#ablauf"    data-i18n="nav.pr">Ablauf</a>
+    <a href="#contact"   data-i18n="nav.contact">Kontakt</a>
+    <a href="#contact" class="sheet-cta" data-i18n="nav.cta">Anfragen</a>
   </div>
 </nav>
 
@@ -593,24 +650,48 @@ footer a:hover{color:var(--teal)}
           <g class="rg-ha"><circle class="r-dot" filter="url(#glr)" fill="#ef4444" r="5"><animateMotion dur="2.1s" repeatCount="indefinite" begin="-0.8s"><mpath href="#p-ha"/></animateMotion></circle><circle class="r-dot2" fill="#ef4444" r="3"><animateMotion dur="2.1s" repeatCount="indefinite" begin="-1.7s"><mpath href="#p-ha"/></animateMotion></circle></g>
 
           <!-- NODES -->
+          <!-- Beschriftung in Klartext statt Fachkuerzel; eingebuergerte englische
+               Begriffe (Switch, Router, Smart Home) bleiben stehen. -->
           <circle id="n-gw"  cx="240" cy="200" r="36" class="t-node-gw"/>
-          <text x="240" y="196" class="t-lbl-gw">CLOUD</text>
-          <text x="240" y="207" class="t-lbl-gw">GATEWAY</text>
+          <g class="t-ico t-ico-gw" transform="translate(229,189) scale(.917)">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </g>
+          <text x="240" y="253" class="t-lbl t-lbl-gw t-lbl-out" data-i18n="topo.gw">ROUTER</text>
 
-          <circle id="n-isp" cx="240" cy="62"  r="22" class="t-node"/>
-          <text x="240" y="66"  class="t-lbl" dominant-baseline="central">ISP</text>
+          <circle id="n-isp" cx="240" cy="62"  r="24" class="t-node"/>
+          <g class="t-ico" transform="translate(231.5,53.5) scale(.708)">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10A15.3 15.3 0 0 1 12 2z"/>
+          </g>
+          <text x="240" y="27" class="t-lbl t-lbl-out" data-i18n="topo.isp">INTERNET</text>
 
-          <circle id="n-sw"  cx="72"  cy="122" r="27" class="t-node"/>
-          <text x="72"   y="126" class="t-lbl" style="font-size:8px;letter-spacing:.04em" dominant-baseline="central">SWITCH</text>
+          <circle id="n-sw"  cx="72"  cy="122" r="24" class="t-node"/>
+          <g class="t-ico" transform="translate(63.5,113.5) scale(.708)">
+            <rect x="2" y="4" width="20" height="6" rx="2"/><rect x="2" y="14" width="20" height="6" rx="2"/>
+            <line x1="6" y1="7" x2="6.01" y2="7"/><line x1="6" y1="17" x2="6.01" y2="17"/>
+          </g>
+          <text x="72" y="161" class="t-lbl t-lbl-out" data-i18n="topo.sw">SWITCH</text>
 
-          <circle id="n-ap"  cx="415" cy="102" r="22" class="t-node"/>
-          <text x="415"  y="106" class="t-lbl" dominant-baseline="central">AP</text>
+          <circle id="n-ap"  cx="415" cy="102" r="24" class="t-node"/>
+          <g class="t-ico" transform="translate(406.5,93.5) scale(.708)">
+            <path d="M5 13a10 10 0 0 1 14 0"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/>
+            <path d="M2 8.8a15 15 0 0 1 20 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>
+          </g>
+          <text x="415" y="141" class="t-lbl t-lbl-out" data-i18n="topo.ap">WLAN</text>
 
-          <circle id="n-nas" cx="78"  cy="322" r="22" class="t-node"/>
-          <text x="78"   y="326" class="t-lbl" dominant-baseline="central">NAS</text>
+          <circle id="n-nas" cx="78"  cy="322" r="24" class="t-node"/>
+          <g class="t-ico" transform="translate(69.5,313.5) scale(.708)">
+            <line x1="22" y1="12" x2="2" y2="12"/>
+            <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+            <line x1="6" y1="16" x2="6.01" y2="16"/><line x1="10" y1="16" x2="10.01" y2="16"/>
+          </g>
+          <text x="78" y="361" class="t-lbl t-lbl-out" data-i18n="topo.nas">SPEICHER</text>
 
-          <circle id="n-ha"  cx="408" cy="318" r="22" class="t-node"/>
-          <text x="408"  y="322" class="t-lbl" dominant-baseline="central">HA</text>
+          <circle id="n-ha"  cx="408" cy="318" r="24" class="t-node"/>
+          <g class="t-ico" transform="translate(399.5,309.5) scale(.708)">
+            <path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/>
+          </g>
+          <text x="408" y="357" class="t-lbl t-lbl-out" data-i18n="topo.ha">SMART HOME</text>
 
           <!-- HOVER ZONES (transparent, larger) -->
           <circle class="nzone" data-node="gw"  cx="240" cy="200" r="42"/>
@@ -1095,7 +1176,7 @@ footer a:hover{color:var(--teal)}
 
 <script>
 /* ══ i18n ══ */
-var T={de:{"nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Ablauf","nav.contact":"Kontakt","nav.cta":"Anfragen","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Sauber gebaut.","h1b":"Einfach genutzt.","hero.lead":"Netzwerk, Smart Home, Speicher, Microsoft 365. Sauber eingerichtet, gut abgesichert, verständlich erklärt.","hero.c1":"ICT-Leistungen","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"mit Zweck gebaut","hm2b":"Schweizer","hm2":"Qualität","ict.lbl":"01 / ICT-Leistungen","ict.h2":"Drei Disziplinen.\nEin Ansprechpartner.","ict.sub":"Von der Dose in der Wand bis in die letzte Ecke im Garten.","c1.tag":"Netzwerk · WLAN","c1.h":"Internet & Netzwerk","c1.p":"Stabiles Netz vom Keller bis in den Garten. Gäste und smarte Geräte bekommen ihr eigenes.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Flächendeckendes WiFi 6/7","c1.l3":"Gast & IoT VLANs","c1.l4":"WireGuard VPN Fernzugang","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Licht, Heizung, Storen. Eine App statt fünf, ohne Abo.","c2.l1":"Licht, Heizung, Storen zentral","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Läuft lokal, nicht in der Cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Speicher & Cloud","c3.p":"Fotos und Dokumente zu Hause gespeichert, automatisch gesichert.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Automatische Foto & Dokument-Sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-Party-Backup","pl.label":"Geräte-Support inklusive","pl.win":"Einrichten, absichern, M365 & Entra ID","pl.mac":"Migrieren, einbinden, betreuen","pl.lin":"Server, Docker & Automationen","nav.sec": "Sicherheit", "nav.ha": "Smart Home", "pl.k": "Im Klartext", "ict.plain": "Gäste ins WLAN, ohne dein Passwort zu verraten. Sehen, was deine Geräte ins Internet senden. Ruhigeres Internet für die Kinder. Ich richte das ein, mit UniFi.", "st.plain": "Ich empfehle nichts, was ich nicht selber täglich benutze.", "dv.plain": "Die zwei Fenster unten sind keine Bilder. Sie laufen wirklich, in deinem Browser.", "pr.plain": "Du schreibst, was dich stört. Du bekommst eine ehrliche Einschätzung, gratis. Erst danach reden wir über Geld.", "sf.lbl": "02 / Netzwerk & Internetsicherheit", "sf.h2": "Sauberes Internet. Auf jedem Gerät im Haus.", "sf.sub": "Werbung und Betrugsseiten kommen gar nicht erst herein. Auf jedem Gerät, ohne App.", "sf.plain": "Ein kleines Gerät bei dir zu Hause prüft jede Anfrage ins Internet. Werbung und Betrug lässt es gar nicht erst durch.", "sf1.tag": "AdGuard Home · Pi-hole", "sf1.h": "Der Filter steht bei dir", "sf1.p": "Ein Raspberry Pi oder dein NAS übernimmt das fürs ganze Haus. Am liebsten mit AdGuard Home.", "sf1.l1": "Steht bei dir, nicht bei einer Firma", "sf1.l2": "Gepflegte Sperrlisten", "sf1.l3": "Ausnahmen für den Alltag", "sf1.l4": "Verschlüsselt nach draussen", "sf2.tag": "UniFi Gateway · VLAN", "sf2.h": "Die Regel gilt an der Haustür", "sf2.p": "Der Router ist die Tür ins Internet. Was dort gilt, gilt für jedes Gerät im Haus.", "sf2.l1": "Angriffserkennung aktiv", "sf2.l2": "Eigene Regeln für Kinder und Gäste", "sf2.l3": "Kein Gerät kommt am Filter vorbei", "sf2.l4": "Getrennte Netze", "sf3.tag": "Übersicht · Fernzugriff", "sf3.h": "Du siehst, was los ist", "sf3.p": "Auf einen Blick sichtbar, welches Gerät wohin funkt.", "sf3.l1": "Kameras ohne Abo-Zwang", "sf3.l2": "Aufnahmen bleiben zu Hause", "sf3.l3": "Sicherer Zugriff von unterwegs", "sf3.l4": "Updates bleiben gepflegt", "sf.dtitle": "DNS-Filter · Beispielansicht", "sf.dblocked": "geblockt", "sf.k1": "Anfragen pro Tag", "sf.k2": "Davon gestoppt", "sf.k3": "Geräte im Netz", "sf.b1": "Werbenetzwerke", "sf.b2": "Nutzungsdaten der Geräte", "sf.b3": "Verfolgung im Web", "sf.b4": "Betrug & Schadseiten", "sf.b5": "Nicht jugendfrei", "sf.dnote": "Beispielansicht mit typischen Werten. Keine Live-Daten.", "sf.hb": "Ehrlich", "sf.honest": "Das ist kein Virenschutz. Es nimmt weg, was im Alltag nervt: Werbung, Datensammler, bekannte Betrugsseiten. Der Router vom Anbieter lässt all das durch.", "hs.lbl": "03 / Smart Home mit Home Assistant", "hs.h2": "Ein Zuhause, das mitdenkt.<br>Alles bleibt bei dir.", "hs.sub": "Eine App statt fünf. Licht, Heizung, Storen, Kameras. Alles bei dir zu Hause, ohne Abo.", "hs.plain": "Jedes smarte Gerät bringt seine eigene App mit. Home Assistant legt eine Oberfläche darüber. Gehen alle aus dem Haus, geht die Heizung runter.", "hs1.h": "Alles an einem Ort", "hs1.p": "Lampen, Storen, Heizung, Steckdosen, Kameras. Auch wenn jedes Gerät von einer anderen Firma stammt.", "hs2.h": "Es passiert im richtigen Moment", "hs2.p": "Nicht stur um sechs Uhr, sondern wenn wirklich jemand da ist.", "hs3.h": "Eine Nachricht, ein Tipp, erledigt", "hs3.p": "Die Meldung kommt aufs iPhone, mit Knöpfen darauf. Die App musst du nie öffnen.", "hs4.h": "Eine Ansicht für alle", "hs4.p": "Eine einfache Seite für die Familie, eine ausführliche für dich.", "hs5.h": "Läuft auch morgen noch", "hs5.p": "Nach einem Stromausfall startet alles von selbst wieder. Sicherungen laufen automatisch.", "hs.dtitle": "Home Assistant · Beispielansicht", "hs.t1": "Wohnzimmer", "hs.t1v": "An · 40%", "hs.t2": "Heizung Bad", "hs.t3": "Storen Süd", "hs.t3v": "Zu", "hs.t4": "Kamera Eingang", "hs.t4v": "Ruhig", "hs.ah": "Automation · Beispiel", "hs.s1k": "Wenn", "hs.s1": "alle aus dem Haus sind", "hs.s2k": "Und", "hs.s2": "das zehn Minuten so bleibt", "hs.s3k": "Dann", "hs.s3": "Licht aus, Heizung auf Sparbetrieb, Kameras scharf", "hs.pw": "jetzt", "hs.pb": "Terrassentür seit 20 Minuten offen, draussen sind es 7 °C.", "hs.pa1": "Erinnere mich in 10 Min.", "hs.pa2": "Passt so", "hs.dnote": "Beispielansicht. Keine echten Geräte.", "hs.kh": "Du bist Apple gewohnt?", "hs.kp": "Deine Geräte tauchen in der Apple Home App auf, auch die, die das von sich aus nicht können. Siri schaltet weiterhin.","st.lbl":"04 / Stack","st.h2":"Womit ich täglich arbeite.","st.c1":"Netzwerk","st.c2":"Automation","st.c3":"Developer","dv.lbl":"05 / RayStudio Developer Tools","dv.h2":"Eigene Tools. Konkrete Probleme gelöst.","dv.sub":"Kleine, eigenständige Apps. Jede löst ein konkretes Problem, das mir selbst begegnet ist.","dv.desc":"Netzwerk- & Mail-Toolkit für Windows. DNS-Abfragen, Mail-Server-Erkennung via DNS, Verbindungstest und vollständige Systeminfo.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"Mein System","dv.gh":"Auf GitHub ansehen","nd.ti":"NetDashboard · Live Preview","nd.t1":"Mein System","nd.t2":"DNS-Check","nd.t3":"Mail-Check","nd.q":"Abfragen","nd.ck":"Prüfen","nd.de":"Domain eingeben und Abfragen klicken.","nd.me":"E-Mail-Adresse oder Domain eingeben.","mt.h":"Weitere Tools aus dem Studio","mt1.p":"Lokaler KI-Mail-Organizer: IMAP-Sync, automatische Kategorisierung, Review-Workflow.","mt2.p":"Offline KI-Lebensplaner: Termine, Aufgaben und Fristen, lokal und privat.","mt3.p":"Speicher-Audit & Cleanup für NAS, SharePoint, OneDrive for Business und DFS.","mt4.p":"KI-gestützte Log-Suche und Root-Cause-Analyse, lokal und ohne Cloud.","mt.all":"Alle Projekte auf GitHub","mt.std":"Alle Repos folgen öffentlichen Engineering-Standards","mt.sec":"CodeQL & Dependabot aktiv auf allen Repos","sy.ip":"Öffentliche IP","sy.os":"Betriebssystem","sy.br":"Browser","sy.sc":"Bildschirm","sy.tz":"Zeitzone","sy.la":"Sprache","sy.cp":"CPU-Kerne","sy.cn":"Verbindung","sy.dv":"Geräteart","sy.note":"Alles lokal aus deinem Browser gelesen. Nichts wird gesendet oder gespeichert.","rl.nobk":"Kein Backend","dv.desc2":"NetDashboard: Netzwerk- &amp; Mail-Toolkit für Windows. RepoLedger: kostenloses GitHub-Portfolio-Dashboard für alle, CI-Status, offene PRs und Lizenzierung auf einen Blick, komplett im Browser, ohne eigenen Server.","rl.f1":"CI &amp; Security","rl.f2":"Lizenzierung","rl.ghnd":"NetDashboard auf GitHub","rl.ghrl":"RepoLedger auf GitHub","rl.tab1":"Übersicht","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Qualitätscheck","rl.lic":"Lizenz","rl.note1":"Live aus der öffentlichen GitHub-API, direkt im Browser des Besuchers.","rl.note2":"Erkennt MIT + Commercial-Zusatz pro Repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"06 / Ablauf","pr.h2":"Kein Verkaufsgespräch. Kein Aufwand.","p1h":"Anfrage","p1p":"Beschreib dein Anliegen ausführlich: Was hast du, was willst du erreichen, was funktioniert nicht. Je mehr Details, desto besser.","p2h":"Prüfung","p2p":"Ich analysiere deine Situation. Sind alle Infos da, bekommst du direkt eine kostenlose Einschätzung. Fehlt etwas, melde ich mich kurz.","p3h":"Empfehlung","p3p":"Du bekommst eine klare, unverbindliche Empfehlung: Welches Setup passt, was sinnvoll ist. Komplett kostenlos, ohne Verpflichtung.","p4h":"Offerte","p4p":"Optional: Wenn du willst, erstelle ich ein konkretes Angebot über <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"07 / Kontakt","co.h2":"Kontaktaufnahme. Kein Aufwand.","co.p":"Beschreib kurz, was du vorhast: Netzwerk, Smart Home, NAS oder eine Frage zu meinen Tools.","co.msg":"Nachricht via GitHub","co.gh":"GitHub Profil","ft.s":"Systeme laufen","ft.pv":"Datenschutz"},en:{"nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Process","nav.contact":"Contact","nav.cta":"Enquire","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Built clean.","h1b":"Simply works.","hero.lead":"Network, smart home, storage, Microsoft 365. Set up properly, well secured, explained in plain words.","hero.c1":"ICT Services","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"built with purpose","hm2b":"Swiss","hm2":"quality","ict.lbl":"01 / ICT Services","ict.h2":"Three disciplines.\nOne contact.","ict.sub":"From the socket in the wall to the far corner of the garden.","c1.tag":"Network · WLAN","c1.h":"Internet & Network","c1.p":"Stable network from basement to garden. Guests and smart devices get their own.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Full WiFi 6/7 coverage","c1.l3":"Guest & IoT VLANs","c1.l4":"WireGuard VPN remote access","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Lights, heating, blinds. One app instead of five, no subscription.","c2.l1":"Lights, heating, blinds centralised","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Runs at home, not in the cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Storage & Cloud","c3.p":"Photos and documents stored at home, backed up automatically.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Auto photo & document sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-party backup","pl.label":"Device support included","pl.win":"Set up, secure, M365 & Entra ID","pl.mac":"Migrate, integrate, support","pl.lin":"Servers, Docker & automations","nav.sec": "Security", "nav.ha": "Smart Home", "pl.k": "In plain words", "ict.plain": "Guests on the WiFi without handing out your password. See what your devices send to the internet. A quieter internet for the kids. I set that up, using UniFi.", "st.plain": "I do not recommend anything I do not use myself every day.", "dv.plain": "The two windows below are not pictures. They really run, in your browser.", "pr.plain": "You tell me what bothers you. You get an honest assessment, free. Only then do we talk about money.", "sf.lbl": "02 / Network & Internet Security", "sf.h2": "A cleaner internet. On every device in the house.", "sf.sub": "Ads and scam sites never make it inside. On every device, without an app.", "sf.plain": "A small box at your home checks every request to the internet. Ads and scams do not get through.", "sf1.tag": "AdGuard Home · Pi-hole", "sf1.h": "The filter sits at your place", "sf1.p": "A Raspberry Pi or your NAS does this for the whole house. Preferably with AdGuard Home.", "sf1.l1": "At your place, not at some company", "sf1.l2": "Curated block lists", "sf1.l3": "Exceptions for everyday use", "sf1.l4": "Encrypted on the way out", "sf2.tag": "UniFi Gateway · VLAN", "sf2.h": "The rule applies at the front door", "sf2.p": "The router is the door to the internet. What applies there applies to every device.", "sf2.l1": "Intrusion detection active", "sf2.l2": "Own rules for kids and guests", "sf2.l3": "No device gets around the filter", "sf2.l4": "Separate networks", "sf3.tag": "Übersicht · Fernzugriff", "sf3.h": "You can see what is going on", "sf3.p": "One glance shows which device talks where.", "sf3.l1": "Cameras without a subscription", "sf3.l2": "Recordings stay at home", "sf3.l3": "Secure access from outside", "sf3.l4": "Updates stay maintained", "sf.dtitle": "DNS filter · example view", "sf.dblocked": "blocked", "sf.k1": "Queries per day", "sf.k2": "Stopped", "sf.k3": "Devices on the network", "sf.b1": "Ad networks", "sf.b2": "Device usage data", "sf.b3": "Web tracking", "sf.b4": "Scam & malware sites", "sf.b5": "Adult content", "sf.dnote": "Example view with typical figures. No live data.", "sf.hb": "Honestly", "sf.honest": "This is not antivirus. It removes what grates every day: ads, data collectors, known scam sites. The router from your provider lets all of it through.", "hs.lbl": "03 / Smart Home with Home Assistant", "hs.h2": "A home that thinks along.<br>Everything stays with you.", "hs.sub": "One app instead of five. Lights, heating, blinds, cameras. All at your home, without a subscription.", "hs.plain": "Every smart device brings its own app. Home Assistant puts one surface on top. Everyone leaves, the heating goes down.", "hs1.h": "Everything in one place", "hs1.p": "Lamps, blinds, heating, sockets, cameras. Even when every device is from a different company.", "hs2.h": "It happens at the right moment", "hs2.p": "Not rigidly at six, but when somebody is actually there.", "hs3.h": "One message, one tap, done", "hs3.p": "The notification arrives on your iPhone with buttons on it. You never have to open the app.", "hs4.h": "One view for everyone", "hs4.p": "A simple page for the family, a detailed one for you.", "hs5.h": "Still working tomorrow", "hs5.p": "After a power cut everything comes back by itself. Backups run automatically.", "hs.dtitle": "Home Assistant · example view", "hs.t1": "Living room", "hs.t1v": "On · 40%", "hs.t2": "Bathroom heating", "hs.t3": "Blinds south", "hs.t3v": "Closed", "hs.t4": "Camera entrance", "hs.t4v": "Quiet", "hs.ah": "Automation · example", "hs.s1k": "When", "hs.s1": "everyone is out of the house", "hs.s2k": "And", "hs.s2": "it stays that way for ten minutes", "hs.s3k": "Then", "hs.s3": "lights off, heating to eco, cameras armed", "hs.pw": "now", "hs.pb": "Terrace door open for 20 minutes, it is 7 °C outside.", "hs.pa1": "Remind me in 10 min.", "hs.pa2": "That is fine", "hs.dnote": "Example view. No real devices.", "hs.kh": "And if you are used to Apple?", "hs.kp": "Your devices show up in the Apple Home app, even the ones that cannot do that on their own. Siri keeps working.","st.lbl":"04 / Stack","st.h2":"What I work with daily.","st.c1":"Network","st.c2":"Automation","st.c3":"Developer","dv.lbl":"05 / RayStudio Developer Tools","dv.h2":"Own tools. Real problems solved.","dv.sub":"Small standalone apps. Each one fixes a specific problem I ran into myself.","dv.desc":"Network & mail toolkit for Windows. DNS queries, mail server detection via DNS, connection test and full system info.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"My System","dv.gh":"View on GitHub","nd.ti":"NetDashboard · Live Preview","nd.t1":"My System","nd.t2":"DNS Check","nd.t3":"Mail Check","nd.q":"Query","nd.ck":"Check","nd.de":"Enter a domain and click Query.","nd.me":"Enter an email address or domain.","mt.h":"More tools from the studio","mt1.p":"Local AI email organizer: IMAP sync, automatic categorization, review workflow.","mt2.p":"Offline AI life planner: events, tasks and deadlines, local and private.","mt3.p":"Storage audit & cleanup for NAS, SharePoint, OneDrive for Business and DFS.","mt4.p":"AI-powered log search and root-cause analysis, local and cloud-free.","mt.all":"All projects on GitHub","mt.std":"All repos follow public engineering standards","mt.sec":"CodeQL & Dependabot active across all repos","sy.ip":"Public IP","sy.os":"Operating System","sy.br":"Browser","sy.sc":"Screen","sy.tz":"Timezone","sy.la":"Language","sy.cp":"CPU Cores","sy.cn":"Connection","sy.dv":"Device type","sy.note":"All read locally in your browser. Nothing is sent or stored.","rl.nobk":"No backend","dv.desc2":"NetDashboard: network &amp; mail toolkit for Windows. RepoLedger: free GitHub portfolio dashboard for everyone, CI status, open PRs and licensing at a glance, entirely in the browser, no server of its own.","rl.f1":"CI &amp; Security","rl.f2":"Licensing","rl.ghnd":"NetDashboard on GitHub","rl.ghrl":"RepoLedger on GitHub","rl.tab1":"Overview","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Quality Check","rl.lic":"License","rl.note1":"Live from the public GitHub API, directly in the visitor's browser.","rl.note2":"Detects MIT + a commercial add-on per repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"06 / How it works","pr.h2":"No sales pitch. No hassle.","p1h":"Request","p1p":"Describe your situation in detail: what you have, what you want to achieve, what isn't working. The more detail, the better.","p2h":"Review","p2p":"I analyse your situation. If all info is there, you get a free assessment straight away. If something is missing, I'll reach out.","p3h":"Recommendation","p3p":"You get a clear, non-binding recommendation: which setup fits, what makes sense. Completely free, no obligation.","p4h":"Quote","p4p":"Optional: if you want, I can provide a concrete offer via <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"07 / Contact","co.h2":"Get in touch. No hassle.","co.p":"Tell me what you have in mind: network, Smart Home, NAS, or just a question about one of my tools.","co.msg":"Message via GitHub","co.gh":"GitHub Profile","ft.s":"systems operational","ft.pv":"Privacy"}};
+var T={de:{"topo.gw":"ROUTER","topo.isp":"INTERNET","topo.sw":"SWITCH","topo.ap":"WLAN","topo.nas":"SPEICHER","topo.ha":"SMART HOME","nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Ablauf","nav.contact":"Kontakt","nav.cta":"Anfragen","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Sauber gebaut.","h1b":"Einfach genutzt.","hero.lead":"Netzwerk, Smart Home, Speicher, Microsoft 365. Sauber eingerichtet, gut abgesichert, verständlich erklärt.","hero.c1":"ICT-Leistungen","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"mit Zweck gebaut","hm2b":"Schweizer","hm2":"Qualität","ict.lbl":"01 / ICT-Leistungen","ict.h2":"Drei Disziplinen.\nEin Ansprechpartner.","ict.sub":"Von der Dose in der Wand bis in die letzte Ecke im Garten.","c1.tag":"Netzwerk · WLAN","c1.h":"Internet & Netzwerk","c1.p":"Stabiles Netz vom Keller bis in den Garten. Gäste und smarte Geräte bekommen ihr eigenes.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Flächendeckendes WiFi 6/7","c1.l3":"Gast & IoT VLANs","c1.l4":"WireGuard VPN Fernzugang","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Licht, Heizung, Storen. Eine App statt fünf, ohne Abo.","c2.l1":"Licht, Heizung, Storen zentral","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Läuft lokal, nicht in der Cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Speicher & Cloud","c3.p":"Fotos und Dokumente zu Hause gespeichert, automatisch gesichert.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Automatische Foto & Dokument-Sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-Party-Backup","pl.label":"Geräte-Support inklusive","pl.win":"Einrichten, absichern, M365 & Entra ID","pl.mac":"Migrieren, einbinden, betreuen","pl.lin":"Server, Docker & Automationen","nav.sec": "Sicherheit", "nav.ha": "Smart Home", "pl.k": "Im Klartext", "ict.plain": "Gäste ins WLAN, ohne dein Passwort zu verraten. Sehen, was deine Geräte ins Internet senden. Ruhigeres Internet für die Kinder. Ich richte das ein, mit UniFi.", "st.plain": "Ich empfehle nichts, was ich nicht selber täglich benutze.", "dv.plain": "Die zwei Fenster unten sind keine Bilder. Sie laufen wirklich, in deinem Browser.", "pr.plain": "Du schreibst, was dich stört. Du bekommst eine ehrliche Einschätzung, gratis. Erst danach reden wir über Geld.", "sf.lbl": "02 / Netzwerk & Internetsicherheit", "sf.h2": "Sauberes Internet. Auf jedem Gerät im Haus.", "sf.sub": "Werbung und Betrugsseiten kommen gar nicht erst herein. Auf jedem Gerät, ohne App.", "sf.plain": "Ein kleines Gerät bei dir zu Hause prüft jede Anfrage ins Internet. Werbung und Betrug lässt es gar nicht erst durch.", "sf1.tag": "AdGuard Home · Pi-hole", "sf1.h": "Der Filter steht bei dir", "sf1.p": "Ein Raspberry Pi oder dein NAS übernimmt das fürs ganze Haus. Am liebsten mit AdGuard Home.", "sf1.l1": "Steht bei dir, nicht bei einer Firma", "sf1.l2": "Gepflegte Sperrlisten", "sf1.l3": "Ausnahmen für den Alltag", "sf1.l4": "Verschlüsselt nach draussen", "sf2.tag": "UniFi Gateway · VLAN", "sf2.h": "Die Regel gilt an der Haustür", "sf2.p": "Der Router ist die Tür ins Internet. Was dort gilt, gilt für jedes Gerät im Haus.", "sf2.l1": "Angriffserkennung aktiv", "sf2.l2": "Eigene Regeln für Kinder und Gäste", "sf2.l3": "Kein Gerät kommt am Filter vorbei", "sf2.l4": "Getrennte Netze", "sf3.tag": "Übersicht · Fernzugriff", "sf3.h": "Du siehst, was los ist", "sf3.p": "Auf einen Blick sichtbar, welches Gerät wohin funkt.", "sf3.l1": "Kameras ohne Abo-Zwang", "sf3.l2": "Aufnahmen bleiben zu Hause", "sf3.l3": "Sicherer Zugriff von unterwegs", "sf3.l4": "Updates bleiben gepflegt", "sf.dtitle": "DNS-Filter · Beispielansicht", "sf.dblocked": "geblockt", "sf.k1": "Anfragen pro Tag", "sf.k2": "Davon gestoppt", "sf.k3": "Geräte im Netz", "sf.b1": "Werbenetzwerke", "sf.b2": "Nutzungsdaten der Geräte", "sf.b3": "Verfolgung im Web", "sf.b4": "Betrug & Schadseiten", "sf.b5": "Nicht jugendfrei", "sf.dnote": "Beispielansicht mit typischen Werten. Keine Live-Daten.", "sf.hb": "Ehrlich", "sf.honest": "Das ist kein Virenschutz. Es nimmt weg, was im Alltag nervt: Werbung, Datensammler, bekannte Betrugsseiten. Der Router vom Anbieter lässt all das durch.", "hs.lbl": "03 / Smart Home mit Home Assistant", "hs.h2": "Ein Zuhause, das mitdenkt.<br>Alles bleibt bei dir.", "hs.sub": "Eine App statt fünf. Licht, Heizung, Storen, Kameras. Alles bei dir zu Hause, ohne Abo.", "hs.plain": "Jedes smarte Gerät bringt seine eigene App mit. Home Assistant legt eine Oberfläche darüber. Gehen alle aus dem Haus, geht die Heizung runter.", "hs1.h": "Alles an einem Ort", "hs1.p": "Lampen, Storen, Heizung, Steckdosen, Kameras. Auch wenn jedes Gerät von einer anderen Firma stammt.", "hs2.h": "Es passiert im richtigen Moment", "hs2.p": "Nicht stur um sechs Uhr, sondern wenn wirklich jemand da ist.", "hs3.h": "Eine Nachricht, ein Tipp, erledigt", "hs3.p": "Die Meldung kommt aufs iPhone, mit Knöpfen darauf. Die App musst du nie öffnen.", "hs4.h": "Eine Ansicht für alle", "hs4.p": "Eine einfache Seite für die Familie, eine ausführliche für dich.", "hs5.h": "Läuft auch morgen noch", "hs5.p": "Nach einem Stromausfall startet alles von selbst wieder. Sicherungen laufen automatisch.", "hs.dtitle": "Home Assistant · Beispielansicht", "hs.t1": "Wohnzimmer", "hs.t1v": "An · 40%", "hs.t2": "Heizung Bad", "hs.t3": "Storen Süd", "hs.t3v": "Zu", "hs.t4": "Kamera Eingang", "hs.t4v": "Ruhig", "hs.ah": "Automation · Beispiel", "hs.s1k": "Wenn", "hs.s1": "alle aus dem Haus sind", "hs.s2k": "Und", "hs.s2": "das zehn Minuten so bleibt", "hs.s3k": "Dann", "hs.s3": "Licht aus, Heizung auf Sparbetrieb, Kameras scharf", "hs.pw": "jetzt", "hs.pb": "Terrassentür seit 20 Minuten offen, draussen sind es 7 °C.", "hs.pa1": "Erinnere mich in 10 Min.", "hs.pa2": "Passt so", "hs.dnote": "Beispielansicht. Keine echten Geräte.", "hs.kh": "Du bist Apple gewohnt?", "hs.kp": "Deine Geräte tauchen in der Apple Home App auf, auch die, die das von sich aus nicht können. Siri schaltet weiterhin.","st.lbl":"04 / Stack","st.h2":"Womit ich täglich arbeite.","st.c1":"Netzwerk","st.c2":"Automation","st.c3":"Developer","dv.lbl":"05 / RayStudio Developer Tools","dv.h2":"Eigene Tools. Konkrete Probleme gelöst.","dv.sub":"Kleine, eigenständige Apps. Jede löst ein konkretes Problem, das mir selbst begegnet ist.","dv.desc":"Netzwerk- & Mail-Toolkit für Windows. DNS-Abfragen, Mail-Server-Erkennung via DNS, Verbindungstest und vollständige Systeminfo.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"Mein System","dv.gh":"Auf GitHub ansehen","nd.ti":"NetDashboard · Live Preview","nd.t1":"Mein System","nd.t2":"DNS-Check","nd.t3":"Mail-Check","nd.q":"Abfragen","nd.ck":"Prüfen","nd.de":"Domain eingeben und Abfragen klicken.","nd.me":"E-Mail-Adresse oder Domain eingeben.","mt.h":"Weitere Tools aus dem Studio","mt1.p":"Lokaler KI-Mail-Organizer: IMAP-Sync, automatische Kategorisierung, Review-Workflow.","mt2.p":"Offline KI-Lebensplaner: Termine, Aufgaben und Fristen, lokal und privat.","mt3.p":"Speicher-Audit & Cleanup für NAS, SharePoint, OneDrive for Business und DFS.","mt4.p":"KI-gestützte Log-Suche und Root-Cause-Analyse, lokal und ohne Cloud.","mt.all":"Alle Projekte auf GitHub","mt.std":"Alle Repos folgen öffentlichen Engineering-Standards","mt.sec":"CodeQL & Dependabot aktiv auf allen Repos","sy.ip":"Öffentliche IP","sy.os":"Betriebssystem","sy.br":"Browser","sy.sc":"Bildschirm","sy.tz":"Zeitzone","sy.la":"Sprache","sy.cp":"CPU-Kerne","sy.cn":"Verbindung","sy.dv":"Geräteart","sy.note":"Alles lokal aus deinem Browser gelesen. Nichts wird gesendet oder gespeichert.","rl.nobk":"Kein Backend","dv.desc2":"NetDashboard: Netzwerk- &amp; Mail-Toolkit für Windows. RepoLedger: kostenloses GitHub-Portfolio-Dashboard für alle, CI-Status, offene PRs und Lizenzierung auf einen Blick, komplett im Browser, ohne eigenen Server.","rl.f1":"CI &amp; Security","rl.f2":"Lizenzierung","rl.ghnd":"NetDashboard auf GitHub","rl.ghrl":"RepoLedger auf GitHub","rl.tab1":"Übersicht","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Qualitätscheck","rl.lic":"Lizenz","rl.note1":"Live aus der öffentlichen GitHub-API, direkt im Browser des Besuchers.","rl.note2":"Erkennt MIT + Commercial-Zusatz pro Repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"06 / Ablauf","pr.h2":"Kein Verkaufsgespräch. Kein Aufwand.","p1h":"Anfrage","p1p":"Beschreib dein Anliegen ausführlich: Was hast du, was willst du erreichen, was funktioniert nicht. Je mehr Details, desto besser.","p2h":"Prüfung","p2p":"Ich analysiere deine Situation. Sind alle Infos da, bekommst du direkt eine kostenlose Einschätzung. Fehlt etwas, melde ich mich kurz.","p3h":"Empfehlung","p3p":"Du bekommst eine klare, unverbindliche Empfehlung: Welches Setup passt, was sinnvoll ist. Komplett kostenlos, ohne Verpflichtung.","p4h":"Offerte","p4p":"Optional: Wenn du willst, erstelle ich ein konkretes Angebot über <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"07 / Kontakt","co.h2":"Kontaktaufnahme. Kein Aufwand.","co.p":"Beschreib kurz, was du vorhast: Netzwerk, Smart Home, NAS oder eine Frage zu meinen Tools.","co.msg":"Nachricht via GitHub","co.gh":"GitHub Profil","ft.s":"Systeme laufen","ft.pv":"Datenschutz"},en:{"topo.gw":"ROUTER","topo.isp":"INTERNET","topo.sw":"SWITCH","topo.ap":"WI-FI","topo.nas":"STORAGE","topo.ha":"SMART HOME","nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Process","nav.contact":"Contact","nav.cta":"Enquire","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Built clean.","h1b":"Simply works.","hero.lead":"Network, smart home, storage, Microsoft 365. Set up properly, well secured, explained in plain words.","hero.c1":"ICT Services","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"built with purpose","hm2b":"Swiss","hm2":"quality","ict.lbl":"01 / ICT Services","ict.h2":"Three disciplines.\nOne contact.","ict.sub":"From the socket in the wall to the far corner of the garden.","c1.tag":"Network · WLAN","c1.h":"Internet & Network","c1.p":"Stable network from basement to garden. Guests and smart devices get their own.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Full WiFi 6/7 coverage","c1.l3":"Guest & IoT VLANs","c1.l4":"WireGuard VPN remote access","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Lights, heating, blinds. One app instead of five, no subscription.","c2.l1":"Lights, heating, blinds centralised","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Runs at home, not in the cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Storage & Cloud","c3.p":"Photos and documents stored at home, backed up automatically.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Auto photo & document sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-party backup","pl.label":"Device support included","pl.win":"Set up, secure, M365 & Entra ID","pl.mac":"Migrate, integrate, support","pl.lin":"Servers, Docker & automations","nav.sec": "Security", "nav.ha": "Smart Home", "pl.k": "In plain words", "ict.plain": "Guests on the WiFi without handing out your password. See what your devices send to the internet. A quieter internet for the kids. I set that up, using UniFi.", "st.plain": "I do not recommend anything I do not use myself every day.", "dv.plain": "The two windows below are not pictures. They really run, in your browser.", "pr.plain": "You tell me what bothers you. You get an honest assessment, free. Only then do we talk about money.", "sf.lbl": "02 / Network & Internet Security", "sf.h2": "A cleaner internet. On every device in the house.", "sf.sub": "Ads and scam sites never make it inside. On every device, without an app.", "sf.plain": "A small box at your home checks every request to the internet. Ads and scams do not get through.", "sf1.tag": "AdGuard Home · Pi-hole", "sf1.h": "The filter sits at your place", "sf1.p": "A Raspberry Pi or your NAS does this for the whole house. Preferably with AdGuard Home.", "sf1.l1": "At your place, not at some company", "sf1.l2": "Curated block lists", "sf1.l3": "Exceptions for everyday use", "sf1.l4": "Encrypted on the way out", "sf2.tag": "UniFi Gateway · VLAN", "sf2.h": "The rule applies at the front door", "sf2.p": "The router is the door to the internet. What applies there applies to every device.", "sf2.l1": "Intrusion detection active", "sf2.l2": "Own rules for kids and guests", "sf2.l3": "No device gets around the filter", "sf2.l4": "Separate networks", "sf3.tag": "Übersicht · Fernzugriff", "sf3.h": "You can see what is going on", "sf3.p": "One glance shows which device talks where.", "sf3.l1": "Cameras without a subscription", "sf3.l2": "Recordings stay at home", "sf3.l3": "Secure access from outside", "sf3.l4": "Updates stay maintained", "sf.dtitle": "DNS filter · example view", "sf.dblocked": "blocked", "sf.k1": "Queries per day", "sf.k2": "Stopped", "sf.k3": "Devices on the network", "sf.b1": "Ad networks", "sf.b2": "Device usage data", "sf.b3": "Web tracking", "sf.b4": "Scam & malware sites", "sf.b5": "Adult content", "sf.dnote": "Example view with typical figures. No live data.", "sf.hb": "Honestly", "sf.honest": "This is not antivirus. It removes what grates every day: ads, data collectors, known scam sites. The router from your provider lets all of it through.", "hs.lbl": "03 / Smart Home with Home Assistant", "hs.h2": "A home that thinks along.<br>Everything stays with you.", "hs.sub": "One app instead of five. Lights, heating, blinds, cameras. All at your home, without a subscription.", "hs.plain": "Every smart device brings its own app. Home Assistant puts one surface on top. Everyone leaves, the heating goes down.", "hs1.h": "Everything in one place", "hs1.p": "Lamps, blinds, heating, sockets, cameras. Even when every device is from a different company.", "hs2.h": "It happens at the right moment", "hs2.p": "Not rigidly at six, but when somebody is actually there.", "hs3.h": "One message, one tap, done", "hs3.p": "The notification arrives on your iPhone with buttons on it. You never have to open the app.", "hs4.h": "One view for everyone", "hs4.p": "A simple page for the family, a detailed one for you.", "hs5.h": "Still working tomorrow", "hs5.p": "After a power cut everything comes back by itself. Backups run automatically.", "hs.dtitle": "Home Assistant · example view", "hs.t1": "Living room", "hs.t1v": "On · 40%", "hs.t2": "Bathroom heating", "hs.t3": "Blinds south", "hs.t3v": "Closed", "hs.t4": "Camera entrance", "hs.t4v": "Quiet", "hs.ah": "Automation · example", "hs.s1k": "When", "hs.s1": "everyone is out of the house", "hs.s2k": "And", "hs.s2": "it stays that way for ten minutes", "hs.s3k": "Then", "hs.s3": "lights off, heating to eco, cameras armed", "hs.pw": "now", "hs.pb": "Terrace door open for 20 minutes, it is 7 °C outside.", "hs.pa1": "Remind me in 10 min.", "hs.pa2": "That is fine", "hs.dnote": "Example view. No real devices.", "hs.kh": "And if you are used to Apple?", "hs.kp": "Your devices show up in the Apple Home app, even the ones that cannot do that on their own. Siri keeps working.","st.lbl":"04 / Stack","st.h2":"What I work with daily.","st.c1":"Network","st.c2":"Automation","st.c3":"Developer","dv.lbl":"05 / RayStudio Developer Tools","dv.h2":"Own tools. Real problems solved.","dv.sub":"Small standalone apps. Each one fixes a specific problem I ran into myself.","dv.desc":"Network & mail toolkit for Windows. DNS queries, mail server detection via DNS, connection test and full system info.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"My System","dv.gh":"View on GitHub","nd.ti":"NetDashboard · Live Preview","nd.t1":"My System","nd.t2":"DNS Check","nd.t3":"Mail Check","nd.q":"Query","nd.ck":"Check","nd.de":"Enter a domain and click Query.","nd.me":"Enter an email address or domain.","mt.h":"More tools from the studio","mt1.p":"Local AI email organizer: IMAP sync, automatic categorization, review workflow.","mt2.p":"Offline AI life planner: events, tasks and deadlines, local and private.","mt3.p":"Storage audit & cleanup for NAS, SharePoint, OneDrive for Business and DFS.","mt4.p":"AI-powered log search and root-cause analysis, local and cloud-free.","mt.all":"All projects on GitHub","mt.std":"All repos follow public engineering standards","mt.sec":"CodeQL & Dependabot active across all repos","sy.ip":"Public IP","sy.os":"Operating System","sy.br":"Browser","sy.sc":"Screen","sy.tz":"Timezone","sy.la":"Language","sy.cp":"CPU Cores","sy.cn":"Connection","sy.dv":"Device type","sy.note":"All read locally in your browser. Nothing is sent or stored.","rl.nobk":"No backend","dv.desc2":"NetDashboard: network &amp; mail toolkit for Windows. RepoLedger: free GitHub portfolio dashboard for everyone, CI status, open PRs and licensing at a glance, entirely in the browser, no server of its own.","rl.f1":"CI &amp; Security","rl.f2":"Licensing","rl.ghnd":"NetDashboard on GitHub","rl.ghrl":"RepoLedger on GitHub","rl.tab1":"Overview","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Quality Check","rl.lic":"License","rl.note1":"Live from the public GitHub API, directly in the visitor's browser.","rl.note2":"Detects MIT + a commercial add-on per repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"06 / How it works","pr.h2":"No sales pitch. No hassle.","p1h":"Request","p1p":"Describe your situation in detail: what you have, what you want to achieve, what isn't working. The more detail, the better.","p2h":"Review","p2p":"I analyse your situation. If all info is there, you get a free assessment straight away. If something is missing, I'll reach out.","p3h":"Recommendation","p3p":"You get a clear, non-binding recommendation: which setup fits, what makes sense. Completely free, no obligation.","p4h":"Quote","p4p":"Optional: if you want, I can provide a concrete offer via <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"07 / Contact","co.h2":"Get in touch. No hassle.","co.p":"Tell me what you have in mind: network, Smart Home, NAS, or just a question about one of my tools.","co.msg":"Message via GitHub","co.gh":"GitHub Profile","ft.s":"systems operational","ft.pv":"Privacy"}};
 
 var lang=(navigator.language||'de').toLowerCase().startsWith('en')?'en':'de';
 function applyLang(l){
@@ -1104,7 +1185,10 @@ function applyLang(l){
   document.getElementById('lang-toggle').textContent=l==='de'?'EN':'DE';
   document.querySelectorAll('[data-i18n]').forEach(function(el){
     var k=el.getAttribute('data-i18n');
-    if(T[l][k]!==undefined) el.innerHTML=T[l][k];
+    if(T[l][k]===undefined) return;
+    /* innerHTML ist auf SVG-Elementen nicht ueberall verfuegbar, dort textContent */
+    if(el.ownerSVGElement) el.textContent=T[l][k];
+    else el.innerHTML=T[l][k];
   });
   var ph={
     'f-n':l==='de'?'Dein Name':'Your name',
@@ -1131,10 +1215,74 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){
     if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
   });
 });
-if('IntersectionObserver' in window){
-  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1,rootMargin:'0px 0px -5% 0px'});
-  document.querySelectorAll('.fade').forEach(function(el){io.observe(el);});
-}else{document.querySelectorAll('.fade').forEach(function(el){el.classList.add('in');});}
+/* Einblenden beim Scrollen.
+   Frueher hing das an einem IntersectionObserver mit negativem rootMargin: nach einem
+   Sprung ans Seitenende (End-Taste, Ankerklick, schnelles Wischen) meldete der zwar,
+   aber die 0.65s-Einblendung samt Staffelung lief erst danach an, und der Besucher sah
+   fuer knapp eine Sekunde leere Farbflaechen. Jetzt gilt eine eindeutige Regel:
+   Was noch unterhalb des Sichtfensters liegt, blendet normal ein. Was bereits im Bild
+   steht und noch nicht sichtbar ist, kommt ohne Uebergang sofort. Damit kann per
+   Definition kein sichtbarer Bereich leer bleiben. */
+(function(){
+  var els=Array.prototype.slice.call(document.querySelectorAll('.fade'));
+  if(!els.length)return;
+  if(!('requestAnimationFrame' in window)){els.forEach(function(el){el.classList.add('in');});return;}
+
+  var LOOKAHEAD=260;  /* so weit vor dem Sichtfenster wird vorgeblendet */
+  var first=true;     /* der erste Durchlauf ist der Seitenaufbau, dort ist die Animation gewollt */
+
+  /* Der Uebergang muss abgeschaltet sein, waehrend der Browser den neuen Zustand
+     berechnet. Klasse setzen und im naechsten Frame wieder entfernen reicht dafuer
+     nicht: bis dahin hat noch kein Stildurchlauf stattgefunden, und der Browser
+     animiert doch. Ein erzwungenes Layout dazwischen schreibt den Sprung fest,
+     einmal fuer die ganze Gruppe statt einmal pro Element. */
+  function showBatch(sofort,weich){
+    if(sofort.length){
+      sofort.forEach(function(el){el.style.transition='none';el.classList.add('in');});
+      void document.body.offsetWidth;
+      sofort.forEach(function(el){el.style.transition='';});
+    }
+    if(weich.length){
+      weich.forEach(function(el){el.classList.add('in');});
+    }
+  }
+
+  function tick(){
+    var h=window.innerHeight,rest=[],sofort=[],weich=[];
+    els.forEach(function(el){
+      var r=el.getBoundingClientRect();
+      if(r.bottom>0&&r.top<h){ if(first)weich.push(el); else sofort.push(el); }
+      else if(r.top>=h&&r.top<h+LOOKAHEAD) weich.push(el);
+      else rest.push(el);
+    });
+    els=rest;
+    first=false;
+    showBatch(sofort,weich);
+  }
+
+  /* Bewusst synchron im Scroll-Ereignis, nicht in requestAnimationFrame: der Browser
+     zeichnet nach dem Ereignis, wer erst im naechsten Frame sichtbar geschaltet wird,
+     fehlt genau ein Bild lang. Die Liste schrumpft mit jedem Durchlauf, und sobald sie
+     leer ist, haengen wir uns wieder aus. */
+  var lastY=window.scrollY;
+  function onScroll(){
+    if(!els.length){detach();return;}
+    var y=window.scrollY;
+    if(Math.abs(y-lastY)<40)return;
+    lastY=y;
+    tick();
+  }
+  function onResize(){ if(els.length)tick(); else detach(); }
+  function detach(){
+    window.removeEventListener('scroll',onScroll);
+    window.removeEventListener('resize',onResize);
+  }
+
+  tick();
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onResize,{passive:true});
+  window.addEventListener('load',function(){if(els.length)tick();});
+})();
 
 /* ══ TABS ══ */
 document.querySelectorAll('.nd-tab').forEach(function(tab){
@@ -1416,6 +1564,50 @@ document.querySelectorAll('.nzone').forEach(function(zone){
   document.querySelectorAll('.nzone').forEach(function(z){
     z.addEventListener('mouseenter',function(){ if(ico)ico.innerHTML=NI[z.getAttribute('data-node')]||''; });
   });
+})();
+</script>
+<script>
+(function(){
+  /* Trennkante der Kopfzeile erst zeigen, sobald wirklich gescrollt wurde */
+  var navEl=document.querySelector('nav');
+  if(navEl){
+    var onScroll=function(){navEl.classList.toggle('scrolled',window.scrollY>4);};
+    onScroll();
+    window.addEventListener('scroll',onScroll,{passive:true});
+  }
+
+  /* Mobiles Menue */
+  var btn=document.getElementById('nav-burger'),
+      sheet=document.getElementById('nav-sheet');
+  if(!btn||!sheet)return;
+
+  function setOpen(open){
+    btn.setAttribute('aria-expanded',open?'true':'false');
+    var de=document.documentElement.lang!=='en';
+    btn.setAttribute('aria-label',open?(de?'Menü schliessen':'Close menu'):(de?'Menü öffnen':'Open menu'));
+    sheet.setAttribute('data-open',open?'true':'false');
+  }
+
+  btn.addEventListener('click',function(){
+    setOpen(btn.getAttribute('aria-expanded')!=='true');
+  });
+
+  sheet.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){setOpen(false);});
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&btn.getAttribute('aria-expanded')==='true'){
+      setOpen(false);btn.focus();
+    }
+  });
+
+  /* Wird die Leiste durch Drehen oder Vergroessern wieder sichtbar, Panel schliessen */
+  window.addEventListener('resize',function(){
+    if(window.innerWidth>960&&btn.getAttribute('aria-expanded')==='true')setOpen(false);
+  });
+
+  setOpen(false);
 })();
 </script>
 </body>

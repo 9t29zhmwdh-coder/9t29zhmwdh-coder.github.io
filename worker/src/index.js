@@ -5,7 +5,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 function corsHeaders(origin) {
   return {
     "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Vary": "Origin",
   };
@@ -35,6 +35,46 @@ async function verifyTurnstile(token, secret, ip) {
   return data.success === true;
 }
 
+function conditionOf(symbol) {
+  if (symbol.includes("thunder")) return "thunder";
+  if (symbol.includes("snow") || symbol.includes("sleet")) return "snow";
+  if (symbol.includes("rain") || symbol.includes("drizzle")) return "rain";
+  if (symbol.startsWith("fog")) return "fog";
+  if (symbol.startsWith("partlycloudy")) return "partly";
+  if (symbol.startsWith("cloudy")) return "cloudy";
+  if (symbol.startsWith("fair")) return "fair";
+  if (symbol.startsWith("clearsky")) return "clear";
+  return "";
+}
+
+// Ort kommt aus Cloudflares IP-Grobortung, auf eine Nachkommastelle gerundet (rund 10 km). MET Norway sieht nie die IP des Besuchers.
+async function weather(request, origin) {
+  const cf = request.cf || {};
+  const lat = Number.parseFloat(cf.latitude);
+  const lon = Number.parseFloat(cf.longitude);
+  if (!Number.isFinite(lat) || !Number.isFinite(lon)) return reply(200, { ok: false }, origin);
+
+  const url = `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${lat.toFixed(1)}&lon=${lon.toFixed(1)}`;
+  const res = await fetch(url, {
+    headers: { "User-Agent": "raystudio.ch-weather/1.0 https://raystudio.ch" },
+    cf: { cacheTtl: 600, cacheEverything: true },
+  });
+  if (!res.ok) return reply(502, { ok: false, error: "weather" }, origin);
+
+  const now = (await res.json()).properties?.timeseries?.[0]?.data;
+  const temp = now?.instant?.details?.air_temperature;
+  if (typeof temp !== "number") return reply(502, { ok: false, error: "weather" }, origin);
+
+  const symbol = now.next_1_hours?.summary?.symbol_code || now.next_6_hours?.summary?.symbol_code || "";
+  return reply(200, {
+    ok: true,
+    city: String(cf.city || cf.region || "").slice(0, 60),
+    country: String(cf.country || "").slice(0, 2),
+    temp: Math.round(temp),
+    condition: conditionOf(symbol),
+  }, origin);
+}
+
 async function sendMail(env, { name, email, message }) {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
@@ -61,6 +101,9 @@ export default {
     }
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
+    }
+    if (request.method === "GET" && new URL(request.url).pathname === "/weather") {
+      return weather(request, origin);
     }
     if (request.method !== "POST") {
       return reply(405, { ok: false, error: "method" }, origin);

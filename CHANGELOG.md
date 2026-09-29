@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-09-29
+
+### Changed
+
+- The green dot of the weather tile now fades slowly in and out (2.8 seconds per cycle) instead of standing still. The animation is switched off for visitors who prefer reduced motion.
+
 ## [0.5.1] - 2026-09-29
 
 ### Changed

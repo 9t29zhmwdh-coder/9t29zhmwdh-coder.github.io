@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-09-29
+
+### Changed
+
+- The weather tile carries a "live" marker with the same green dot as the footer status, so it is clear that this value is not static like the rest of the example view.
+
 ## [0.5.0] - 2026-09-29
 
 ### Added

@@ -523,6 +523,8 @@ footer a:hover{color:var(--teal)}
 .hs-tile.off .hs-ti{background:rgba(239,233,221,.06);color:rgba(239,233,221,.38)}
 .hs-wx{grid-column:1/-1}
 .hs-wx[hidden]{display:none}
+.hs-live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.04em;color:var(--teal)}
+.hs-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px rgba(63,142,126,.5)}
 .hs-auto{margin:0 16px 14px;border:1px dashed rgba(239,233,221,.13);border-radius:10px;padding:12px 14px}
 .hs-ah{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
   color:rgba(239,233,221,.34);margin-bottom:9px}
@@ -925,6 +927,7 @@ footer a:hover{color:var(--teal)}
             <div class="hs-tile on hs-wx" id="hs-wx" hidden>
               <div class="hs-ti"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 1 0-1.4-8.78A6 6 0 1 0 5 15.5c0 1.93 1.57 3.5 3.5 3.5z"/></svg></div>
               <div class="hs-tx"><div class="hs-tt" id="hs-wt"></div><div class="hs-ts" id="hs-ws"></div></div>
+              <span class="hs-live">live</span>
             </div>
           </div>
           <div class="hs-auto">

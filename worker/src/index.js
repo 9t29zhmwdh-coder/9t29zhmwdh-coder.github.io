@@ -43,7 +43,7 @@ async function sendMail(env, { name, email, message }) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: "RayStudio Kontakt <onboarding@resend.dev>",
+      from: "RayStudio Kontakt <kontakt@raystudio.ch>",
       to: [env.TO_EMAIL],
       reply_to: email,
       subject: `Anfrage von ${name}`,

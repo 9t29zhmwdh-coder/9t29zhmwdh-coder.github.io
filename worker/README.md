@@ -10,7 +10,7 @@ Set once with `npx wrangler secret put <NAME>`, never commit them:
 |---|---|
 | `TURNSTILE_SECRET` | Secret key of the Turnstile widget |
 | `RESEND_API_KEY` | Resend API key (sending access only) |
-| `TO_EMAIL` | The mailbox that receives the enquiries, must be the address of the Resend account while `onboarding@resend.dev` is the sender |
+| `TO_EMAIL` | The mailbox that receives the enquiries. The sender `kontakt@raystudio.ch` needs the domain verified in Resend (DKIM and the two CNAME records at the DNS host) |
 
 ## Deploy
 

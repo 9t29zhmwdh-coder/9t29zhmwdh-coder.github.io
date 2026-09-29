@@ -349,7 +349,7 @@ footer a:hover{color:var(--teal)}
 @media(prefers-reduced-motion:reduce){
   .fade{opacity:1!important;transform:none!important;transition:none!important}
   .t-link,.spin{animation:none!important}
-  .fstatus::before{animation:none!important}
+  .fstatus::before,.hs-live::before{animation:none!important}
 }
 
 /* ══════ ENERGY PASS · visueller Punch (Sandbox) ══════ */
@@ -524,7 +524,8 @@ footer a:hover{color:var(--teal)}
 .hs-wx{grid-column:1/-1}
 .hs-wx[hidden]{display:none}
 .hs-live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.04em;color:var(--teal)}
-.hs-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px rgba(63,142,126,.5)}
+.hs-live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px rgba(63,142,126,.5);animation:livePulse 2.8s ease-in-out infinite}
+@keyframes livePulse{0%,100%{opacity:1}50%{opacity:.25}}
 .hs-auto{margin:0 16px 14px;border:1px dashed rgba(239,233,221,.13);border-radius:10px;padding:12px 14px}
 .hs-ah{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
   color:rgba(239,233,221,.34);margin-bottom:9px}

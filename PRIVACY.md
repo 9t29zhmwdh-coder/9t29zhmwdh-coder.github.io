@@ -4,7 +4,8 @@ This is a static website hosted on GitHub Pages.
 
 - **No tracking:** The site does not use cookies, analytics scripts, or user tracking.
 - **GitHub Pages hosting:** GitHub may collect server logs (IP addresses, access times) as part of their hosting service. See [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement).
-- **No forms:** The site does not collect personal data via forms or submissions.
+- **Contact form:** If you send a message, your name, email address and message are transmitted to a Cloudflare Worker, which forwards them by mail through Resend to the site owner. They are used only to reply to you and are not stored by the site itself. Cloudflare and Resend process them as technical providers under their own privacy policies.
+- **Cloudflare Turnstile:** The contact form is protected against bots by Cloudflare Turnstile. Its script (challenges.cloudflare.com) is loaded only when you first click into the form, not when you merely read the page. Cloudflare receives your IP address and browser signals for that check.
 - **System info panel:** The "My System" preview reads values (OS, browser, screen, timezone, language, CPU cores, device type) locally in your browser only. Nothing is sent or stored, and no public IP lookup is performed.
 - **Tool lookups:** The DNS and mail checks run only when you click them. They query public DNS-over-HTTPS resolvers (Google 8.8.8.8, Cloudflare 1.1.1.1) with the domain you enter; those providers' privacy policies apply.
 - **Web fonts:** Fonts are loaded from Google Fonts (fonts.googleapis.com), so Google receives your IP as part of that request.

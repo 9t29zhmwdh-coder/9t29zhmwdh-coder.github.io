@@ -5,6 +5,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- A contact form with name, reply address and message, so that visitors without a GitHub account can reach the site owner. The GitHub issue button stays as a second way in. The form is protected by Cloudflare Turnstile, whose script loads only after the first click into the form, plus a hidden honeypot field.
+- `worker/`: the Cloudflare Worker behind the form. It accepts requests only from raystudio.ch, verifies the Turnstile token server side, validates length and format of every field and forwards the message by mail through Resend with the visitor's address as reply address. Recipient address and API keys live in Worker secrets, not in the repository.
+
+### Changed
+
+- `PRIVACY.md` no longer says the site has no forms and names Cloudflare Turnstile, Cloudflare Workers and Resend.
+- The form stays hidden until `CONTACT_ENDPOINT` and `TURNSTILE_SITEKEY` in `index.html` are set, so the page shows only the GitHub button until the Worker is deployed.
+
 ## [0.3.0] - 2026-09-04
 
 ### Added

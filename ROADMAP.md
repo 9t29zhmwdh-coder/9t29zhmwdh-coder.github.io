@@ -8,7 +8,7 @@
 ## v0.2.0 — Planned
 - [ ] Project cards with live links
 - [ ] Dark/light mode toggle
-- [ ] Contact section
+- [x] Contact section (contact form, v0.4.0)
 
 ## v0.3.0 — Planned
 - [ ] Blog section

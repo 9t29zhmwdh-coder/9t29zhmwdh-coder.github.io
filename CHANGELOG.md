@@ -5,6 +5,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-09-29
+
+### Added
+
+- A live weather tile in the Home Assistant example view. It shows the current temperature, the city and the conditions for the visitor's approximate location, in German or English. The location comes from Cloudflare's coarse IP geolocation inside the Worker (rounded to about 10 km, no permission prompt), the forecast from MET Norway (CC BY 4.0, credited in the view's footnote). The tile loads only when the view scrolls into view and stays hidden if anything fails.
+- `worker/`: a `GET /weather` route, limited to requests from raystudio.ch, with a ten minute cache.
+
+### Changed
+
+- `PRIVACY.md` describes the weather lookup.
+- The footnote of the Home Assistant view says that only the weather is live.
+
 ## [0.4.0] - 2026-09-29
 
 ### Added

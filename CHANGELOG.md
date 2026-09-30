@@ -5,6 +5,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.5.3] - 2026-09-30
+
+### Fixed
+
+- The contact section had large empty gaps between the send button, the privacy note, the "or" line and the GitHub buttons. The general rule for paragraphs in that section (`margin: 0 auto 32px`) was more specific than the rules of the status line, the note and the "or" line, so it overrode their margins, and the empty status line reserved a full line on top. The three rules now win over it and the status line takes no space while it is empty. The gaps are now 14, 26 and 14 pixels.
+
+
 ## [0.5.2] - 2026-09-29
 
 ### Changed

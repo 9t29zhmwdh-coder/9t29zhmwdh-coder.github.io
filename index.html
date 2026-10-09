@@ -1766,12 +1766,21 @@ document.querySelectorAll('.nzone').forEach(function(zone){
 (function(){
   var a=document.getElementById("hero-comet"),b=document.getElementById("hero-logo"),hero=document.querySelector(".hero"),wrap=document.querySelector(".hero-logo-wrap");
   if(!a||!b||!hero||!wrap||matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  /* Die Logo-Spalte blendet beim Laden von unten ein (transform). getBoundingClientRect würde diese Bewegung mitmessen, und die Videos säßen dann
+     zu tief und sprängen später nach (Safari löst "load" erst spät aus). Deshalb nur die Layoutposition: Summe der offsetLeft/offsetTop bis zum Hero. */
+  function anchor(){
+    var x=0,y=0,e=wrap;
+    while(e&&e!==hero){x+=e.offsetLeft;y+=e.offsetTop;e=e.offsetParent;}
+    return {x:x,y:y,L:wrap.offsetWidth};
+  }
   function place(){
-    var h=hero.getBoundingClientRect(),w=wrap.getBoundingClientRect(),L=w.width;
-    a.style.width=(7.6*L)+"px";a.style.left=(w.left-h.left-4.6*L)+"px";a.style.top=(w.top-h.top-2.6*L)+"px";
-    var g=1280/720*L,o=280/720*L;b.style.width=g+"px";b.style.left=(w.left-h.left-o)+"px";b.style.top=(w.top-h.top-o)+"px";
+    var p=anchor(),L=p.L;
+    a.style.width=(7.6*L)+"px";a.style.left=(p.x-4.6*L)+"px";a.style.top=(p.y-2.6*L)+"px";
+    var g=1280/720*L,o=280/720*L;b.style.width=g+"px";b.style.left=(p.x-o)+"px";b.style.top=(p.y-o)+"px";
   }
   place();addEventListener("resize",place);addEventListener("load",place);
+  if(window.ResizeObserver)new ResizeObserver(place).observe(hero);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(place);
 
   /* Einheiten, die schwingen: Wörter der Fliesstexte, die zwei Überschriftszeilen, Buttons, Meta-Angaben */
   function words(el){

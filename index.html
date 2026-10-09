@@ -121,9 +121,7 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .hero-logo,.hero-logo-still{width:100%;height:auto;aspect-ratio:1;opacity:.92;border-radius:24px;display:block;position:relative;z-index:1}
 .hero-logo-still{display:none}
 /* liegt hinter dem Text (der .wrap hat z-index 1). Der Videogrund hat exakt die Heroffarbe #0b1521, kein Blend-Modus, weil Safari ihn bei Videos ignoriert. Position setzt das Skript relativ zum Logo */
-.hero-comet{position:absolute;left:0;top:0;width:640px;aspect-ratio:1280/1020;z-index:0;pointer-events:none;
-  -webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 8%,#000 92%,transparent);-webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 8%,#000 92%,transparent);mask-composite:intersect}
+.hero-comet{position:absolute;left:0;top:0;width:640px;aspect-ratio:1280/1020;z-index:0;pointer-events:none}
 @media(prefers-reduced-motion:reduce){.hero-logo,.hero-comet{display:none}.hero-logo-still{display:block}}
 .hero-meta{display:flex;gap:24px;margin-top:32px;font-family:var(--fm);font-size:.75rem;color:rgba(239,233,221,.42)}
 .hero-meta b{color:rgba(239,233,221,.72);font-weight:500}
@@ -1807,25 +1805,33 @@ document.querySelectorAll('.nzone').forEach(function(zone){
   }
   function quake(){
     var w=wrap.getBoundingClientRect(),L=w.width,sx=scrollX,sy=scrollY;
-    var cx=w.left+sx-1.9*L,cy=w.top+sy+1.40*L;   /* Startpunkt der Sternschnuppe, gleiche Zahlen wie im Video */
-    var T0=1.0,RMAX=1.4*L,SIG=0.16*L,AMP=0.075*L;
-    var us=units().map(function(el){var r=el.getBoundingClientRect(),x=r.left+sx+r.width/2-cx,y=r.top+sy+r.height/2-cy,d=Math.hypot(x,y)||1;return {el:el,ux:x/d,uy:y/d,d:d};});
-    var t0=performance.now();
+    /* zwei Wellensätze wie im Video: Durchbruch am Startpunkt (bis 1.4 L) und Einschlag im Stern (bis 1.0 L) */
+    var waves=[
+      {cx:w.left+sx-1.9*L,cy:w.top+sy+1.40*L,T:1.0,dur:1.5,R:1.4*L,amp:0.075*L,lag:0.16},
+      {cx:w.left+sx+0.6204*L,cy:w.top+sy+0.3549*L,T:3.6,dur:1.1,R:1.0*L,amp:0.055*L,lag:0.14}
+    ],SIG=0.16*L;
+    var us=units().map(function(el){
+      var r=el.getBoundingClientRect(),x=r.left+sx+r.width/2,y=r.top+sy+r.height/2;
+      el.style.willChange="transform";
+      return {el:el,w:waves.map(function(v){var dx=x-v.cx,dy=y-v.cy,d=Math.hypot(dx,dy)||1;return {ux:dx/d,uy:dy/d,d:d};})};
+    });
+    var t0=performance.now(),END=3.6+1.1+0.28+0.1;
     (function frame(){
-      var t=(performance.now()-t0)/1000,alive=false;
+      var t=(performance.now()-t0)/1000;
       us.forEach(function(o){
-        var dx=0;
-        for(var k=0;k<3;k++){
-          var q=(t-T0-0.16*k)/1.5;if(q<0||q>1)continue;alive=true;
-          var R=RMAX*(1-Math.pow(1-q,2.2)),x=(o.d-R)/SIG,amp=AMP*Math.pow(1-q,1.3)*(1-0.25*k);
-          dx+=amp*(-x*Math.exp(-x*x))*2.2;          /* Druckwelle: erst weg, dann zurück */
-        }
-        var g=Math.min(1,Math.abs(dx)/(AMP*0.8));
-        o.el.style.transform=dx?"translate("+(o.ux*dx).toFixed(2)+"px,"+(o.uy*dx).toFixed(2)+"px)":"";
+        var mx=0,my=0,g=0;
+        waves.forEach(function(v,i){
+          for(var k=0;k<3;k++){
+            var q=(t-v.T-v.lag*k)/v.dur;if(q<0||q>1)continue;
+            var R=v.R*(1-Math.pow(1-q,2.2)),x=(o.w[i].d-R)/SIG,amp=v.amp*Math.pow(1-q,1.3)*(1-0.25*k),dx=amp*(-x*Math.exp(-x*x))*2.2;
+            mx+=o.w[i].ux*dx;my+=o.w[i].uy*dx;g=Math.max(g,Math.min(1,Math.abs(dx)/(v.amp*0.8)));
+          }
+        });
+        o.el.style.transform=(mx||my)?"translate("+mx.toFixed(2)+"px,"+my.toFixed(2)+"px)":"";
         o.el.style.filter=g>0.02?"brightness("+(1+0.5*g).toFixed(2)+")":"";
       });
-      if(t<T0+1.5+0.32+0.1)requestAnimationFrame(frame);
-      else us.forEach(function(o){o.el.style.transform="";o.el.style.filter="";});
+      if(t<END)requestAnimationFrame(frame);
+      else us.forEach(function(o){o.el.style.transform="";o.el.style.filter="";o.el.style.willChange="";});
     })();
   }
   var ready=0,started=false;

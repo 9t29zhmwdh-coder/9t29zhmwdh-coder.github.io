@@ -12,6 +12,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - The hero logo no longer loops. After about one second a shooting star appears at the lower left, flies on a measured arc that joins the golden ray of the logo exactly, grows and brightens as if it came from far away, lands in the star of the logo, and the star flashes three times. Then everything stays still. It plays once per page load.
 - When the shooting star breaks through, soft pressure waves run through the hero (video behind the text) and the text itself shakes: every word, headline line and button is pushed away from the wave front while it passes, then swings back. The waves grow with the size of the shooting star.
 - Two short videos start together (background flight and logo landing, 0.15 MB in total). The background video has exactly the hero colour, so no box is visible, also in Safari. The page is checked at 390, 430, 544 and 892 pixels wide: no sideways scrolling, text stays readable.
+- When the shooting star lands, a second, smaller burst of waves runs out of the star (up to one logo width), golden inside the logo and teal outside. The text shakes a second time. The edge mask on the background video is gone, which also makes playback lighter in Safari.
 - Visitors who prefer reduced motion, or browsers that cannot play the video, still see the plain logo.
 
 ## [0.6.2] - 2026-10-09

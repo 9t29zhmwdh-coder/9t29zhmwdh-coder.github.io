@@ -88,3 +88,7 @@ All repos follow the same public **[engineering standards](https://github.com/9t
 ---
 
 **Author:** [Rafael Yilmaz](https://github.com/9t29zhmwdh-coder) · **Status:** Active · **Last Updated:** Juli 2026
+
+## Credits
+
+The Linux tile uses the Tux penguin by Larry Ewing, Simon Budig and Garrett LeSage (free to use with attribution). Windows, Apple, AdGuard, Home Assistant and UniFi names and images belong to their owners and are shown only to name the platforms and products supported.

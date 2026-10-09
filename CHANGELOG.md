@@ -5,6 +5,21 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-09
+
+### Added
+
+- The logo in the hero area is now a short looping video instead of a still image: a small golden light travels along the ray, then the star flashes three times. The loop is 4.5 seconds, about 38 kilobytes. Visitors who prefer reduced motion still see the plain logo, which is also the fallback if a browser cannot play the video. The frames were made in Pixelmator Pro.
+- The three platform tiles (Windows, macOS, Linux) now show the real logos on rounded tiles. On hover a tile grows to 2.5 times its size and gets a gradient border.
+- The three service cards and the three security cards show an image behind their icon on hover, with the same zoom and gradient border: the UniFi Cloud Gateway Max (cut out, shown at half the zoom), an animated Home Assistant logo, a NAS with blinking LEDs, the AdGuard logo, the back of a UniFi gateway and a camera. The Home Assistant and NAS images are short videos that only play while the pointer is on them.
+- The five list icons in the smart home section are now small illustrated tiles.
+
+### Changed
+
+- The background between sections now runs through a muted teal instead of a hard edge.
+- The contact section is centred at every window width, including the send button, the privacy note and the GitHub buttons.
+- The visitor badge in the footer only appears once it has loaded. If it is blocked by a DNS filter or an ad blocker, it is hidden instead of showing a broken image.
+
 ## [0.5.3] - 2026-09-30
 
 ### Fixed

@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.7.2] - 2026-10-09
+
+### Fixed
+
+- On phones and tablets the shooting star started outside the visible area, so it took visibly long until it appeared. The page now works out from the real flight path and the window size when the star first enters the picture, and starts both videos shortly before that (about 2.4 seconds into the clip at 390 and 430 pixels wide). The shock waves and the shaking text keep the same time. On wide screens nothing changes.
+
 ## [0.7.1] - 2026-10-09
 
 ### Removed

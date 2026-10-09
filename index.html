@@ -115,9 +115,16 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .btn{display:inline-flex;align-items:center;gap:.5em;padding:10px 19px;border-radius:9px;font-family:var(--fd);font-weight:500;font-size:.88rem;border:1px solid transparent;transition:transform .15s,background .2s,border-color .2s;cursor:pointer}
 .bp{background:var(--teal);color:#fff}.bp:hover{background:var(--teal-d);transform:translateY(-1px)}
 .bg{background:transparent;color:#efe9dd;border-color:var(--lsd)}.bg:hover{border-color:var(--teal);color:var(--teal)}
-.hero-logo,.hero-logo-still{width:min(260px,55%);height:auto;aspect-ratio:1;opacity:.92;border-radius:24px}
+/* Hero: Sternschnuppe fliegt aus der Ferne auf den Stern im Logo, der Stern funkelt dreimal, dann bleibt alles stehen.
+   Zwei Videos starten gleichzeitig: der Anflug im Hintergrund (L = Logobreite, Stern bei 61.8 % / 35.5 % des Logos) und die letzte Strecke samt Funkeln im Logo selbst. */
+.hero-logo-wrap{position:relative;width:min(260px,55%)}
+.hero-logo,.hero-logo-still{width:100%;height:auto;aspect-ratio:1;opacity:.92;border-radius:24px;display:block;position:relative;z-index:1}
 .hero-logo-still{display:none}
-@media(prefers-reduced-motion:reduce){.hero-logo{display:none}.hero-logo-still{display:block}}
+/* liegt hinter dem Text (der .wrap hat z-index 1). Der Videogrund hat exakt die Heroffarbe #0b1521, kein Blend-Modus, weil Safari ihn bei Videos ignoriert. Position setzt das Skript relativ zum Logo */
+.hero-comet{position:absolute;left:0;top:0;width:640px;aspect-ratio:1280/1020;z-index:0;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 8%,#000 92%,transparent);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent,#000 6%,#000 94%,transparent),linear-gradient(to bottom,transparent,#000 8%,#000 92%,transparent);mask-composite:intersect}
+@media(prefers-reduced-motion:reduce){.hero-logo,.hero-comet{display:none}.hero-logo-still{display:block}}
 .hero-meta{display:flex;gap:24px;margin-top:32px;font-family:var(--fm);font-size:.75rem;color:rgba(239,233,221,.42)}
 .hero-meta b{color:rgba(239,233,221,.72);font-weight:500}
 
@@ -640,6 +647,10 @@ footer a:hover{color:var(--teal)}
 
 <!-- ══ HERO · DARK ══ -->
 <section class="hero">
+  <video class="hero-comet" muted playsinline preload="auto" aria-hidden="true" tabindex="-1" id="hero-comet">
+    <source src="media/hero-bg.webm" type="video/webm"/>
+    <source src="media/hero-bg.mp4" type="video/mp4"/>
+  </video>
   <div class="wrap hero-g">
     <div>
       <div class="eyebrow fade" data-i18n="hero.ey">Microsoft 365 · Cloud · Developer Tools</div>
@@ -656,11 +667,13 @@ footer a:hover{color:var(--teal)}
     </div>
     <!-- hero logo -->
     <div class="fade" style="display:flex;align-items:center;justify-content:center">
-      <video class="hero-logo" autoplay muted loop playsinline preload="metadata" poster="media/logo-poster.png" aria-label="RayStudio">
-        <source src="media/logo-loop.webm" type="video/webm"/>
-        <source src="media/logo-loop.mp4" type="video/mp4"/>
-      </video>
-      <img class="hero-logo-still" src="RayStudio.svg" alt="RayStudio" loading="lazy"/>
+      <div class="hero-logo-wrap">
+        <video class="hero-logo" muted playsinline preload="auto" poster="media/logo-poster.png" aria-label="RayStudio" id="hero-logo">
+          <source src="media/hero-logo.webm" type="video/webm"/>
+          <source src="media/hero-logo.mp4" type="video/mp4"/>
+        </video>
+        <img class="hero-logo-still" src="RayStudio.svg" alt="RayStudio" loading="lazy"/>
+      </div>
     </div>
   </div>
 </section>
@@ -1752,6 +1765,79 @@ document.querySelectorAll('.nzone').forEach(function(zone){
     c.addEventListener("mouseenter",function(){var p=v.play();if(p&&p.catch)p.catch(function(){});});
     c.addEventListener("mouseleave",function(){v.pause();v.currentTime=0;});
   });
+})();
+</script>
+<script>
+/* Hero-Animation: Sternschnuppe fliegt aus der Ferne auf den Stern im Logo. Beide Videos starten gemeinsam, einmal, kein Loop.
+   Beben: die Wellenfronten des Durchbruchs (bis 1.4 Logobreiten) verschieben den Text, solange sie ihn durchlaufen. Die Funktion
+   entspricht den Wellen im Video (gleiche Zeit, gleicher Mittelpunkt). Jedes Wort und jede Zeile wird radial von der Welle weggedrückt. */
+(function(){
+  var a=document.getElementById("hero-comet"),b=document.getElementById("hero-logo"),hero=document.querySelector(".hero"),wrap=document.querySelector(".hero-logo-wrap");
+  if(!a||!b||!hero||!wrap||matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  function place(){
+    var h=hero.getBoundingClientRect(),w=wrap.getBoundingClientRect(),L=w.width;
+    a.style.width=(6.4*L)+"px";a.style.left=(w.left-h.left-4.6*L)+"px";a.style.top=(w.top-h.top-1.35*L)+"px";
+  }
+  place();addEventListener("resize",place);addEventListener("load",place);
+
+  /* Einheiten, die schwingen: Wörter der Fliesstexte, die zwei Überschriftszeilen, Buttons, Meta-Angaben */
+  function words(el){
+    var out=[];
+    (function walk(n){
+      Array.prototype.slice.call(n.childNodes).forEach(function(c){
+        if(c.nodeType===3){
+          var parts=c.nodeValue.split(/(\s+)/),f=document.createDocumentFragment();
+          parts.forEach(function(t){
+            if(!t)return;
+            if(/^\s+$/.test(t)){f.appendChild(document.createTextNode(t));return;}
+            var sp=document.createElement("span");sp.textContent=t;sp.style.display="inline-block";f.appendChild(sp);out.push(sp);
+          });
+          c.parentNode.replaceChild(f,c);
+        }else if(c.nodeType===1&&c.tagName!=="SVG"&&c.tagName!=="BR")walk(c);
+      });
+    })(el);
+    return out;
+  }
+  function units(){
+    var u=[];
+    document.querySelectorAll(".hero .eyebrow,.hero .lead").forEach(function(el){u=u.concat(words(el));});
+    document.querySelectorAll(".hero h1 > span").forEach(function(el){el.style.display="inline-block";u.push(el);});
+    document.querySelectorAll(".hero .ha .btn,.hero-meta > span").forEach(function(el){u.push(el);});
+    return u;
+  }
+  function quake(){
+    var w=wrap.getBoundingClientRect(),L=w.width,sx=scrollX,sy=scrollY;
+    var cx=w.left+sx-1.9*L,cy=w.top+sy+1.40*L;   /* Startpunkt der Sternschnuppe, gleiche Zahlen wie im Video */
+    var T0=1.0,RMAX=1.4*L,SIG=0.16*L,AMP=0.075*L;
+    var us=units().map(function(el){var r=el.getBoundingClientRect(),x=r.left+sx+r.width/2-cx,y=r.top+sy+r.height/2-cy,d=Math.hypot(x,y)||1;return {el:el,ux:x/d,uy:y/d,d:d};});
+    var t0=performance.now();
+    (function frame(){
+      var t=(performance.now()-t0)/1000,alive=false;
+      us.forEach(function(o){
+        var dx=0;
+        for(var k=0;k<3;k++){
+          var q=(t-T0-0.16*k)/1.5;if(q<0||q>1)continue;alive=true;
+          var R=RMAX*(1-Math.pow(1-q,2.2)),x=(o.d-R)/SIG,amp=AMP*Math.pow(1-q,1.3)*(1-0.25*k);
+          dx+=amp*(-x*Math.exp(-x*x))*2.2;          /* Druckwelle: erst weg, dann zurück */
+        }
+        var g=Math.min(1,Math.abs(dx)/(AMP*0.8));
+        o.el.style.transform=dx?"translate("+(o.ux*dx).toFixed(2)+"px,"+(o.uy*dx).toFixed(2)+"px)":"";
+        o.el.style.filter=g>0.02?"brightness("+(1+0.5*g).toFixed(2)+")":"";
+      });
+      if(t<T0+1.5+0.32+0.1)requestAnimationFrame(frame);
+      else us.forEach(function(o){o.el.style.transform="";o.el.style.filter="";});
+    })();
+  }
+  var ready=0,started=false;
+  function go(){
+    if(started)return;started=true;place();
+    var pa=a.play(),pb=b.play();
+    if(pa&&pa.catch)pa.catch(function(){});if(pb&&pb.catch)pb.catch(function(){});
+    quake();
+  }
+  function one(){ready++;if(ready===2)go();}
+  [a,b].forEach(function(v){v.readyState>=3?one():v.addEventListener("canplaythrough",one,{once:true});});
+  setTimeout(go,4000);
 })();
 </script>
 </body>

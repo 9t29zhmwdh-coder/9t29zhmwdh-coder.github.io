@@ -5,6 +5,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-09
+
+### Changed
+
+- The hero animation now ends with a breakout. The shooting star flies into the logo tile, and while it travels, short leaf-like veins grow along its path: a thin central vein at the entry point that gets thicker towards the star, with short side veins that grow longer the closer they are to the star. After the landing the tile breaks into stone pieces along these veins, starting at the entry point at the lower left and running along the vein towards the star. The pieces fall away sideways and fade out, with small splinters and dust along the break front.
+- What remains is the logo as light lettering (cream with a soft teal tint) with a warm glowing tail and star. The star flashes three times, and on every flash the edges of the letters that face the star catch the light. After that one soft streak of light runs over the letters and everything stands still.
+- The logo video now covers a larger area behind the text, with exactly the hero colour, and draws the shooting star and the shock waves itself, so the star stays visible all the way into the tile. The still logo stays as the fallback and is shown again if the video cannot play. Visitors who prefer reduced motion see only the still logo.
+- Both videos together are about 0.6 MB. On small screens the videos start later in the clip, shortly before the star enters the picture, so nobody waits for it. Checked at 320, 390, 430 and 768 pixels wide: no sideways scrolling, the text stays readable.
+
 ## [0.7.2] - 2026-10-09
 
 ### Fixed

@@ -118,11 +118,13 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 /* Hero: Sternschnuppe fliegt aus der Ferne auf den Stern im Logo, der Stern funkelt dreimal, dann bleibt alles stehen.
    Zwei Videos starten gleichzeitig: der Anflug im Hintergrund (L = Logobreite, Stern bei 61.8 % / 35.5 % des Logos) und die letzte Strecke samt Funkeln im Logo selbst. */
 .hero-logo-wrap{position:relative;width:min(260px,55%)}
-.hero-logo,.hero-logo-still{width:100%;height:auto;aspect-ratio:1;opacity:.92;border-radius:24px;display:block;position:relative;z-index:1}
-.hero-logo-still{display:none}
-/* liegt hinter dem Text (der .wrap hat z-index 1). Der Videogrund hat exakt die Heroffarbe #0b1521, kein Blend-Modus, weil Safari ihn bei Videos ignoriert. Position setzt das Skript relativ zum Logo */
-.hero-comet{position:absolute;left:0;top:0;width:640px;aspect-ratio:1280/1020;z-index:0;pointer-events:none}
-@media(prefers-reduced-motion:reduce){.hero-logo,.hero-comet{display:none}.hero-logo-still{display:block}}
+.hero-logo-still{width:100%;height:auto;aspect-ratio:1;opacity:.92;border-radius:24px;display:block;position:relative;z-index:1}
+.hero-logo-wrap.playing .hero-logo-still{visibility:hidden}
+/* Beide Videos liegen hinter dem Text (der .wrap hat z-index 1). Grund in Heroffarbe, kein Blend-Modus, weil Safari ihn bei Videos ignoriert. Position und Grösse setzt das Skript relativ zum Logo */
+.hero-comet,.hero-logo{position:absolute;left:0;top:0;z-index:0;pointer-events:none}
+.hero-comet{width:640px;aspect-ratio:1280/1020}
+.hero-logo{width:460px;aspect-ratio:1;background:#0b1521}
+@media(prefers-reduced-motion:reduce){.hero-logo,.hero-comet{display:none}}
 .hero-meta{display:flex;gap:24px;margin-top:32px;font-family:var(--fm);font-size:.75rem;color:rgba(239,233,221,.42)}
 .hero-meta b{color:rgba(239,233,221,.72);font-weight:500}
 
@@ -649,6 +651,10 @@ footer a:hover{color:var(--teal)}
     <source src="media/hero-bg.webm" type="video/webm"/>
     <source src="media/hero-bg.mp4" type="video/mp4"/>
   </video>
+  <video class="hero-logo" muted playsinline preload="auto" aria-hidden="true" tabindex="-1" poster="media/logo-poster.jpg" id="hero-logo">
+    <source src="media/hero-logo.webm" type="video/webm"/>
+    <source src="media/hero-logo.mp4" type="video/mp4"/>
+  </video>
   <div class="wrap hero-g">
     <div>
       <div class="eyebrow fade" data-i18n="hero.ey">Microsoft 365 · Cloud · Developer Tools</div>
@@ -666,10 +672,6 @@ footer a:hover{color:var(--teal)}
     <!-- hero logo -->
     <div class="fade" style="display:flex;align-items:center;justify-content:center">
       <div class="hero-logo-wrap">
-        <video class="hero-logo" muted playsinline preload="auto" poster="media/logo-poster.png" aria-label="RayStudio" id="hero-logo">
-          <source src="media/hero-logo.webm" type="video/webm"/>
-          <source src="media/hero-logo.mp4" type="video/mp4"/>
-        </video>
         <img class="hero-logo-still" src="RayStudio.svg" alt="RayStudio" loading="lazy"/>
       </div>
     </div>
@@ -1767,6 +1769,7 @@ document.querySelectorAll('.nzone').forEach(function(zone){
   function place(){
     var h=hero.getBoundingClientRect(),w=wrap.getBoundingClientRect(),L=w.width;
     a.style.width=(6.4*L)+"px";a.style.left=(w.left-h.left-4.6*L)+"px";a.style.top=(w.top-h.top-1.35*L)+"px";
+    var g=1280/720*L,o=280/720*L;b.style.width=g+"px";b.style.left=(w.left-h.left-o)+"px";b.style.top=(w.top-h.top-o)+"px";
   }
   place();addEventListener("resize",place);addEventListener("load",place);
 
@@ -1843,10 +1846,11 @@ document.querySelectorAll('.nzone').forEach(function(zone){
   var ready=0,started=false;
   function go(){
     if(started)return;started=true;place();
+    wrap.classList.add("playing");
     var off=entryOffset();
     if(off>0){try{a.currentTime=off;b.currentTime=off;}catch(e){off=0;}}
     var pa=a.play(),pb=b.play();
-    if(pa&&pa.catch)pa.catch(function(){});if(pb&&pb.catch)pb.catch(function(){});
+    if(pa&&pa.catch)pa.catch(function(){});if(pb&&pb.catch)pb.catch(function(){wrap.classList.remove("playing");});
     quake(off);
   }
   function one(){ready++;if(ready===2)go();}

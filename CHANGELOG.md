@@ -16,7 +16,6 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- The background between sections now runs through a muted teal instead of a hard edge.
 - The contact section is centred at every window width, including the send button, the privacy note and the GitHub buttons.
 - The visitor badge in the footer only appears once it has loaded. If it is blocked by a DNS filter or an ad blocker, it is hidden instead of showing a broken image.
 

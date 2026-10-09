@@ -491,7 +491,11 @@ footer a:hover{color:var(--teal)}
 /* ══════ DUNKLE KARTEN ══════ */
 .dcard{background:var(--bg-d3);border:1px solid var(--ld);border-radius:var(--r);padding:24px 22px;
   position:relative;overflow:hidden;transition:transform .22s,border-color .22s}
-.dcard:hover{transform:translateY(-3px);border-color:rgba(63,142,126,.42)}
+.dcard{transition:transform .22s,border-color .22s,box-shadow .22s}
+.dcard::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent);transform:scaleX(0);transform-origin:left;transition:transform .38s}
+.dcard:hover{transform:translateY(-3px);border-color:rgba(63,142,126,.42);box-shadow:0 14px 30px -16px rgba(0,0,0,.55)}
+.dcard:hover::after{transform:scaleX(1)}
+.dcard:hover .cico{transform:translateY(-3px) scale(1.09) rotate(-4deg);box-shadow:0 8px 20px -8px currentColor}
 .dcard .cico{background:rgba(63,142,126,.14);color:var(--teal)}
 .dcard h3{font-family:var(--fd);font-size:1rem;font-weight:600;margin-bottom:7px;color:#efe9dd}
 .dcard p{font-size:.86rem;color:rgba(239,233,221,.58);margin-bottom:11px;line-height:1.55}

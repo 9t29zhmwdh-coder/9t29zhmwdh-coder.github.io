@@ -5,6 +5,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-09
+
+### Changed
+
+- The hero animation no longer breaks the logo tile. When the shooting star reaches the star of the logo, a burst of light shoots out of it: a soft warm glow (white in the core, then yellow, amber at the edge) with about 150 fine rays of different lengths and a few long camera-style streaks. It lights up the whole logo and reaches far beyond the tile, through the whole hero area behind the text. At the peak the tile is completely covered, the logo is swapped, and the light fades after about 0.6 seconds. What remains is the new logo as light lettering with a warm tail and star.
+- After the burst the star flashes twice more, the edges of the letters that face the star catch the light, and one soft streak of light runs over the letters. Then everything stands still.
+- The leaf veins and the stone break from 0.8.0 are gone. The logo video is about 0.14 MB smaller, the background video got bigger (up and to the right) so that the rays are not cut off. Both videos together are about 0.5 MB. The letters sit at the same position before and after the swap (measured on the finished video: at most 1 pixel off).
+
 ## [0.8.0] - 2026-10-09
 
 ### Changed

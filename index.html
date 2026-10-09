@@ -1795,7 +1795,21 @@ document.querySelectorAll('.nzone').forEach(function(zone){
     document.querySelectorAll(".hero .ha .btn,.hero-meta > span").forEach(function(el){u.push(el);});
     return u;
   }
-  function quake(){
+  /* Auf kleinen Bildschirmen liegt der Startpunkt ausserhalb des sichtbaren Bereichs. Dann starten die Videos erst kurz bevor der Komet ins Bild kommt.
+     Bahn wie im Video gerechnet (Einheiten: Logobreite L): Bogen bis zum Strahl bei x=-0.35, danach gerade zum Stern; Tempo u^1.7 über die Bogenlänge. */
+  function entryOffset(){
+    var w=wrap.getBoundingClientRect(),h=hero.getBoundingClientRect(),L=w.width;
+    var xe=-w.left/L+0.03,yb=(h.bottom-w.top)/L-0.03;
+    var P0=[-1.9,1.40],S=[0.6204,0.3549],QX=-0.35,Q=[QX,-0.66997*QX+0.7718],K=[Q[0]-0.6*0.8308,Q[1]+0.6*0.5566],pts=[],i,a,b,c;
+    for(i=0;i<=400;i++){var t=i/400;a=(1-t)*(1-t);b=2*(1-t)*t;c=t*t;pts.push([a*P0[0]+b*K[0]+c*Q[0],a*P0[1]+b*K[1]+c*Q[1]]);}
+    for(i=1;i<=100;i++)pts.push([Q[0]+(S[0]-Q[0])*i/100,Q[1]+(S[1]-Q[1])*i/100]);
+    var cum=[0];for(i=1;i<pts.length;i++)cum.push(cum[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+    var idx=-1;for(i=0;i<pts.length;i++){if(pts[i][0]>=xe&&pts[i][1]<=yb){idx=i;break;}}
+    if(idx<=0)return 0;                                   /* von Anfang an sichtbar (breite Bildschirme) */
+    var u=Math.pow(cum[idx]/cum[cum.length-1],1/1.7),tv=1.0+u*2.6;
+    return Math.max(0,tv-0.4);                            /* kurzer Vorlauf, damit man die Ankunft sieht */
+  }
+  function quake(off){
     var w=wrap.getBoundingClientRect(),L=w.width,sx=scrollX,sy=scrollY;
     /* zwei Wellensätze wie im Video: Durchbruch am Startpunkt (bis 1.4 L) und Einschlag im Stern (bis 1.0 L) */
     var waves=[
@@ -1809,7 +1823,7 @@ document.querySelectorAll('.nzone').forEach(function(zone){
     });
     var t0=performance.now(),END=3.6+1.1+0.28+0.1;
     (function frame(){
-      var t=(performance.now()-t0)/1000;
+      var t=(performance.now()-t0)/1000+off;
       us.forEach(function(o){
         var mx=0,my=0,g=0;
         waves.forEach(function(v,i){
@@ -1829,9 +1843,11 @@ document.querySelectorAll('.nzone').forEach(function(zone){
   var ready=0,started=false;
   function go(){
     if(started)return;started=true;place();
+    var off=entryOffset();
+    if(off>0){try{a.currentTime=off;b.currentTime=off;}catch(e){off=0;}}
     var pa=a.play(),pb=b.play();
     if(pa&&pa.catch)pa.catch(function(){});if(pb&&pb.catch)pb.catch(function(){});
-    quake();
+    quake(off);
   }
   function one(){ready++;if(ready===2)go();}
   [a,b].forEach(function(v){v.readyState>=3?one():v.addEventListener("canplaythrough",one,{once:true});});

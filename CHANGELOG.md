@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.6.2] - 2026-10-09
+
+### Fixed
+
+- The Apple logo in the device tile looked stretched. It was squeezed into a square, but the logo is taller than wide. It now keeps its real proportions.
+
 ## [0.6.1] - 2026-10-09
 
 ### Fixed

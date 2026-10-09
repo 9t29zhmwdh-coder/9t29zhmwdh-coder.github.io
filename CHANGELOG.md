@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-10-09
+
+### Fixed
+
+- The three dark cards in the security section now react to the pointer like the light cards above: they lift, show the teal line along the bottom edge, and the icon tilts slightly before it turns into the image on hover.
+
 ## [0.6.0] - 2026-10-09
 
 ### Added

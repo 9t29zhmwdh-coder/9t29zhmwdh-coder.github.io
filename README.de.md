@@ -84,3 +84,7 @@ Alle Repos folgen denselben öffentlichen **[Engineering-Standards](https://gith
 ---
 
 **Author:** [Rafael Yilmaz](https://github.com/9t29zhmwdh-coder) · **Status:** Active · **Last Updated:** Juli 2026
+
+## Quellenangaben
+
+Die Linux-Kachel verwendet den Pinguin Tux von Larry Ewing, Simon Budig und Garrett LeSage (frei nutzbar mit Namensnennung). Namen und Bilder von Windows, Apple, AdGuard, Home Assistant und UniFi gehören ihren Inhabern und werden nur gezeigt, um unterstützte Plattformen und Produkte zu benennen.

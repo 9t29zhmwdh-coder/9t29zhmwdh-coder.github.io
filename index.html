@@ -123,7 +123,10 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 /* Beide Videos liegen hinter dem Text (der .wrap hat z-index 1). Grund in Heroffarbe, kein Blend-Modus, weil Safari ihn bei Videos ignoriert. Position und Grösse setzt das Skript relativ zum Logo */
 .hero-comet,.hero-logo{position:absolute;left:0;top:0;z-index:0;pointer-events:none}
 .hero-comet{width:640px;aspect-ratio:1216/1016}
-.hero-logo{width:460px;aspect-ratio:1;background:#0b1521}
+.hero-logo{width:460px;aspect-ratio:1;background:#0b1521;
+  /* weicher Rand (die Kachel liegt weit ausserhalb des Verlaufs), damit ein minimaler Versatz zum Hintergrund-Video nie als Rahmen sichtbar wird */
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 11%,#000 89%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0,#000 11%,#000 89%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%);mask-composite:intersect}
 @media(prefers-reduced-motion:reduce){.hero-logo,.hero-comet{display:none}}
 .hero-meta{display:flex;gap:24px;margin-top:32px;font-family:var(--fm);font-size:.75rem;color:rgba(239,233,221,.42)}
 .hero-meta b{color:rgba(239,233,221,.72);font-weight:500}
@@ -1861,6 +1864,13 @@ document.querySelectorAll('.nzone').forEach(function(zone){
     var pa=a.play(),pb=b.play();
     if(pa&&pa.catch)pa.catch(function(){});if(pb&&pb.catch)pb.catch(function(){wrap.classList.remove("playing");});
     quake(off);
+    /* Gleichlauf: das Hintergrund-Video folgt dem Logo-Video, nur bei spürbarem Versatz (über 50 ms) wird nachgestellt */
+    (function sync(){
+      if(b.ended||b.paused&&b.currentTime>0&&b.readyState>=2&&b.currentTime>=b.duration-0.05)return;
+      var d=a.currentTime-b.currentTime;
+      if(Math.abs(d)>0.05&&b.currentTime<a.duration-0.1){try{a.currentTime=b.currentTime;}catch(e){}}
+      requestAnimationFrame(sync);
+    })();
   }
   function one(){ready++;if(ready===2)go();}
   [a,b].forEach(function(v){v.readyState>=3?one():v.addEventListener("canplaythrough",one,{once:true});});

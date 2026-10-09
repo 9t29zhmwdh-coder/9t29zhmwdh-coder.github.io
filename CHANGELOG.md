@@ -10,6 +10,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - In Safari the logo jumped by about 18 pixels shortly before the shooting star landed. The logo column fades in from below when the page loads, and the position of the videos was measured while it was still moving. Safari fires the `load` event late (it waits for the videos), and only then the position was corrected. The videos are now placed from the layout position, which does not include the fade-in movement, so they stand in the right place from the first second and never jump. Checked in the browser: one single position from the start, at most 0.5 pixel from the final logo (rounding).
+- In Edge the frame of the logo video could flash up for a moment during the burst of light. The two videos are now kept in step (the background video follows the logo video if it drifts by more than 50 ms), and the edges of the logo video fade out softly into the background video, so even a tiny offset never shows as a frame.
 
 ## [0.9.0] - 2026-10-09
 

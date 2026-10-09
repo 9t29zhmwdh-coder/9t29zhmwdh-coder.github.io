@@ -17,7 +17,6 @@ than a repository listing.
 
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-live-brightgreen?logo=github)
 ![Platform](https://img.shields.io/badge/Platform-Web-lightgrey?logo=googlechrome)
-[![Count](https://hits.sh/www.raystudio.ch.svg?style=flat-square&label=count&color=blueviolet)](https://hits.sh/www.raystudio.ch/)
 
 ![RayStudio website](docs/screenshot.png)
 

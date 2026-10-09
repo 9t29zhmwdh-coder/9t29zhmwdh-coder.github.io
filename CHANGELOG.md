@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-10-09
+
+### Removed
+
+- The visitor counter in the footer and the count badge in the README. Both loaded an image from the third-party service hits.sh, which counts every visit and is blocked by many filters. The site no longer contacts hits.sh at all.
+
 ## [0.7.0] - 2026-10-09
 
 ### Changed

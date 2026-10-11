@@ -1,6 +1,8 @@
 const ALLOWED_ORIGINS = ["https://raystudio.ch", "https://www.raystudio.ch"];
 const MAX_BODY_BYTES = 10000;
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const MAX_EMAIL_LENGTH = 200;
+// Dots separate the domain parts, so there is only one way to split the domain and backtracking stays linear.
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)*\.[^\s@.]{2,}$/;
 
 function corsHeaders(origin) {
   return {
@@ -121,6 +123,11 @@ export default {
       return reply(400, { ok: false, error: "invalid" }, origin);
     }
 
+    // JSON "null", numbers or lists are valid JSON but would throw on the field access below.
+    if (typeof input !== "object" || input === null || Array.isArray(input)) {
+      return reply(400, { ok: false, error: "invalid" }, origin);
+    }
+
     // Bots füllen das versteckte Feld aus; sie bekommen ein Erfolgssignal, damit sie nichts lernen.
     if (input.website) return reply(200, { ok: true }, origin);
 
@@ -129,7 +136,7 @@ export default {
     const message = String(input.message ?? "").trim();
     const valid =
       name.length > 0 && name.length <= 100 &&
-      EMAIL_PATTERN.test(email) && email.length <= 200 &&
+      email.length <= MAX_EMAIL_LENGTH && EMAIL_PATTERN.test(email) &&
       message.length >= 10 && message.length <= 4000;
     if (!valid) return reply(400, { ok: false, error: "invalid" }, origin);
 

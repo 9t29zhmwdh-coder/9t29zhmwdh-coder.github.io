@@ -5,6 +5,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.9.2] - 2026-10-11
+
+### Security
+
+Fix for the one low-severity finding of the Claude Security scan of 2026-10-11 (contact form worker, CWE-1333):
+
+- The email check no longer runs on unbounded input. The length is checked first (200 characters), and the pattern splits the domain at the dots in only one way, so a crafted address can no longer make the regex backtrack quadratically (measured with a 10 KB address: 49 ms before, under 1 ms now). The pattern now also rejects domains with consecutive dots such as `a@b..cc`.
+- A request body that is valid JSON but not an object (`null`, a number, a list) now gets a clean 400 answer instead of an unhandled error.
+- The worker has to be deployed again for this to take effect (`wrangler deploy` in `worker/`).
+
 ## [0.9.1] - 2026-10-09
 
 ### Fixed

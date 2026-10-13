@@ -11,7 +11,8 @@
 <meta property="og:url" content="https://raystudio.ch/"/>
 <meta property="og:image" content="https://raystudio.ch/RayStudio.svg"/>
 <meta name="twitter:card" content="summary_large_image"/>
-<link rel="icon" href="RayStudio.svg" type="image/svg+xml"/>
+<link rel="icon" href="media/logo-64.png" type="image/png" sizes="64x64"/>
+<link rel="preload" href="media/logo-poster.jpg" as="image" fetchpriority="high">
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -619,7 +620,7 @@ footer a:hover{color:var(--teal)}
 <!-- ══ NAV ══ -->
 <nav>
   <div class="nav-i">
-    <a href="#" class="nav-logo"><img src="RayStudio.svg" alt=""/><span>RayStudio</span></a>
+    <a href="#" class="nav-logo"><img src="media/logo-56.webp" alt="" width="28" height="28"/><span>RayStudio</span></a>
     <div class="nl">
       <a href="#ict"       data-i18n="nav.ict">ICT</a>
       <a href="#security"  data-i18n="nav.sec">Sicherheit</a>
@@ -652,11 +653,11 @@ footer a:hover{color:var(--teal)}
 <main id="main">
 <!-- ══ HERO · DARK ══ -->
 <section class="hero">
-  <video class="hero-comet" muted playsinline preload="auto" aria-hidden="true" tabindex="-1" id="hero-comet">
+  <video class="hero-comet" muted playsinline preload="none" aria-hidden="true" tabindex="-1" id="hero-comet">
     <source src="media/hero-bg.webm" type="video/webm"/>
     <source src="media/hero-bg.mp4" type="video/mp4"/>
   </video>
-  <video class="hero-logo" muted playsinline preload="auto" aria-hidden="true" tabindex="-1" poster="media/logo-poster.jpg" id="hero-logo">
+  <video class="hero-logo" muted playsinline preload="none" aria-hidden="true" tabindex="-1" poster="media/logo-poster.jpg" id="hero-logo">
     <source src="media/hero-logo.webm" type="video/webm"/>
     <source src="media/hero-logo.mp4" type="video/mp4"/>
   </video>
@@ -677,7 +678,7 @@ footer a:hover{color:var(--teal)}
     <!-- hero logo -->
     <div class="fade" style="display:flex;align-items:center;justify-content:center">
       <div class="hero-logo-wrap">
-        <img class="hero-logo-still" src="RayStudio.svg" alt="RayStudio" loading="lazy"/>
+        <img class="hero-logo-still" src="media/logo-520.webp" alt="RayStudio" width="260" height="260" fetchpriority="high"/>
       </div>
     </div>
   </div>
@@ -1605,8 +1606,17 @@ function rlLoadLicensing(){
     });
   });
 }
-rlLoadOverview();
-rlLoadLicensing();
+/* Erst laden, wenn das Widget in die Nähe des Bildschirms kommt: sonst gehen bei jedem Seitenaufruf 12 Anfragen an GitHub, auch wenn niemand dorthin scrollt (und das Limit von 60 pro Stunde teilen sich alle Geräte im selben Netz) */
+(function(){
+  var panel=document.getElementById('rl-p0'),box=panel&&panel.closest('.netdash');
+  function load(){rlLoadOverview();rlLoadLicensing();}
+  if(!box||!('IntersectionObserver' in window)){load();return;}
+  var io=new IntersectionObserver(function(en){
+    if(!en.some(function(e){return e.isIntersecting;}))return;
+    io.disconnect();load();
+  },{rootMargin:'300px'});
+  io.observe(box);
+})();
 
 /* ══ CARD HOVER → TOPOLOGY HIGHLIGHT ══ */
 var topoSvg=document.getElementById('topo-svg');
@@ -1763,7 +1773,8 @@ document.querySelectorAll('.nzone').forEach(function(zone){
    entspricht den Wellen im Video (gleiche Zeit, gleicher Mittelpunkt). Jedes Wort und jede Zeile wird radial von der Welle weggedrückt. */
 (function(){
   var a=document.getElementById("hero-comet"),b=document.getElementById("hero-logo"),hero=document.querySelector(".hero"),wrap=document.querySelector(".hero-logo-wrap");
-  if(!a||!b||!hero||!wrap||matchMedia("(prefers-reduced-motion:reduce)").matches)return;
+  /* Datensparmodus: kein Video, das ruhige Logo bleibt stehen */
+  if(!a||!b||!hero||!wrap||matchMedia("(prefers-reduced-motion:reduce)").matches||(navigator.connection&&navigator.connection.saveData))return;
   /* Die Logo-Spalte blendet beim Laden von unten ein (transform). getBoundingClientRect würde diese Bewegung mitmessen, und die Videos säßen dann
      zu tief und sprängen später nach (Safari löst "load" erst spät aus). Deshalb nur die Layoutposition: Summe der offsetLeft/offsetTop bis zum Hero. */
   function anchor(){
@@ -1869,7 +1880,12 @@ document.querySelectorAll('.nzone').forEach(function(zone){
   }
   function one(){ready++;if(ready===2)go();}
   [a,b].forEach(function(v){v.readyState>=3?one():v.addEventListener("canplaythrough",one,{once:true});});
-  setTimeout(go,4000);
+  /* Die Videos (zusammen rund 190 KB) laden erst nach dem Seitenaufbau, damit sie nicht gegen das erste Bild um die Bandbreite konkurrieren. Fallback: nach 4 s Start mit dem, was da ist. */
+  function begin(){
+    [a,b].forEach(function(v){v.preload="auto";v.load();});
+    setTimeout(go,4000);
+  }
+  if(document.readyState==="complete")begin();else addEventListener("load",begin,{once:true});
 })();
 </script>
 </body>

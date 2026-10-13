@@ -5,6 +5,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.4] - 2026-10-13
+
+### Changed
+
+- The first view loads about half as much: 358 KB in 11 requests instead of 714 KB in 22 (measured in a throttled mobile test; largest paint 645 to 670 ms instead of 770 to 870 ms). Three changes:
+  - The logo `RayStudio.svg` is only a wrapper around a 1254 pixel PNG and weighed 130 KB, and it was fetched twice (navigation logo and hero logo) plus once more as the favicon. The navigation logo (4 KB), the hero logo (10 KB) and the favicon (3 KB) are small WebP and PNG files now, made in Pixelmator Pro from the same picture. The SVG stays in the repository for the social preview image only. The hero logo is no longer loaded lazily, because it sits at the top of the page, and its preview image is preloaded.
+  - The two hero videos (about 190 KB together) start loading after the page has finished building, so they no longer compete with the first picture for bandwidth. The animation starts as soon as both can play, or after 4 seconds at the latest. With the browser's data saver switched on, the videos are not loaded at all and the still logo stays.
+  - The RepoLedger preview asks the GitHub API only when it comes close to the screen. Before, every page view sent 12 requests, even if nobody scrolled there, and the limit of 60 per hour is shared by all devices in one network. `PRIVACY.md` is updated.
+
+### Notes
+
+- PageSpeed measured a largest paint of 3.1 s on mobile for 0.10.2. My own throttled test never reached that, so the real effect will only show in the next PageSpeed run.
+
 ## [0.10.3] - 2026-10-13
 
 ### Fixed

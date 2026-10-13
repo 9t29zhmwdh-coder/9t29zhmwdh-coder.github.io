@@ -5,6 +5,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.3] - 2026-10-13
+
+### Fixed
+
+- Accessibility: the tags in the dark RepoLedger preview (`Rust`, `Python`, `CI passing`) were unreadable. The language tags were hard to read after the colour change of 0.10.2 (contrast 1.99, my regression: the same class sits on light cards and on the dark widget), and the green "CI passing" tag was too weak. They have their own light colours inside the dark widget now. This was the last contrast finding of PageSpeed, and my earlier test missed it because the widget loads its data from GitHub after the page is shown.
+- Best Practices: the licensing tab asked GitHub for `LICENSE.COMMERCIAL` in every repository, and the repositories without that file answered 404, which the browser logs as a console error. The widget now reads the file list of the repository instead (always 200) and looks for the file in it. The result is the same for all four repositories (checked against the live API).
+
+### Changed
+
+- `PRIVACY.md` now describes the RepoLedger preview: it asks the GitHub API when the page opens, GitHub sees the visitor's IP address, and the answers are kept in the browser for 15 minutes.
+
 ## [0.10.2] - 2026-10-13
 
 ### Fixed

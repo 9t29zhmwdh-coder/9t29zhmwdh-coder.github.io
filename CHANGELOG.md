@@ -5,6 +5,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-13
+
+### Added
+
+- The contact form now checks the email address on the server before anything is sent. Addresses from throwaway services (10-minute mail and the like) are refused, including their subdomains, based on the public CC0 list `disposable-email-domains` (about 9,800 domains, shipped with the worker). The domain must also be able to receive mail: it needs an MX record, or an address record as the fallback defined in RFC 5321, and a "null MX" is refused. Typos such as `name@gmial.con` are caught this way. The visitor sees a friendly message in German or English and can correct the address.
+- The domain lookup uses Cloudflare's DNS-over-HTTPS resolver and sends only the domain part of the address, never the name or the message. If the resolver does not answer within 3 seconds, the visitor is let through, so a DNS outage never locks out a real person.
+- Tests for the check in `worker/test` (run with `node --test test/`), including the resolver-failure case.
+
+### Notes
+
+- This proves the domain can receive mail, not that the address exists or belongs to the sender. A confirmation link would be needed for that and is not part of this version.
+
 ## [0.9.2] - 2026-10-11
 
 ### Security

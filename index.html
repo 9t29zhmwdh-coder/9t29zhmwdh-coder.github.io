@@ -389,26 +389,6 @@ footer a:hover{color:var(--teal)}
 .card[data-hi="home"] .cico{color:var(--teal);background:color-mix(in srgb,var(--teal) 13%,var(--bg-light));border-color:color-mix(in srgb,var(--teal) 30%,transparent)}
 .card[data-hi="nas"] .cico{color:var(--amber);background:color-mix(in srgb,var(--amber) 14%,var(--bg-light));border-color:color-mix(in srgb,var(--amber) 30%,transparent)}
 .card:hover .cico{transform:translateY(-3px) scale(1.09) rotate(-4deg);box-shadow:0 8px 20px -8px currentColor}
-/* Leistungs-Kacheln: das Icon wird beim Darüberfahren zum Bild, wächst auf das 2.5-Fache und bekommt einen Verlaufsrand */
-:is(.card[data-hi],.dcard[data-hm]) .cico{position:relative;transform-origin:0 0}
-:is(.card[data-hi],.dcard[data-hm]) .cico svg{transition:opacity .2s}
-.card[data-hi="net"] .cico{transition:transform .35s cubic-bezier(.2,.8,.2,1),width .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
-.cico-media{position:absolute;inset:0;border-radius:inherit;overflow:hidden;opacity:0;transition:opacity .25s;pointer-events:none}
-.cico-media img,.cico-media video{width:100%;height:100%;object-fit:cover;display:block}
-:is(.card[data-hi],.dcard[data-hm]) .cico::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:.7px;pointer-events:none;opacity:0;transition:opacity .3s;
-  background:linear-gradient(135deg,var(--teal),color-mix(in srgb,var(--teal) 14%,transparent) 50%,var(--teal));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
-@media(hover:hover){
-  :is(.card[data-hi],.dcard[data-hm]) .cico:hover{transform:scale(2.5);z-index:6;border-color:transparent;box-shadow:0 14px 26px -10px rgba(28,31,36,.4)}
-  :is(.card[data-hi],.dcard[data-hm]) .cico:hover .cico-media,:is(.card[data-hi],.dcard[data-hm]) .cico:hover::after{opacity:1}
-  :is(.card[data-hi],.dcard[data-hm]) .cico:hover svg{opacity:0}
-  /* Gateway: nur das freigestellte Gerät, ohne Kachel und Rand */
-  .card[data-hi="net"] .cico:hover{width:92px;background:transparent;box-shadow:none}
-  .card[data-hi="net"] .cico:hover::after{opacity:0}
-  .card[data-hi="net"] .cico-media{overflow:visible;border-radius:0}
-  .card[data-hi="net"] .cico-media img{object-fit:contain;filter:drop-shadow(0 4px 6px rgba(28,31,36,.3))}
-}
-@media(prefers-reduced-motion:reduce){:is(.card[data-hi],.dcard[data-hm]) .cico{transition:none}}
 
 .btn.bp,.nav-cta{position:relative;overflow:hidden}
 .btn.bp::after,.nav-cta::after{content:"";position:absolute;top:0;left:-140%;width:55%;height:100%;
@@ -788,21 +768,21 @@ footer a:hover{color:var(--teal)}
     <!-- 3 cards -->
     <div class="c3" id="ict-cards" data-stagger>
       <div class="card fade" data-hi="net">
-        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 18h.01"/><path d="M10 18h.01"/><path d="M15 10V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3v4"/><path d="M12 10v4"/></svg><span class="cico-media" aria-hidden="true"><img src="media/card-net.webp" alt="" width="46" height="46" loading="lazy" decoding="async"/></span></div>
+        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 18h.01"/><path d="M10 18h.01"/><path d="M15 10V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3v4"/><path d="M12 10v4"/></svg></div>
         <span class="ctag" data-i18n="c1.tag">Netzwerk · WLAN</span>
         <h3 data-i18n="c1.h">Internet &amp; Netzwerk</h3>
         <p data-i18n="c1.p">Stabiles Netz vom Keller bis in den Garten. Gäste und smarte Geräte bekommen ihr eigenes.</p>
         <ul><li data-i18n="c1.l1">UniFi Cloud Gateway, Switch &amp; APs</li><li data-i18n="c1.l2">Flächendeckendes WiFi 6/7</li><li data-i18n="c1.l3">Gast &amp; IoT VLANs</li><li data-i18n="c1.l4">WireGuard VPN Fernzugang</li></ul>
       </div>
       <div class="card fade" data-hi="home">
-        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg><span class="cico-media" aria-hidden="true"><video muted loop playsinline preload="none" poster="media/card-ha-poster.png" width="46" height="46"><source src="media/card-ha.webm" type="video/webm"/><source src="media/card-ha.mp4" type="video/mp4"/></video></span></div>
+        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg></div>
         <span class="ctag" data-i18n="c2.tag">Home Automation · HomeKit</span>
         <h3 data-i18n="c2.h">Smart Home</h3>
         <p data-i18n="c2.p">Licht, Heizung, Storen. Eine App statt fünf, ohne Abo.</p>
         <ul><li data-i18n="c2.l1">Licht, Heizung, Storen zentral</li><li data-i18n="c2.l2">Apple HomeKit &amp; Siri</li><li data-i18n="c2.l3">Zigbee · Matter · Z-Wave</li><li data-i18n="c2.l4">Läuft lokal, nicht in der Cloud</li></ul>
       </div>
       <div class="card fade" data-hi="nas">
-        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg><span class="cico-media" aria-hidden="true"><video muted loop playsinline preload="none" poster="media/card-nas-poster.png" width="46" height="46"><source src="media/card-nas.webm" type="video/webm"/><source src="media/card-nas.mp4" type="video/mp4"/></video></span></div>
+        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
         <span class="ctag" data-i18n="c3.tag">NAS · Microsoft 365</span>
         <h3 data-i18n="c3.h">Speicher &amp; Cloud</h3>
         <p data-i18n="c3.p">Fotos und Dokumente zu Hause gespeichert, automatisch gesichert.</p>
@@ -849,21 +829,21 @@ footer a:hover{color:var(--teal)}
 
     <div class="c3" data-stagger>
       <div class="dcard fade" data-hm>
-        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><span class="cico-media" aria-hidden="true"><img src="media/card-adguard.webp" alt="" width="46" height="46" loading="lazy" decoding="async"/></span></div>
+        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
         <span class="ctag" data-i18n="sf1.tag">AdGuard Home · Pi-hole</span>
         <h3 data-i18n="sf1.h">Der Filter steht bei dir</h3>
         <p data-i18n="sf1.p">Ein Raspberry Pi oder dein NAS übernimmt das fürs ganze Haus. Am liebsten mit AdGuard Home.</p>
         <ul><li data-i18n="sf1.l1">Steht bei dir, nicht bei einer Firma</li><li data-i18n="sf1.l2">Gepflegte Sperrlisten</li><li data-i18n="sf1.l3">Ausnahmen für den Alltag</li><li data-i18n="sf1.l4">Verschlüsselt nach draussen</li></ul>
       </div>
       <div class="dcard fade" data-hm>
-        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 18h.01"/><path d="M10 18h.01"/><path d="M12 10V6"/><path d="M8 6h8"/><path d="M12 3v3"/></svg><span class="cico-media" aria-hidden="true"><img src="media/card-unifi.webp" alt="" width="46" height="46" loading="lazy" decoding="async"/></span></div>
+        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 18h.01"/><path d="M10 18h.01"/><path d="M12 10V6"/><path d="M8 6h8"/><path d="M12 3v3"/></svg></div>
         <span class="ctag" data-i18n="sf2.tag">UniFi Gateway · VLAN</span>
         <h3 data-i18n="sf2.h">Die Regel gilt an der Haustür</h3>
         <p data-i18n="sf2.p">Der Router ist die Tür ins Internet. Was dort gilt, gilt für jedes Gerät im Haus.</p>
         <ul><li data-i18n="sf2.l1">Angriffserkennung aktiv</li><li data-i18n="sf2.l2">Eigene Regeln für Kinder und Gäste</li><li data-i18n="sf2.l3">Kein Gerät kommt am Filter vorbei</li><li data-i18n="sf2.l4">Getrennte Netze</li></ul>
       </div>
       <div class="dcard fade" data-hm>
-        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg><span class="cico-media" aria-hidden="true"><img src="media/card-cam.webp" alt="" width="46" height="46" loading="lazy" decoding="async"/></span></div>
+        <div class="cico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
         <span class="ctag" data-i18n="sf3.tag">Übersicht · Fernzugriff</span>
         <h3 data-i18n="sf3.h">Du siehst, was los ist</h3>
         <p data-i18n="sf3.p">Auf einen Blick sichtbar, welches Gerät wohin funkt.</p>
@@ -1750,16 +1730,6 @@ document.querySelectorAll('.nzone').forEach(function(zone){
   });
 
   setOpen(false);
-})();
-</script>
-<script>
-/* Leistungs-Kacheln: Videos laufen nur, solange die Maus über dem Icon steht */
-(function(){
-  document.querySelectorAll(".card[data-hi] .cico").forEach(function(c){
-    var v=c.querySelector("video");if(!v)return;
-    c.addEventListener("mouseenter",function(){var p=v.play();if(p&&p.catch)p.catch(function(){});});
-    c.addEventListener("mouseleave",function(){v.pause();v.currentTime=0;});
-  });
 })();
 </script>
 <script>

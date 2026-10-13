@@ -1,3 +1,5 @@
+import { checkEmailDomain } from "./email-check.js";
+
 const ALLOWED_ORIGINS = ["https://raystudio.ch", "https://www.raystudio.ch"];
 const MAX_BODY_BYTES = 10000;
 const MAX_EMAIL_LENGTH = 200;
@@ -144,6 +146,9 @@ export default {
     const human = token && await verifyTurnstile(
       token, env.TURNSTILE_SECRET, request.headers.get("CF-Connecting-IP"));
     if (!human) return reply(403, { ok: false, error: "captcha" }, origin);
+
+    const domainCheck = await checkEmailDomain(email);
+    if (domainCheck !== "ok") return reply(422, { ok: false, error: "email" }, origin);
 
     const sent = await sendMail(env, { name, email, message });
     if (!sent) return reply(502, { ok: false, error: "send" }, origin);

@@ -5,6 +5,24 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.2] - 2026-10-13
+
+### Fixed
+
+- The page no longer shifts while loading. PageSpeed measured a layout shift of 0.292 on desktop and 0.829 on mobile (limit for "good": 0.1), which cost most of the missing performance points. Two causes, both reproduced in a headless Edge with throttled mobile network:
+  - The two hero videos had no size and position until the script placed them, then jumped into view (0.29 alone). They stay invisible until the first placement now. Measured afterwards: 0.000 on desktop.
+  - Visitors with an English browser got the German text first, and the script swapped it for English after the first paint, which moved the content below (0.355 on mobile). The page now stays invisible for English browsers until the texts are swapped, with a 3 second emergency exit. Measured afterwards: about 0.04 on mobile, German unchanged at 0.01.
+- Accessibility (axe-core, WCAG 2 A and AA): all 103 contrast findings are fixed, the headings run in order (the former `h4` titles are `h3` under their `h2`), the page content sits in a `<main>`, the logo in the navigation no longer repeats its name as alt text, and the novoSYS link in the process section is underlined. axe reports no violations on desktop and mobile, in German and English. Colours moved slightly: small teal labels are darker on light sections and lighter on dark sections, grey captions are a bit stronger, and the blue and violet tags on light cards are darker.
+
+### Changed
+
+- The fonts are hosted on this site now (Space Grotesk, Inter and JetBrains Mono as variable fonts, latin and latin-ext, SIL Open Font License, see `fonts/README.md`). The render-blocking request to Google Fonts is gone, and Google no longer receives the visitor's IP address for the fonts (`PRIVACY.md` updated). The page starts painting slightly earlier (first paint about 100 ms in the throttled mobile test).
+
+### Notes
+
+- The largest content paint moved from about 650 ms to about 850 ms in the throttled mobile test, because the hero logo is now shown after its first placement instead of at once in the wrong place. In exchange the jump is gone.
+- Content security headers, HSTS and the cache lifetime come from GitHub Pages and cannot be changed from this repository.
+
 ## [0.10.1] - 2026-10-13
 
 ### Removed

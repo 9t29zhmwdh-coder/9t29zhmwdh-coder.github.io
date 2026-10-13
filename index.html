@@ -12,16 +12,30 @@
 <meta property="og:image" content="https://raystudio.ch/RayStudio.svg"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="icon" href="RayStudio.svg" type="image/svg+xml"/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+/* Englische Browser: Die Seite bleibt bis zum Textwechsel (applyLang) unsichtbar, sonst springt das Layout, wenn die deutschen Texte durch englische ersetzt werden. Notausgang nach 3 s, falls das Skript nie ankommt. */
+(function(){var h=document.documentElement;if((navigator.language||'de').toLowerCase().indexOf('en')===0){h.classList.add('lang-wait');setTimeout(function(){h.classList.remove('lang-wait');},3000);}})();
+</script>
 <style>
+/* Schriften selbst gehostet (OFL, siehe fonts/README.md): keine Anfrage mehr an Google, nichts blockiert das Zeichnen */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(fonts/inter-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 600; font-display: swap; src: url(fonts/inter-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url(fonts/jetbrains-mono-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 500; font-display: swap; src: url(fonts/jetbrains-mono-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap; src: url(fonts/space-grotesk-latin-ext.woff2) format('woff2'); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: 'Space Grotesk'; font-style: normal; font-weight: 400 700; font-display: swap; src: url(fonts/space-grotesk-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+html.lang-wait{visibility:hidden}
 :root{
   --bg-dark:  #0b1521; --bg-d2: #0f1e2e; --bg-d3: #152535;
   --ld:  rgba(239,233,221,.08); --lsd: rgba(239,233,221,.15);
   --bg-light: #F2EFE9; --bg-soft: #EAE6DD; --bg-card: #F8F5EF;
-  --ink: #1C1F24; --ink-2: #4A4F57; --muted: #7A7E85; --line: #D9D3C6;
-  --teal: #3F8E7E; --teal-d: #2d6b5e; --amber: #B87C4C;
+  --ink: #1C1F24; --ink-2: #4A4F57; --muted: #5f636a; --line: #D9D3C6;
+  --teal: #3F8E7E; --teal-d: #2d6b5e;
+  /* Textfarben mit mindestens 4.5:1: -t auf hellem, -l auf dunklem Grund */
+  --teal-t: #2a6556; --teal-l: #58ad9d; --muted-d: #99a0a7; --dev-t: #2f4fb8; --purple-t: #5d38c4; --amber: #B87C4C;
   --dev: #5b8af5; --red: #ef4444; --amber: #e0a06b;
   --fd:"Space Grotesk",system-ui,sans-serif;
   --fb:"Inter",system-ui,sans-serif;
@@ -127,8 +141,10 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
   /* weicher Rand (die Kachel liegt weit ausserhalb des Verlaufs), damit ein minimaler Versatz zum Hintergrund-Video nie als Rahmen sichtbar wird */
   -webkit-mask-image:linear-gradient(to right,transparent 0,#000 11%,#000 89%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%);-webkit-mask-composite:source-in;
   mask-image:linear-gradient(to right,transparent 0,#000 11%,#000 89%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 11%,#000 89%,transparent 100%);mask-composite:intersect}
+/* Vor der ersten Platzierung durchs Skript haben die Videos keine Grösse und keine Position; sichtbar würden sie ins Bild springen (Layout-Shift) */
+.hero:not(.vready) .hero-comet,.hero:not(.vready) .hero-logo{visibility:hidden}
 @media(prefers-reduced-motion:reduce){.hero-logo,.hero-comet{display:none}}
-.hero-meta{display:flex;gap:24px;margin-top:32px;font-family:var(--fm);font-size:.75rem;color:rgba(239,233,221,.42)}
+.hero-meta{display:flex;gap:24px;margin-top:32px;font-family:var(--fm);font-size:.75rem;color:rgba(239,233,221,.58)}
 .hero-meta b{color:rgba(239,233,221,.72);font-weight:500}
 
 /* ══ SECTION BASE ══ */
@@ -136,9 +152,9 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .sd{background:var(--bg-d2);color:#efe9dd;position:relative;z-index:1}
 .sec{padding:80px 0}
 .sh{max-width:100%;margin-bottom:44px}
-.sl-lbl{font-family:var(--fm);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);display:inline-flex;align-items:center;gap:.55em;margin-bottom:11px}
+.sl-lbl{font-family:var(--fm);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-t);display:inline-flex;align-items:center;gap:.55em;margin-bottom:11px}
 .sl-lbl::before{content:"";width:13px;height:1px;background:var(--teal);display:inline-block}
-.dk-lbl{font-family:var(--fm);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);display:inline-flex;align-items:center;gap:.55em;margin-bottom:11px}
+.dk-lbl{font-family:var(--fm);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal-l);display:inline-flex;align-items:center;gap:.55em;margin-bottom:11px}
 .dk-lbl::before{content:"";width:13px;height:1px;background:var(--teal);display:inline-block}
 .sh h2{font-family:var(--fd);font-weight:700;font-size:clamp(1.5rem,2.5vw,2.05rem);letter-spacing:-.02em;line-height:1.2;margin-bottom:9px}
 .sh .sub{font-size:.96rem;color:var(--ink-2);max-width:60ch}
@@ -189,7 +205,7 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
   transform:translateY(-50%);
 }
 #ntip.show{opacity:1}
-#ntip h4{font-family:var(--fd);font-size:.88rem;font-weight:700;margin-bottom:3px;color:#efe9dd}
+#ntip-h{font-family:var(--fd);font-size:.88rem;font-weight:700;margin-bottom:3px;color:#efe9dd}
 #ntip .model{font-family:var(--fm);font-size:.7rem;color:var(--teal);letter-spacing:.04em;margin-bottom:6px}
 #ntip .ndesc{font-size:.78rem;color:rgba(239,233,221,.6);line-height:1.45}
 #ntip .logos{display:flex;gap:8px;align-items:center;margin-top:8px}
@@ -205,6 +221,7 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .card:hover::after{transform:scaleX(1)}
 .cico{width:38px;height:38px;border-radius:9px;background:color-mix(in srgb,var(--teal) 11%,var(--bg-light));display:grid;place-items:center;color:var(--teal);margin-bottom:14px}
 .ctag{font-family:var(--fm);font-size:.68rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;display:block}
+.dcard .ctag{color:var(--muted-d)}
 .card h3{font-family:var(--fd);font-size:1rem;font-weight:600;margin-bottom:7px;color:var(--ink)}
 .card p{font-size:.86rem;color:var(--ink-2);margin-bottom:10px;line-height:1.55}
 .card ul{display:flex;flex-direction:column;gap:5px;font-size:.84rem;color:var(--ink-2)}
@@ -214,7 +231,7 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 
 /* ══ PLATFORM STRIP ══ */
 .plat-strip{margin-top:32px;background:var(--bg-card);border:1px solid var(--line);border-radius:var(--r);padding:28px 32px}
-.plat-label{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:22px}
+.plat-label{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-t);margin-bottom:22px}
 .plat-3{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
 .plat-col{display:flex;flex-direction:column;align-items:center;text-align:center;padding:8px 20px;border-right:1px solid var(--line)}
 .plat-col:last-child{border-right:none}
@@ -235,10 +252,10 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .scol{background:var(--bg-d3);border:1px solid var(--ld);padding:26px 22px}
 .scol:first-child{border-radius:12px 0 0 12px}
 .scol:last-child{border-radius:0 12px 12px 0}
-.scol h4{font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:16px;font-weight:500}
+.scol h3{font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-l);margin-bottom:16px;font-weight:500}
 .scol li{padding:8px 0;font-size:.9rem;border-bottom:1px solid var(--ld);display:flex;justify-content:space-between;align-items:center;color:rgba(239,233,221,.78)}
 .scol li:last-child{border-bottom:none}
-.scol li span:last-child{font-family:var(--fm);font-size:.65rem;color:rgba(239,233,221,.32);letter-spacing:.08em;text-transform:uppercase}
+.scol li span:last-child{font-family:var(--fm);font-size:.65rem;color:rgba(239,233,221,.58);letter-spacing:.08em;text-transform:uppercase}
 
 /* ══ DEVELOPER ══ */
 .dev-hdr{margin-bottom:36px}
@@ -247,23 +264,23 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .dev-left{display:flex;flex-direction:column;gap:14px;max-width:74ch}
 .badges{display:flex;gap:6px;flex-wrap:wrap}
 .db,.dp{font-family:var(--fm);font-size:.67rem;padding:3px 8px;border-radius:4px;font-weight:500;letter-spacing:.04em}
-.db{background:rgba(91,138,245,.12);color:var(--dev);border:1px solid rgba(91,138,245,.22)}
-.dp{background:rgba(124,91,245,.1);color:#9b78f5;border:1px solid rgba(124,91,245,.18)}
+.db{background:rgba(91,138,245,.12);color:var(--dev-t);border:1px solid rgba(91,138,245,.22)}
+.dp{background:rgba(124,91,245,.1);color:var(--purple-t);border:1px solid rgba(124,91,245,.18)}
 .dev-left h3{font-family:var(--fd);font-size:1.35rem;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
 .dev-left p{font-size:.88rem;color:var(--ink-2);line-height:1.6;max-width:70ch}
 .feat-wrap{display:flex;flex-wrap:wrap;gap:6px}
 .ftag{font-family:var(--fm);font-size:.69rem;padding:3px 8px;border-radius:4px;background:var(--bg-soft);border:1px solid var(--line);color:var(--ink-2)}
 .dev-links{display:flex;gap:22px;flex-wrap:wrap}
-.gh-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-size:.84rem;font-weight:500;color:var(--dev);transition:gap .18s}
+.gh-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-size:.84rem;font-weight:500;color:var(--dev-t);transition:gap .18s}
 .gh-link:hover{gap:10px}
 .widget-pair{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 @media(max-width:900px){.widget-pair{grid-template-columns:1fr}}
-.rl-tab{flex:1;padding:10px 5px;text-align:center;font-family:var(--fm);font-size:.7rem;letter-spacing:.04em;color:rgba(239,233,221,.42);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;user-select:none}
+.rl-tab{flex:1;padding:10px 5px;text-align:center;font-family:var(--fm);font-size:.7rem;letter-spacing:.04em;color:rgba(239,233,221,.58);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;user-select:none}
 .rl-tab:hover{color:rgba(239,233,221,.78)}
 .rl-tab.active{color:#e0a06b;border-bottom-color:#e0a06b}
 .rl-panel{display:none;padding:16px}
 .rl-panel.active{display:block}
-.rl-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:8px;font-family:var(--fm);font-size:.62rem;color:rgba(239,233,221,.38);letter-spacing:.1em;text-transform:uppercase}
+.rl-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:8px;font-family:var(--fm);font-size:.62rem;color:rgba(239,233,221,.58);letter-spacing:.1em;text-transform:uppercase}
 .rl-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-top:1px dashed rgba(239,233,221,.09)}
 .rl-row:first-child{border-top:none}
 .rl-name{font-family:var(--fm);font-size:.72rem;color:#efe9dd;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -280,33 +297,33 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .nd-dots span:nth-child(1){background:#ff5f57}
 .nd-dots span:nth-child(2){background:#ffbd2e}
 .nd-dots span:nth-child(3){background:#28ca41}
-.nd-title{flex:1;text-align:center;font-family:var(--fm);font-size:.7rem;color:rgba(239,233,221,.35);letter-spacing:.06em}
+.nd-title{flex:1;text-align:center;font-family:var(--fm);font-size:.7rem;color:rgba(239,233,221,.58);letter-spacing:.06em}
 .nd-tabs{display:flex;border-bottom:1px solid rgba(239,233,221,.07);background:rgba(0,0,0,.13)}
-.nd-tab{flex:1;padding:10px 5px;text-align:center;font-family:var(--fm);font-size:.7rem;letter-spacing:.04em;color:rgba(239,233,221,.42);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;user-select:none}
+.nd-tab{flex:1;padding:10px 5px;text-align:center;font-family:var(--fm);font-size:.7rem;letter-spacing:.04em;color:rgba(239,233,221,.58);cursor:pointer;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;user-select:none}
 .nd-tab:hover{color:rgba(239,233,221,.78)}
 .nd-tab.active{color:var(--dev);border-bottom-color:var(--dev)}
 .nd-panel{display:none;padding:16px}
 .nd-panel.active{display:block}
 .sg{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .sr{background:rgba(255,255,255,.03);border:1px solid rgba(239,233,221,.07);border-radius:7px;padding:10px 12px;display:flex;flex-direction:column;gap:3px}
-.sl2{font-family:var(--fm);font-size:.62rem;color:rgba(239,233,221,.38);letter-spacing:.1em;text-transform:uppercase}
+.sl2{font-family:var(--fm);font-size:.62rem;color:rgba(239,233,221,.58);letter-spacing:.1em;text-transform:uppercase}
 .sv{font-family:var(--fm);font-size:.78rem;color:#efe9dd;word-break:break-all}
 .spin{display:inline-block;width:11px;height:11px;border:2px solid rgba(255,255,255,.13);border-top-color:var(--dev);border-radius:50%;animation:spin .8s linear infinite;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 .nd-row{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}
 .ndi{flex:1;min-width:110px;background:rgba(0,0,0,.28);border:1px solid rgba(239,233,221,.09);border-radius:7px;padding:7px 10px;color:#efe9dd;font-family:var(--fm);font-size:.75rem;outline:none;transition:border-color .2s}
-.ndi:focus{border-color:var(--dev)}.ndi::placeholder{color:rgba(239,233,221,.28)}
+.ndi:focus{border-color:var(--dev)}.ndi::placeholder{color:rgba(239,233,221,.58)}
 .nds{background:rgba(0,0,0,.28);border:1px solid rgba(239,233,221,.09);border-radius:7px;padding:7px 8px;color:#efe9dd;font-family:var(--fm);font-size:.73rem;outline:none;cursor:pointer}
 .ndr{padding:7px 13px;background:var(--dev);color:#fff;border:none;border-radius:7px;font-family:var(--fm);font-size:.73rem;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap}
 .ndr:hover{background:#4a78e0;transform:translateY(-1px)}.ndr:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .nchips{display:flex;gap:5px;margin-bottom:9px}
-.nchip{font-family:var(--fm);font-size:.66rem;padding:3px 9px;border-radius:4px;border:1px solid rgba(239,233,221,.09);color:rgba(239,233,221,.38);cursor:pointer;transition:all .2s}
+.nchip{font-family:var(--fm);font-size:.66rem;padding:3px 9px;border-radius:4px;border:1px solid rgba(239,233,221,.09);color:rgba(239,233,221,.58);cursor:pointer;transition:all .2s}
 .nchip.active{background:rgba(91,138,245,.14);color:var(--dev);border-color:rgba(91,138,245,.28)}
 .nd-out{min-height:68px}
 .nres{display:grid;grid-template-columns:52px 1fr auto;gap:7px;align-items:start;padding:6px 0;border-bottom:1px solid rgba(239,233,221,.05);font-family:var(--fm);font-size:.73rem}
 .nres:last-child{border-bottom:none}
-.nrtype{color:var(--dev);font-weight:500}.nrdata{color:#efe9dd;word-break:break-all}.nrttl{color:rgba(239,233,221,.32);white-space:nowrap}
-.nd-empty{font-family:var(--fm);font-size:.73rem;color:rgba(239,233,221,.32);padding:9px 0}
+.nrtype{color:var(--dev);font-weight:500}.nrdata{color:#efe9dd;word-break:break-all}.nrttl{color:rgba(239,233,221,.58);white-space:nowrap}
+.nd-empty{font-family:var(--fm);font-size:.73rem;color:rgba(239,233,221,.58);padding:9px 0}
 .nd-err{font-family:var(--fm);font-size:.73rem;color:#e07c5b;padding:7px 0}
 .nd-hint{font-family:var(--fm);font-size:.7rem;color:var(--teal);margin-top:7px}
 
@@ -315,8 +332,8 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .pstep{background:var(--bg-d3);border:1px solid var(--ld);border-radius:var(--r);padding:22px 19px;transition:border-color .2s}
 .pstep:hover{border-color:var(--teal)}
 .pstep::before{counter-increment:step;content:"0" counter(step);font-family:var(--fm);font-size:.7rem;color:var(--teal);letter-spacing:.1em;display:block;margin-bottom:12px}
-.pstep h4{font-family:var(--fd);font-size:.97rem;font-weight:600;margin-bottom:7px;color:#efe9dd}
-.pstep p{font-size:.85rem;color:rgba(239,233,221,.52);line-height:1.5}
+.pstep h3{font-family:var(--fd);font-size:.97rem;font-weight:600;margin-bottom:7px;color:#efe9dd}
+.pstep p{font-size:.85rem;color:rgba(239,233,221,.58);line-height:1.5}
 
 /* ══ CONTACT ══ */
 .contact-inner{max-width:660px;margin:0 auto;text-align:center}
@@ -339,10 +356,10 @@ nav.scrolled{border-bottom-color:var(--ld);box-shadow:0 6px 20px -12px rgba(0,0,
 .contact-inner .cor{font-size:.88rem;color:var(--muted);margin:0 auto 14px}
 
 /* ══ FOOTER ══ */
-footer{background:var(--bg-dark);border-top:1px solid var(--ld);padding:26px var(--mx) 34px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:var(--fm);font-size:.7rem;color:rgba(239,233,221,.38);letter-spacing:.04em}
+footer{background:var(--bg-dark);border-top:1px solid var(--ld);padding:26px var(--mx) 34px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-family:var(--fm);font-size:.7rem;color:rgba(239,233,221,.58);letter-spacing:.04em}
 .fstatus{display:inline-flex;align-items:center;gap:6px}
 .fstatus::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px rgba(63,142,126,.5)}
-footer a{color:rgba(239,233,221,.38);transition:color .2s}
+footer a{color:rgba(239,233,221,.58);transition:color .2s}
 footer a:hover{color:var(--teal)}
 
 /* ══ MORE TOOLS ══ */
@@ -351,9 +368,9 @@ footer a:hover{color:var(--teal)}
 .mt-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .mt-card{display:block;background:var(--bg-card);border:1px solid var(--line);border-radius:var(--r);padding:16px 15px;transition:transform .22s,border-color .22s,box-shadow .22s;color:inherit;text-decoration:none}
 .mt-card:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--dev) 38%,var(--line));box-shadow:var(--sh)}
-.mt-card h4{font-family:var(--fd);font-size:.88rem;font-weight:600;color:var(--ink);margin:8px 0 5px}
+.mt-card h3{font-family:var(--fd);font-size:.88rem;font-weight:600;color:var(--ink);margin:8px 0 5px}
 .mt-card p{font-size:.78rem;color:var(--ink-2);line-height:1.5;margin:0}
-.mt-tag{font-family:var(--fm);font-size:.62rem;padding:2px 7px;border-radius:4px;background:rgba(91,138,245,.12);color:var(--dev);border:1px solid rgba(91,138,245,.22);letter-spacing:.04em}
+.mt-tag{font-family:var(--fm);font-size:.62rem;padding:2px 7px;border-radius:4px;background:rgba(91,138,245,.12);color:var(--dev-t);border:1px solid rgba(91,138,245,.22);letter-spacing:.04em}
 .mt-foot{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;font-size:.8rem}
 
 /* ══ RESPONSIVE ══ */
@@ -462,7 +479,7 @@ footer a:hover{color:var(--teal)}
   box-shadow:0 5px 16px -7px rgba(63,142,126,.7)}
 .ntip-ico svg{width:20px;height:20px}
 .ntip-ht{min-width:0}
-#ntip h4{margin-bottom:1px;font-size:.9rem}
+#ntip-h{margin-bottom:1px;font-size:.9rem}
 #ntip .model{margin-bottom:0}
 #ntip .ndesc{margin-top:4px}
 #ntip .nbadge{
@@ -475,7 +492,8 @@ footer a:hover{color:var(--teal)}
   border:1px solid color-mix(in srgb,var(--teal) 22%,transparent);
   font-size:.88rem;line-height:1.58;color:var(--ink-2);max-width:82ch}
 .plain b{font-family:var(--fm);font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--teal);flex:none;padding-top:4px;font-weight:500}
+  color:var(--teal-t);flex:none;padding-top:4px;font-weight:500}
+.plain-d b{color:var(--teal-l)}
 .plain-d{color:rgba(239,233,221,.68);background:rgba(63,142,126,.09);border-color:rgba(63,142,126,.24)}
 
 /* ══════ DUNKLE KARTEN ══════ */
@@ -508,7 +526,7 @@ footer a:hover{color:var(--teal)}
 .sf-rc{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
 .sf-rn{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:#efe9dd;line-height:1}
 .sf-rl{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(239,233,221,.36);margin-top:4px}
+  color:rgba(239,233,221,.58);margin-top:4px}
 .sf-right{min-width:0}
 .sf-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:15px}
 .sf-bar{display:grid;grid-template-columns:192px 1fr 54px;gap:12px;align-items:center;
@@ -519,9 +537,9 @@ footer a:hover{color:var(--teal)}
   background:linear-gradient(90deg,var(--teal),#5fd0b6);
   transition:width 1.15s cubic-bezier(.22,1,.36,1) .3s}
 .sf-dash.in .sf-fill{width:var(--w)}
-.sf-val{text-align:right;color:rgba(239,233,221,.4)}
+.sf-val{text-align:right;color:rgba(239,233,221,.58)}
 .sf-note{padding:11px 24px 15px;border-top:1px solid rgba(239,233,221,.06);
-  font-family:var(--fm);font-size:.66rem;color:rgba(239,233,221,.34);letter-spacing:.03em}
+  font-family:var(--fm);font-size:.66rem;color:rgba(239,233,221,.58);letter-spacing:.03em}
 
 /* ══════ 03 · HOME ASSISTANT DASHBOARD (Beispielansicht) ══════ */
 .hs-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:46px;align-items:start}
@@ -530,7 +548,7 @@ footer a:hover{color:var(--teal)}
 .hs-ico img{width:100%;height:100%;display:block;border-radius:inherit}
 .hs-ico{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
   background:color-mix(in srgb,var(--amber) 13%,var(--bg-light));color:var(--amber)}
-.hs-item h4{font-family:var(--fd);font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:4px}
+.hs-item h3{font-family:var(--fd);font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:4px}
 .hs-item p{font-size:.86rem;color:var(--ink-2);line-height:1.55}
 .hs-dash{background:var(--bg-d2);border:1px solid rgba(239,233,221,.13);border-radius:13px;
   overflow:hidden;box-shadow:0 18px 56px rgba(0,0,0,.38)}
@@ -541,11 +559,11 @@ footer a:hover{color:var(--teal)}
 .hs-tx{min-width:0}
 .hs-tt{font-family:var(--fd);font-size:.79rem;font-weight:500;color:#efe9dd;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hs-ts{font-family:var(--fm);font-size:.63rem;color:rgba(239,233,221,.38);
+.hs-ts{font-family:var(--fm);font-size:.63rem;color:rgba(239,233,221,.58);
   letter-spacing:.07em;text-transform:uppercase}
 .hs-tile.on .hs-ti{background:rgba(224,160,107,.17);color:#e0a06b}
 .hs-tile.on .hs-ts{color:#e0a06b}
-.hs-tile.off .hs-ti{background:rgba(239,233,221,.06);color:rgba(239,233,221,.38)}
+.hs-tile.off .hs-ti{background:rgba(239,233,221,.06);color:rgba(239,233,221,.58)}
 .hs-wx{grid-column:1/-1}
 .hs-wx[hidden]{display:none}
 .hs-live{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.04em;color:var(--teal)}
@@ -553,10 +571,10 @@ footer a:hover{color:var(--teal)}
 @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.25}}
 .hs-auto{margin:0 16px 14px;border:1px dashed rgba(239,233,221,.13);border-radius:10px;padding:12px 14px}
 .hs-ah{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(239,233,221,.34);margin-bottom:9px}
+  color:rgba(239,233,221,.58);margin-bottom:9px}
 .hs-step{display:grid;grid-template-columns:60px 1fr;gap:10px;align-items:start;
   font-size:.79rem;color:rgba(239,233,221,.7);padding:4px 0;line-height:1.45}
-.hs-sk{font-family:var(--fm);font-size:.62rem;color:var(--teal);padding-top:3px;
+.hs-sk{font-family:var(--fm);font-size:.62rem;color:var(--teal-l);padding-top:3px;
   letter-spacing:.06em;text-transform:uppercase}
 .hs-push{margin:0 16px 16px;background:rgba(255,255,255,.055);
   border:1px solid rgba(239,233,221,.1);border-radius:13px;padding:12px 14px}
@@ -564,19 +582,19 @@ footer a:hover{color:var(--teal)}
 .hs-pico{width:22px;height:22px;border-radius:6px;background:#e0a06b;display:grid;
   place-items:center;color:#1C1F24;flex:none}
 .hs-pn{font-family:var(--fd);font-size:.74rem;font-weight:600;color:#efe9dd}
-.hs-pw{font-family:var(--fm);font-size:.61rem;color:rgba(239,233,221,.3);margin-left:auto}
+.hs-pw{font-family:var(--fm);font-size:.61rem;color:rgba(239,233,221,.58);margin-left:auto}
 .hs-pb{font-size:.81rem;color:rgba(239,233,221,.76);margin-bottom:11px;line-height:1.45}
 .hs-pa{display:grid;grid-template-columns:1fr 1fr;gap:7px}
 .hs-btn{text-align:center;padding:7px 6px;border-radius:8px;font-family:var(--fd);
   font-size:.75rem;font-weight:500}
-.hs-btn.p{background:var(--teal);color:#fff}
+.hs-btn.p{background:var(--teal-d);color:#fff}
 .hs-btn.s{background:rgba(239,233,221,.08);color:rgba(239,233,221,.62)}
 .hs-note{padding:11px 20px 15px;border-top:1px solid rgba(239,233,221,.06);
-  font-family:var(--fm);font-size:.66rem;color:rgba(239,233,221,.34)}
+  font-family:var(--fm);font-size:.66rem;color:rgba(239,233,221,.58)}
 .hs-kit{margin-top:22px;background:var(--bg-card);border:1px solid var(--line);
   border-radius:var(--r);padding:18px 22px;display:flex;gap:15px;align-items:flex-start}
 .hs-kit svg{flex:none;margin-top:2px}
-.hs-kit h4{font-family:var(--fd);font-size:.92rem;font-weight:600;color:var(--ink);margin-bottom:4px}
+.hs-kit h3{font-family:var(--fd);font-size:.92rem;font-weight:600;color:var(--ink);margin-bottom:4px}
 .hs-kit p{font-size:.85rem;color:var(--ink-2);line-height:1.55}
 
 @media(max-width:960px){
@@ -598,7 +616,7 @@ footer a:hover{color:var(--teal)}
 <!-- ══ NAV ══ -->
 <nav>
   <div class="nav-i">
-    <a href="#" class="nav-logo"><img src="RayStudio.svg" alt="RayStudio"/><span>RayStudio</span></a>
+    <a href="#" class="nav-logo"><img src="RayStudio.svg" alt=""/><span>RayStudio</span></a>
     <div class="nl">
       <a href="#ict"       data-i18n="nav.ict">ICT</a>
       <a href="#security"  data-i18n="nav.sec">Sicherheit</a>
@@ -628,6 +646,7 @@ footer a:hover{color:var(--teal)}
   </div>
 </nav>
 
+<main id="main">
 <!-- ══ HERO · DARK ══ -->
 <section class="hero">
   <video class="hero-comet" muted playsinline preload="auto" aria-hidden="true" tabindex="-1" id="hero-comet">
@@ -667,7 +686,7 @@ footer a:hover{color:var(--teal)}
     <div class="ict-top">
       <!-- Interactive Topology -->
       <div class="topo-wrap fade" id="topo-wrap">
-        <div id="ntip"><div class="ntip-hd"><span class="ntip-ico" id="ntip-ico"></span><div class="ntip-ht"><h4 id="ntip-h"></h4><div class="model" id="ntip-m"></div></div></div><div class="ndesc" id="ntip-d"></div><div class="logos" id="ntip-l" style="display:none"></div><div class="badge-list" id="ntip-b" style="display:none"></div></div>
+        <div id="ntip"><div class="ntip-hd"><span class="ntip-ico" id="ntip-ico"></span><div class="ntip-ht"><div id="ntip-h"></div><div class="model" id="ntip-m"></div></div></div><div class="ndesc" id="ntip-d"></div><div class="logos" id="ntip-l" style="display:none"></div><div class="badge-list" id="ntip-b" style="display:none"></div></div>
         <svg id="topo-svg" class="topo-svg" viewBox="0 0 480 420">
           <defs>
             <filter id="gl"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
@@ -904,23 +923,23 @@ footer a:hover{color:var(--teal)}
       <div class="hs-list" data-stagger>
         <div class="hs-item fade">
           <div class="hs-ico"><img src="media/hs-0.webp" alt="" width="38" height="38" loading="lazy" decoding="async"/></div>
-          <div><h4 data-i18n="hs1.h">Alles an einem Ort</h4><p data-i18n="hs1.p">Lampen, Storen, Heizung, Steckdosen, Kameras. Auch wenn jedes Gerät von einer anderen Firma stammt.</p></div>
+          <div><h3 data-i18n="hs1.h">Alles an einem Ort</h3><p data-i18n="hs1.p">Lampen, Storen, Heizung, Steckdosen, Kameras. Auch wenn jedes Gerät von einer anderen Firma stammt.</p></div>
         </div>
         <div class="hs-item fade">
           <div class="hs-ico"><img src="media/hs-1.webp" alt="" width="38" height="38" loading="lazy" decoding="async"/></div>
-          <div><h4 data-i18n="hs2.h">Es passiert im richtigen Moment</h4><p data-i18n="hs2.p">Nicht stur um sechs Uhr, sondern wenn wirklich jemand da ist.</p></div>
+          <div><h3 data-i18n="hs2.h">Es passiert im richtigen Moment</h3><p data-i18n="hs2.p">Nicht stur um sechs Uhr, sondern wenn wirklich jemand da ist.</p></div>
         </div>
         <div class="hs-item fade">
           <div class="hs-ico"><img src="media/hs-2.webp" alt="" width="38" height="38" loading="lazy" decoding="async"/></div>
-          <div><h4 data-i18n="hs3.h">Eine Nachricht, ein Tipp, erledigt</h4><p data-i18n="hs3.p">Die Meldung kommt aufs iPhone, mit Knöpfen darauf. Die App musst du nie öffnen.</p></div>
+          <div><h3 data-i18n="hs3.h">Eine Nachricht, ein Tipp, erledigt</h3><p data-i18n="hs3.p">Die Meldung kommt aufs iPhone, mit Knöpfen darauf. Die App musst du nie öffnen.</p></div>
         </div>
         <div class="hs-item fade">
           <div class="hs-ico"><img src="media/hs-3.webp" alt="" width="38" height="38" loading="lazy" decoding="async"/></div>
-          <div><h4 data-i18n="hs4.h">Eine Ansicht für alle</h4><p data-i18n="hs4.p">Eine einfache Seite für die Familie, eine ausführliche für dich.</p></div>
+          <div><h3 data-i18n="hs4.h">Eine Ansicht für alle</h3><p data-i18n="hs4.p">Eine einfache Seite für die Familie, eine ausführliche für dich.</p></div>
         </div>
         <div class="hs-item fade">
           <div class="hs-ico"><img src="media/hs-4.webp" alt="" width="38" height="38" loading="lazy" decoding="async"/></div>
-          <div><h4 data-i18n="hs5.h">Läuft auch morgen noch</h4><p data-i18n="hs5.p">Nach einem Stromausfall startet alles von selbst wieder. Sicherungen laufen automatisch.</p></div>
+          <div><h3 data-i18n="hs5.h">Läuft auch morgen noch</h3><p data-i18n="hs5.p">Nach einem Stromausfall startet alles von selbst wieder. Sicherungen laufen automatisch.</p></div>
         </div>
       </div>
 
@@ -975,7 +994,7 @@ footer a:hover{color:var(--teal)}
         <div class="hs-kit fade">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="#1d1d1f"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.46 2.208 3.09 3.792 3.029 1.52-.065 2.09-.987 3.925-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.208-4.853-.026-3.022 2.496-4.515 2.612-4.749-1.443-2.09-3.65-2.324-4.415-2.376-2-.13-3.676 1.079-4.602 1.079zm3.378-3.066c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.56-1.702z"/></svg>
           <div>
-            <h4 data-i18n="hs.kh">Du bist Apple gewohnt?</h4>
+            <h3 data-i18n="hs.kh">Du bist Apple gewohnt?</h3>
             <p data-i18n="hs.kp">Deine Geräte tauchen in der Apple Home App auf, auch die, die das von sich aus nicht können. Siri schaltet weiterhin.</p>
           </div>
         </div>
@@ -993,21 +1012,21 @@ footer a:hover{color:var(--teal)}
       <div class="plain plain-d fade"><b data-i18n="pl.k">Im Klartext</b><span data-i18n="st.plain">Ich empfehle nichts, was ich nicht selber täglich benutze.</span></div>
     </div>
     <div class="sc3">
-      <div class="scol fade"><h4 data-i18n="st.c1">Netzwerk</h4><ul>
+      <div class="scol fade"><h3 data-i18n="st.c1">Netzwerk</h3><ul>
         <li><span>UniFi Cloud Gateway</span><span>Core</span></li>
         <li><span>UDM Pro Max</span><span>Enterprise</span></li>
         <li><span>WiFi 6 / 7</span><span>Wireless</span></li>
         <li><span>UniFi Content Filter</span><span>Security</span></li>
         <li><span>WireGuard</span><span>VPN</span></li>
       </ul></div>
-      <div class="scol fade"><h4 data-i18n="st.c2">Automation</h4><ul>
+      <div class="scol fade"><h3 data-i18n="st.c2">Automation</h3><ul>
         <li><span>Raspberry Pi 5</span><span>Host</span></li>
         <li><span>Home Assistant OS</span><span>Platform</span></li>
         <li><span>Zigbee2MQTT</span><span>Bridge</span></li>
         <li><span>Matter</span><span>Standard</span></li>
         <li><span>Docker</span><span>Services</span></li>
       </ul></div>
-      <div class="scol fade"><h4 data-i18n="st.c3">Developer</h4><ul>
+      <div class="scol fade"><h3 data-i18n="st.c3">Developer</h3><ul>
         <li><span>C# · WPF · .NET 8</span><span>Apps</span></li>
         <li><span>Azure Monitor · Entra ID</span><span>Cloud</span></li>
         <li><span>Microsoft 365 · Graph API</span><span>Platform</span></li>
@@ -1081,7 +1100,7 @@ footer a:hover{color:var(--teal)}
               <div class="sr"><span class="sl2" data-i18n="sy.cp">CPU-Kerne</span><span class="sv" id="s-cp">…</span></div>
               <div class="sr"><span class="sl2" data-i18n="sy.dv">Geräteart</span><span class="sv" id="s-dv">…</span></div>
             </div>
-            <div class="sy-note" data-i18n="sy.note" style="font-size:.62rem;color:rgba(239,233,221,.42);margin-top:10px;letter-spacing:.03em">Alles lokal aus deinem Browser gelesen. Nichts wird gesendet oder gespeichert.</div>
+            <div class="sy-note" data-i18n="sy.note" style="font-size:.62rem;color:rgba(239,233,221,.58);margin-top:10px;letter-spacing:.03em">Alles lokal aus deinem Browser gelesen. Nichts wird gesendet oder gespeichert.</div>
           </div>
           <div class="nd-panel" id="nd-dns">
             <div class="nchips">
@@ -1116,12 +1135,12 @@ footer a:hover{color:var(--teal)}
           <div class="rl-panel active" id="rl-p0">
             <div class="rl-head"><span data-i18n="rl.repo">Repo Name</span><span data-i18n="rl.ghcheck">GitHub Qualitätscheck</span></div>
             <div id="rl-p0-body"><span class="spin"></span></div>
-            <div class="sy-note" data-i18n="rl.note1" style="font-size:.62rem;color:rgba(239,233,221,.42);margin-top:10px;letter-spacing:.03em">Live aus der öffentlichen GitHub-API, direkt im Browser des Besuchers.</div>
+            <div class="sy-note" data-i18n="rl.note1" style="font-size:.62rem;color:rgba(239,233,221,.58);margin-top:10px;letter-spacing:.03em">Live aus der öffentlichen GitHub-API, direkt im Browser des Besuchers.</div>
           </div>
           <div class="rl-panel" id="rl-p1">
             <div class="rl-head"><span data-i18n="rl.repo">Repo Name</span><span data-i18n="rl.lic">Lizenz</span></div>
             <div id="rl-p1-body"><span class="spin"></span></div>
-            <div class="sy-note" data-i18n="rl.note2" style="font-size:.62rem;color:rgba(239,233,221,.42);margin-top:10px;letter-spacing:.03em">Erkennt MIT + Commercial-Zusatz pro Repo.</div>
+            <div class="sy-note" data-i18n="rl.note2" style="font-size:.62rem;color:rgba(239,233,221,.58);margin-top:10px;letter-spacing:.03em">Erkennt MIT + Commercial-Zusatz pro Repo.</div>
           </div>
         </div>
       </div>
@@ -1133,22 +1152,22 @@ footer a:hover{color:var(--teal)}
       <div class="mt-grid">
         <a class="mt-card" href="https://github.com/9t29zhmwdh-coder/MailLoom" target="_blank" rel="noopener">
           <span class="mt-tag">Rust · Tauri</span>
-          <h4>MailLoom</h4>
+          <h3>MailLoom</h3>
           <p data-i18n="mt1.p">Lokaler KI-Mail-Organizer: IMAP-Sync, automatische Kategorisierung, Review-Workflow.</p>
         </a>
         <a class="mt-card" href="https://github.com/9t29zhmwdh-coder/LifePlanner" target="_blank" rel="noopener">
           <span class="mt-tag">Rust · Tauri</span>
-          <h4>LifePlanner</h4>
+          <h3>LifePlanner</h3>
           <p data-i18n="mt2.p">Offline KI-Lebensplaner: Termine, Aufgaben und Fristen, lokal und privat.</p>
         </a>
         <a class="mt-card" href="https://github.com/9t29zhmwdh-coder/NetSweep" target="_blank" rel="noopener">
           <span class="mt-tag">C# · .NET 8</span>
-          <h4>NetSweep</h4>
+          <h3>NetSweep</h3>
           <p data-i18n="mt3.p">Speicher-Audit &amp; Cleanup für NAS, SharePoint, OneDrive for Business und DFS.</p>
         </a>
         <a class="mt-card" href="https://github.com/9t29zhmwdh-coder/LogLens" target="_blank" rel="noopener">
           <span class="mt-tag">Rust · Tauri</span>
-          <h4>LogLens</h4>
+          <h3>LogLens</h3>
           <p data-i18n="mt4.p">KI-gestützte Log-Suche und Root-Cause-Analyse, lokal und ohne Cloud.</p>
         </a>
       </div>
@@ -1179,10 +1198,10 @@ footer a:hover{color:var(--teal)}
       <div class="plain plain-d fade"><b data-i18n="pl.k">Im Klartext</b><span data-i18n="pr.plain">Du schreibst, was dich stört. Du bekommst eine ehrliche Einschätzung, gratis. Erst danach reden wir über Geld.</span></div>
     </div>
     <div class="p4" data-stagger>
-      <div class="pstep fade"><h4 data-i18n="p1h">Anfrage</h4><p data-i18n="p1p">Beschreib dein Anliegen ausführlich: Was hast du, was willst du erreichen, was funktioniert nicht. Je mehr Details, desto besser.</p></div>
-      <div class="pstep fade"><h4 data-i18n="p2h">Prüfung</h4><p data-i18n="p2p">Ich analysiere deine Situation. Sind alle Infos da, bekommst du direkt eine kostenlose Einschätzung. Fehlt etwas, melde ich mich kurz.</p></div>
-      <div class="pstep fade"><h4 data-i18n="p3h">Empfehlung</h4><p data-i18n="p3p">Du bekommst eine klare, unverbindliche Empfehlung: Welches Setup passt, was sinnvoll ist. Komplett kostenlos, ohne Verpflichtung.</p></div>
-      <div class="pstep fade"><h4 data-i18n="p4h">Offerte</h4><p data-i18n="p4p">Optional: Wenn du willst, erstelle ich ein konkretes Angebot über <a href="https://www.novosys.ch" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:none">novoSYS.ch</a>.</p></div>
+      <div class="pstep fade"><h3 data-i18n="p1h">Anfrage</h3><p data-i18n="p1p">Beschreib dein Anliegen ausführlich: Was hast du, was willst du erreichen, was funktioniert nicht. Je mehr Details, desto besser.</p></div>
+      <div class="pstep fade"><h3 data-i18n="p2h">Prüfung</h3><p data-i18n="p2p">Ich analysiere deine Situation. Sind alle Infos da, bekommst du direkt eine kostenlose Einschätzung. Fehlt etwas, melde ich mich kurz.</p></div>
+      <div class="pstep fade"><h3 data-i18n="p3h">Empfehlung</h3><p data-i18n="p3p">Du bekommst eine klare, unverbindliche Empfehlung: Welches Setup passt, was sinnvoll ist. Komplett kostenlos, ohne Verpflichtung.</p></div>
+      <div class="pstep fade"><h3 data-i18n="p4h">Offerte</h3><p data-i18n="p4p">Optional: Wenn du willst, erstelle ich ein konkretes Angebot über <a href="https://www.novosys.ch" target="_blank" rel="noopener" style="color:var(--teal-l);text-decoration:underline">novoSYS.ch</a>.</p></div>
     </div>
   </div>
 </section>
@@ -1218,6 +1237,7 @@ footer a:hover{color:var(--teal)}
     </div>
   </div>
 </section>
+</main>
 
 <!-- ══ FOOTER ══ -->
 <footer>
@@ -1230,7 +1250,7 @@ footer a:hover{color:var(--teal)}
 
 <script>
 /* ══ i18n ══ */
-var T={de:{"topo.gw":"ROUTER","topo.isp":"INTERNET","topo.sw":"SWITCH","topo.ap":"WLAN","topo.nas":"SPEICHER","topo.ha":"SMART HOME","nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Ablauf","nav.contact":"Kontakt","nav.cta":"Anfragen","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Sauber gebaut.","h1b":"Einfach genutzt.","hero.lead":"Netzwerk, Smart Home, Speicher, Microsoft 365. Sauber eingerichtet, gut abgesichert, verständlich erklärt.","hero.c1":"ICT-Leistungen","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"mit Zweck gebaut","hm2b":"Schweizer","hm2":"Qualität","ict.lbl":"01 / ICT-Leistungen","ict.h2":"Drei Disziplinen.\nEin Ansprechpartner.","ict.sub":"Von der Dose in der Wand bis in die letzte Ecke im Garten.","c1.tag":"Netzwerk · WLAN","c1.h":"Internet & Netzwerk","c1.p":"Stabiles Netz vom Keller bis in den Garten. Gäste und smarte Geräte bekommen ihr eigenes.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Flächendeckendes WiFi 6/7","c1.l3":"Gast & IoT VLANs","c1.l4":"WireGuard VPN Fernzugang","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Licht, Heizung, Storen. Eine App statt fünf, ohne Abo.","c2.l1":"Licht, Heizung, Storen zentral","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Läuft lokal, nicht in der Cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Speicher & Cloud","c3.p":"Fotos und Dokumente zu Hause gespeichert, automatisch gesichert.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Automatische Foto & Dokument-Sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-Party-Backup","pl.label":"Geräte-Support inklusive","pl.win":"Einrichten, absichern, M365 & Entra ID","pl.mac":"Migrieren, einbinden, betreuen","pl.lin":"Server, Docker & Automationen","nav.sec": "Sicherheit", "nav.ha": "Smart Home", "pl.k": "Im Klartext", "ict.plain": "Gäste ins WLAN, ohne dein Passwort zu verraten. Sehen, was deine Geräte ins Internet senden. Ruhigeres Internet für die Kinder. Ich richte das ein, mit UniFi.", "st.plain": "Ich empfehle nichts, was ich nicht selber täglich benutze.", "dv.plain": "Die zwei Fenster unten sind keine Bilder. Sie laufen wirklich, in deinem Browser.", "pr.plain": "Du schreibst, was dich stört. Du bekommst eine ehrliche Einschätzung, gratis. Erst danach reden wir über Geld.", "sf.lbl": "02 / Netzwerk & Internetsicherheit", "sf.h2": "Sauberes Internet. Auf jedem Gerät im Haus.", "sf.sub": "Werbung und Betrugsseiten kommen gar nicht erst herein. Auf jedem Gerät, ohne App.", "sf.plain": "Ein kleines Gerät bei dir zu Hause prüft jede Anfrage ins Internet. Werbung und Betrug lässt es gar nicht erst durch.", "sf1.tag": "AdGuard Home · Pi-hole", "sf1.h": "Der Filter steht bei dir", "sf1.p": "Ein Raspberry Pi oder dein NAS übernimmt das fürs ganze Haus. Am liebsten mit AdGuard Home.", "sf1.l1": "Steht bei dir, nicht bei einer Firma", "sf1.l2": "Gepflegte Sperrlisten", "sf1.l3": "Ausnahmen für den Alltag", "sf1.l4": "Verschlüsselt nach draussen", "sf2.tag": "UniFi Gateway · VLAN", "sf2.h": "Die Regel gilt an der Haustür", "sf2.p": "Der Router ist die Tür ins Internet. Was dort gilt, gilt für jedes Gerät im Haus.", "sf2.l1": "Angriffserkennung aktiv", "sf2.l2": "Eigene Regeln für Kinder und Gäste", "sf2.l3": "Kein Gerät kommt am Filter vorbei", "sf2.l4": "Getrennte Netze", "sf3.tag": "Übersicht · Fernzugriff", "sf3.h": "Du siehst, was los ist", "sf3.p": "Auf einen Blick sichtbar, welches Gerät wohin funkt.", "sf3.l1": "Kameras ohne Abo-Zwang", "sf3.l2": "Aufnahmen bleiben zu Hause", "sf3.l3": "Sicherer Zugriff von unterwegs", "sf3.l4": "Updates bleiben gepflegt", "sf.dtitle": "DNS-Filter · Beispielansicht", "sf.dblocked": "geblockt", "sf.k1": "Anfragen pro Tag", "sf.k2": "Davon gestoppt", "sf.k3": "Geräte im Netz", "sf.b1": "Werbenetzwerke", "sf.b2": "Nutzungsdaten der Geräte", "sf.b3": "Verfolgung im Web", "sf.b4": "Betrug & Schadseiten", "sf.b5": "Nicht jugendfrei", "sf.dnote": "Beispielansicht mit typischen Werten. Keine Live-Daten.", "sf.hb": "Ehrlich", "sf.honest": "Das ist kein Virenschutz. Es nimmt weg, was im Alltag nervt: Werbung, Datensammler, bekannte Betrugsseiten. Der Router vom Anbieter lässt all das durch.", "hs.lbl": "03 / Smart Home mit Home Assistant", "hs.h2": "Ein Zuhause, das mitdenkt.<br>Alles bleibt bei dir.", "hs.sub": "Eine App statt fünf. Licht, Heizung, Storen, Kameras. Alles bei dir zu Hause, ohne Abo.", "hs.plain": "Jedes smarte Gerät bringt seine eigene App mit. Home Assistant legt eine Oberfläche darüber. Gehen alle aus dem Haus, geht die Heizung runter.", "hs1.h": "Alles an einem Ort", "hs1.p": "Lampen, Storen, Heizung, Steckdosen, Kameras. Auch wenn jedes Gerät von einer anderen Firma stammt.", "hs2.h": "Es passiert im richtigen Moment", "hs2.p": "Nicht stur um sechs Uhr, sondern wenn wirklich jemand da ist.", "hs3.h": "Eine Nachricht, ein Tipp, erledigt", "hs3.p": "Die Meldung kommt aufs iPhone, mit Knöpfen darauf. Die App musst du nie öffnen.", "hs4.h": "Eine Ansicht für alle", "hs4.p": "Eine einfache Seite für die Familie, eine ausführliche für dich.", "hs5.h": "Läuft auch morgen noch", "hs5.p": "Nach einem Stromausfall startet alles von selbst wieder. Sicherungen laufen automatisch.", "hs.dtitle": "Home Assistant · Beispielansicht", "hs.t1": "Wohnzimmer", "hs.t1v": "An · 40%", "hs.t2": "Heizung Bad", "hs.t3": "Storen Süd", "hs.t3v": "Zu", "hs.t4": "Kamera Eingang", "hs.t4v": "Ruhig", "hs.ah": "Automation · Beispiel", "hs.s1k": "Wenn", "hs.s1": "alle aus dem Haus sind", "hs.s2k": "Und", "hs.s2": "das zehn Minuten so bleibt", "hs.s3k": "Dann", "hs.s3": "Licht aus, Heizung auf Sparbetrieb, Kameras scharf", "hs.pw": "jetzt", "hs.pb": "Terrassentür seit 20 Minuten offen, draussen sind es 7 °C.", "hs.pa1": "Erinnere mich in 10 Min.", "hs.pa2": "Passt so", "hs.dnote": "Beispielansicht. Keine echten Geräte, nur das Wetter ist live (Daten: MET Norway).", "hs.w": "Draussen", "hs.w.clear": "Klar", "hs.w.fair": "Heiter", "hs.w.partly": "Teils bewölkt", "hs.w.cloudy": "Bewölkt", "hs.w.fog": "Nebel", "hs.w.rain": "Regen", "hs.w.snow": "Schnee", "hs.w.thunder": "Gewitter", "hs.kh": "Du bist Apple gewohnt?", "hs.kp": "Deine Geräte tauchen in der Apple Home App auf, auch die, die das von sich aus nicht können. Siri schaltet weiterhin.","st.lbl":"04 / Stack","st.h2":"Womit ich täglich arbeite.","st.c1":"Netzwerk","st.c2":"Automation","st.c3":"Developer","dv.lbl":"05 / RayStudio Developer Tools","dv.h2":"Eigene Tools. Konkrete Probleme gelöst.","dv.sub":"Kleine, eigenständige Apps. Jede löst ein konkretes Problem, das mir selbst begegnet ist.","dv.desc":"Netzwerk- & Mail-Toolkit für Windows. DNS-Abfragen, Mail-Server-Erkennung via DNS, Verbindungstest und vollständige Systeminfo.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"Mein System","dv.gh":"Auf GitHub ansehen","nd.ti":"NetDashboard · Live Preview","nd.t1":"Mein System","nd.t2":"DNS-Check","nd.t3":"Mail-Check","nd.q":"Abfragen","nd.ck":"Prüfen","nd.de":"Domain eingeben und Abfragen klicken.","nd.me":"E-Mail-Adresse oder Domain eingeben.","mt.h":"Weitere Tools aus dem Studio","mt1.p":"Lokaler KI-Mail-Organizer: IMAP-Sync, automatische Kategorisierung, Review-Workflow.","mt2.p":"Offline KI-Lebensplaner: Termine, Aufgaben und Fristen, lokal und privat.","mt3.p":"Speicher-Audit & Cleanup für NAS, SharePoint, OneDrive for Business und DFS.","mt4.p":"KI-gestützte Log-Suche und Root-Cause-Analyse, lokal und ohne Cloud.","mt.all":"Alle Projekte auf GitHub","mt.std":"Alle Repos folgen öffentlichen Engineering-Standards","mt.sec":"CodeQL & Dependabot aktiv auf allen Repos","sy.ip":"Öffentliche IP","sy.os":"Betriebssystem","sy.br":"Browser","sy.sc":"Bildschirm","sy.tz":"Zeitzone","sy.la":"Sprache","sy.cp":"CPU-Kerne","sy.cn":"Verbindung","sy.dv":"Geräteart","sy.note":"Alles lokal aus deinem Browser gelesen. Nichts wird gesendet oder gespeichert.","rl.nobk":"Kein Backend","dv.desc2":"NetDashboard: Netzwerk- &amp; Mail-Toolkit für Windows. RepoLedger: kostenloses GitHub-Portfolio-Dashboard für alle, CI-Status, offene PRs und Lizenzierung auf einen Blick, komplett im Browser, ohne eigenen Server.","rl.f1":"CI &amp; Security","rl.f2":"Lizenzierung","rl.ghnd":"NetDashboard auf GitHub","rl.ghrl":"RepoLedger auf GitHub","rl.tab1":"Übersicht","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Qualitätscheck","rl.lic":"Lizenz","rl.note1":"Live aus der öffentlichen GitHub-API, direkt im Browser des Besuchers.","rl.note2":"Erkennt MIT + Commercial-Zusatz pro Repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"06 / Ablauf","pr.h2":"Kein Verkaufsgespräch. Kein Aufwand.","p1h":"Anfrage","p1p":"Beschreib dein Anliegen ausführlich: Was hast du, was willst du erreichen, was funktioniert nicht. Je mehr Details, desto besser.","p2h":"Prüfung","p2p":"Ich analysiere deine Situation. Sind alle Infos da, bekommst du direkt eine kostenlose Einschätzung. Fehlt etwas, melde ich mich kurz.","p3h":"Empfehlung","p3p":"Du bekommst eine klare, unverbindliche Empfehlung: Welches Setup passt, was sinnvoll ist. Komplett kostenlos, ohne Verpflichtung.","p4h":"Offerte","p4p":"Optional: Wenn du willst, erstelle ich ein konkretes Angebot über <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"07 / Kontakt","co.h2":"Kontaktaufnahme. Kein Aufwand.","co.p":"Beschreib kurz, was du vorhast: Netzwerk, Smart Home, NAS oder eine Frage zu meinen Tools.","co.msg":"Nachricht via GitHub","co.gh":"GitHub Profil","co.fn":"Name","co.fe":"E-Mail für die Antwort","co.fm":"Deine Nachricht","co.send":"Nachricht senden","co.sending":"Wird gesendet","co.ok":"Danke, deine Nachricht ist angekommen. Ich melde mich bei dir.","co.err":"Das hat leider nicht geklappt. Bitte versuche es später nochmal.","co.cap":"Bitte bestätige zuerst kurz, dass du kein Roboter bist.","co.inv":"Bitte fülle Name, gültige E-Mail und Nachricht aus.","co.mail":"Diese E-Mail-Adresse kann ich nicht annehmen. Bitte nimm deine echte Adresse, keine Wegwerf-Adresse.","co.note":"Deine Angaben nutze ich nur, um dir zu antworten.","co.or":"Oder, wenn du ein GitHub-Konto hast:","ft.s":"Systeme laufen","ft.pv":"Datenschutz"},en:{"topo.gw":"ROUTER","topo.isp":"INTERNET","topo.sw":"SWITCH","topo.ap":"WI-FI","topo.nas":"STORAGE","topo.ha":"SMART HOME","nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Process","nav.contact":"Contact","nav.cta":"Enquire","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Built clean.","h1b":"Simply works.","hero.lead":"Network, smart home, storage, Microsoft 365. Set up properly, well secured, explained in plain words.","hero.c1":"ICT Services","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"built with purpose","hm2b":"Swiss","hm2":"quality","ict.lbl":"01 / ICT Services","ict.h2":"Three disciplines.\nOne contact.","ict.sub":"From the socket in the wall to the far corner of the garden.","c1.tag":"Network · WLAN","c1.h":"Internet & Network","c1.p":"Stable network from basement to garden. Guests and smart devices get their own.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Full WiFi 6/7 coverage","c1.l3":"Guest & IoT VLANs","c1.l4":"WireGuard VPN remote access","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Lights, heating, blinds. One app instead of five, no subscription.","c2.l1":"Lights, heating, blinds centralised","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Runs at home, not in the cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Storage & Cloud","c3.p":"Photos and documents stored at home, backed up automatically.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Auto photo & document sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-party backup","pl.label":"Device support included","pl.win":"Set up, secure, M365 & Entra ID","pl.mac":"Migrate, integrate, support","pl.lin":"Servers, Docker & automations","nav.sec": "Security", "nav.ha": "Smart Home", "pl.k": "In plain words", "ict.plain": "Guests on the WiFi without handing out your password. See what your devices send to the internet. A quieter internet for the kids. I set that up, using UniFi.", "st.plain": "I do not recommend anything I do not use myself every day.", "dv.plain": "The two windows below are not pictures. They really run, in your browser.", "pr.plain": "You tell me what bothers you. You get an honest assessment, free. Only then do we talk about money.", "sf.lbl": "02 / Network & Internet Security", "sf.h2": "A cleaner internet. On every device in the house.", "sf.sub": "Ads and scam sites never make it inside. On every device, without an app.", "sf.plain": "A small box at your home checks every request to the internet. Ads and scams do not get through.", "sf1.tag": "AdGuard Home · Pi-hole", "sf1.h": "The filter sits at your place", "sf1.p": "A Raspberry Pi or your NAS does this for the whole house. Preferably with AdGuard Home.", "sf1.l1": "At your place, not at some company", "sf1.l2": "Curated block lists", "sf1.l3": "Exceptions for everyday use", "sf1.l4": "Encrypted on the way out", "sf2.tag": "UniFi Gateway · VLAN", "sf2.h": "The rule applies at the front door", "sf2.p": "The router is the door to the internet. What applies there applies to every device.", "sf2.l1": "Intrusion detection active", "sf2.l2": "Own rules for kids and guests", "sf2.l3": "No device gets around the filter", "sf2.l4": "Separate networks", "sf3.tag": "Übersicht · Fernzugriff", "sf3.h": "You can see what is going on", "sf3.p": "One glance shows which device talks where.", "sf3.l1": "Cameras without a subscription", "sf3.l2": "Recordings stay at home", "sf3.l3": "Secure access from outside", "sf3.l4": "Updates stay maintained", "sf.dtitle": "DNS filter · example view", "sf.dblocked": "blocked", "sf.k1": "Queries per day", "sf.k2": "Stopped", "sf.k3": "Devices on the network", "sf.b1": "Ad networks", "sf.b2": "Device usage data", "sf.b3": "Web tracking", "sf.b4": "Scam & malware sites", "sf.b5": "Adult content", "sf.dnote": "Example view with typical figures. No live data.", "sf.hb": "Honestly", "sf.honest": "This is not antivirus. It removes what grates every day: ads, data collectors, known scam sites. The router from your provider lets all of it through.", "hs.lbl": "03 / Smart Home with Home Assistant", "hs.h2": "A home that thinks along.<br>Everything stays with you.", "hs.sub": "One app instead of five. Lights, heating, blinds, cameras. All at your home, without a subscription.", "hs.plain": "Every smart device brings its own app. Home Assistant puts one surface on top. Everyone leaves, the heating goes down.", "hs1.h": "Everything in one place", "hs1.p": "Lamps, blinds, heating, sockets, cameras. Even when every device is from a different company.", "hs2.h": "It happens at the right moment", "hs2.p": "Not rigidly at six, but when somebody is actually there.", "hs3.h": "One message, one tap, done", "hs3.p": "The notification arrives on your iPhone with buttons on it. You never have to open the app.", "hs4.h": "One view for everyone", "hs4.p": "A simple page for the family, a detailed one for you.", "hs5.h": "Still working tomorrow", "hs5.p": "After a power cut everything comes back by itself. Backups run automatically.", "hs.dtitle": "Home Assistant · example view", "hs.t1": "Living room", "hs.t1v": "On · 40%", "hs.t2": "Bathroom heating", "hs.t3": "Blinds south", "hs.t3v": "Closed", "hs.t4": "Camera entrance", "hs.t4v": "Quiet", "hs.ah": "Automation · example", "hs.s1k": "When", "hs.s1": "everyone is out of the house", "hs.s2k": "And", "hs.s2": "it stays that way for ten minutes", "hs.s3k": "Then", "hs.s3": "lights off, heating to eco, cameras armed", "hs.pw": "now", "hs.pb": "Terrace door open for 20 minutes, it is 7 °C outside.", "hs.pa1": "Remind me in 10 min.", "hs.pa2": "That is fine", "hs.dnote": "Example view. No real devices, only the weather is live (data: MET Norway).", "hs.w": "Outside", "hs.w.clear": "Clear", "hs.w.fair": "Fair", "hs.w.partly": "Partly cloudy", "hs.w.cloudy": "Cloudy", "hs.w.fog": "Fog", "hs.w.rain": "Rain", "hs.w.snow": "Snow", "hs.w.thunder": "Thunderstorm", "hs.kh": "And if you are used to Apple?", "hs.kp": "Your devices show up in the Apple Home app, even the ones that cannot do that on their own. Siri keeps working.","st.lbl":"04 / Stack","st.h2":"What I work with daily.","st.c1":"Network","st.c2":"Automation","st.c3":"Developer","dv.lbl":"05 / RayStudio Developer Tools","dv.h2":"Own tools. Real problems solved.","dv.sub":"Small standalone apps. Each one fixes a specific problem I ran into myself.","dv.desc":"Network & mail toolkit for Windows. DNS queries, mail server detection via DNS, connection test and full system info.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"My System","dv.gh":"View on GitHub","nd.ti":"NetDashboard · Live Preview","nd.t1":"My System","nd.t2":"DNS Check","nd.t3":"Mail Check","nd.q":"Query","nd.ck":"Check","nd.de":"Enter a domain and click Query.","nd.me":"Enter an email address or domain.","mt.h":"More tools from the studio","mt1.p":"Local AI email organizer: IMAP sync, automatic categorization, review workflow.","mt2.p":"Offline AI life planner: events, tasks and deadlines, local and private.","mt3.p":"Storage audit & cleanup for NAS, SharePoint, OneDrive for Business and DFS.","mt4.p":"AI-powered log search and root-cause analysis, local and cloud-free.","mt.all":"All projects on GitHub","mt.std":"All repos follow public engineering standards","mt.sec":"CodeQL & Dependabot active across all repos","sy.ip":"Public IP","sy.os":"Operating System","sy.br":"Browser","sy.sc":"Screen","sy.tz":"Timezone","sy.la":"Language","sy.cp":"CPU Cores","sy.cn":"Connection","sy.dv":"Device type","sy.note":"All read locally in your browser. Nothing is sent or stored.","rl.nobk":"No backend","dv.desc2":"NetDashboard: network &amp; mail toolkit for Windows. RepoLedger: free GitHub portfolio dashboard for everyone, CI status, open PRs and licensing at a glance, entirely in the browser, no server of its own.","rl.f1":"CI &amp; Security","rl.f2":"Licensing","rl.ghnd":"NetDashboard on GitHub","rl.ghrl":"RepoLedger on GitHub","rl.tab1":"Overview","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Quality Check","rl.lic":"License","rl.note1":"Live from the public GitHub API, directly in the visitor's browser.","rl.note2":"Detects MIT + a commercial add-on per repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"06 / How it works","pr.h2":"No sales pitch. No hassle.","p1h":"Request","p1p":"Describe your situation in detail: what you have, what you want to achieve, what isn't working. The more detail, the better.","p2h":"Review","p2p":"I analyse your situation. If all info is there, you get a free assessment straight away. If something is missing, I'll reach out.","p3h":"Recommendation","p3p":"You get a clear, non-binding recommendation: which setup fits, what makes sense. Completely free, no obligation.","p4h":"Quote","p4p":"Optional: if you want, I can provide a concrete offer via <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal);text-decoration:none\">novoSYS.ch</a>.","co.lbl":"07 / Contact","co.h2":"Get in touch. No hassle.","co.p":"Tell me what you have in mind: network, Smart Home, NAS, or just a question about one of my tools.","co.msg":"Message via GitHub","co.gh":"GitHub Profile","co.fn":"Name","co.fe":"Email for the reply","co.fm":"Your message","co.send":"Send message","co.sending":"Sending","co.ok":"Thank you, your message has arrived. I will get back to you.","co.err":"That did not work. Please try again later.","co.cap":"Please confirm first that you are not a robot.","co.inv":"Please fill in your name, a valid email and a message.","co.mail":"I cannot accept this email address. Please use your real address, not a disposable one.","co.note":"I only use your details to reply to you.","co.or":"Or, if you have a GitHub account:","ft.s":"systems operational","ft.pv":"Privacy"}};
+var T={de:{"topo.gw":"ROUTER","topo.isp":"INTERNET","topo.sw":"SWITCH","topo.ap":"WLAN","topo.nas":"SPEICHER","topo.ha":"SMART HOME","nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Ablauf","nav.contact":"Kontakt","nav.cta":"Anfragen","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Sauber gebaut.","h1b":"Einfach genutzt.","hero.lead":"Netzwerk, Smart Home, Speicher, Microsoft 365. Sauber eingerichtet, gut abgesichert, verständlich erklärt.","hero.c1":"ICT-Leistungen","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"mit Zweck gebaut","hm2b":"Schweizer","hm2":"Qualität","ict.lbl":"01 / ICT-Leistungen","ict.h2":"Drei Disziplinen.\nEin Ansprechpartner.","ict.sub":"Von der Dose in der Wand bis in die letzte Ecke im Garten.","c1.tag":"Netzwerk · WLAN","c1.h":"Internet & Netzwerk","c1.p":"Stabiles Netz vom Keller bis in den Garten. Gäste und smarte Geräte bekommen ihr eigenes.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Flächendeckendes WiFi 6/7","c1.l3":"Gast & IoT VLANs","c1.l4":"WireGuard VPN Fernzugang","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Licht, Heizung, Storen. Eine App statt fünf, ohne Abo.","c2.l1":"Licht, Heizung, Storen zentral","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Läuft lokal, nicht in der Cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Speicher & Cloud","c3.p":"Fotos und Dokumente zu Hause gespeichert, automatisch gesichert.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Automatische Foto & Dokument-Sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-Party-Backup","pl.label":"Geräte-Support inklusive","pl.win":"Einrichten, absichern, M365 & Entra ID","pl.mac":"Migrieren, einbinden, betreuen","pl.lin":"Server, Docker & Automationen","nav.sec": "Sicherheit", "nav.ha": "Smart Home", "pl.k": "Im Klartext", "ict.plain": "Gäste ins WLAN, ohne dein Passwort zu verraten. Sehen, was deine Geräte ins Internet senden. Ruhigeres Internet für die Kinder. Ich richte das ein, mit UniFi.", "st.plain": "Ich empfehle nichts, was ich nicht selber täglich benutze.", "dv.plain": "Die zwei Fenster unten sind keine Bilder. Sie laufen wirklich, in deinem Browser.", "pr.plain": "Du schreibst, was dich stört. Du bekommst eine ehrliche Einschätzung, gratis. Erst danach reden wir über Geld.", "sf.lbl": "02 / Netzwerk & Internetsicherheit", "sf.h2": "Sauberes Internet. Auf jedem Gerät im Haus.", "sf.sub": "Werbung und Betrugsseiten kommen gar nicht erst herein. Auf jedem Gerät, ohne App.", "sf.plain": "Ein kleines Gerät bei dir zu Hause prüft jede Anfrage ins Internet. Werbung und Betrug lässt es gar nicht erst durch.", "sf1.tag": "AdGuard Home · Pi-hole", "sf1.h": "Der Filter steht bei dir", "sf1.p": "Ein Raspberry Pi oder dein NAS übernimmt das fürs ganze Haus. Am liebsten mit AdGuard Home.", "sf1.l1": "Steht bei dir, nicht bei einer Firma", "sf1.l2": "Gepflegte Sperrlisten", "sf1.l3": "Ausnahmen für den Alltag", "sf1.l4": "Verschlüsselt nach draussen", "sf2.tag": "UniFi Gateway · VLAN", "sf2.h": "Die Regel gilt an der Haustür", "sf2.p": "Der Router ist die Tür ins Internet. Was dort gilt, gilt für jedes Gerät im Haus.", "sf2.l1": "Angriffserkennung aktiv", "sf2.l2": "Eigene Regeln für Kinder und Gäste", "sf2.l3": "Kein Gerät kommt am Filter vorbei", "sf2.l4": "Getrennte Netze", "sf3.tag": "Übersicht · Fernzugriff", "sf3.h": "Du siehst, was los ist", "sf3.p": "Auf einen Blick sichtbar, welches Gerät wohin funkt.", "sf3.l1": "Kameras ohne Abo-Zwang", "sf3.l2": "Aufnahmen bleiben zu Hause", "sf3.l3": "Sicherer Zugriff von unterwegs", "sf3.l4": "Updates bleiben gepflegt", "sf.dtitle": "DNS-Filter · Beispielansicht", "sf.dblocked": "geblockt", "sf.k1": "Anfragen pro Tag", "sf.k2": "Davon gestoppt", "sf.k3": "Geräte im Netz", "sf.b1": "Werbenetzwerke", "sf.b2": "Nutzungsdaten der Geräte", "sf.b3": "Verfolgung im Web", "sf.b4": "Betrug & Schadseiten", "sf.b5": "Nicht jugendfrei", "sf.dnote": "Beispielansicht mit typischen Werten. Keine Live-Daten.", "sf.hb": "Ehrlich", "sf.honest": "Das ist kein Virenschutz. Es nimmt weg, was im Alltag nervt: Werbung, Datensammler, bekannte Betrugsseiten. Der Router vom Anbieter lässt all das durch.", "hs.lbl": "03 / Smart Home mit Home Assistant", "hs.h2": "Ein Zuhause, das mitdenkt.<br>Alles bleibt bei dir.", "hs.sub": "Eine App statt fünf. Licht, Heizung, Storen, Kameras. Alles bei dir zu Hause, ohne Abo.", "hs.plain": "Jedes smarte Gerät bringt seine eigene App mit. Home Assistant legt eine Oberfläche darüber. Gehen alle aus dem Haus, geht die Heizung runter.", "hs1.h": "Alles an einem Ort", "hs1.p": "Lampen, Storen, Heizung, Steckdosen, Kameras. Auch wenn jedes Gerät von einer anderen Firma stammt.", "hs2.h": "Es passiert im richtigen Moment", "hs2.p": "Nicht stur um sechs Uhr, sondern wenn wirklich jemand da ist.", "hs3.h": "Eine Nachricht, ein Tipp, erledigt", "hs3.p": "Die Meldung kommt aufs iPhone, mit Knöpfen darauf. Die App musst du nie öffnen.", "hs4.h": "Eine Ansicht für alle", "hs4.p": "Eine einfache Seite für die Familie, eine ausführliche für dich.", "hs5.h": "Läuft auch morgen noch", "hs5.p": "Nach einem Stromausfall startet alles von selbst wieder. Sicherungen laufen automatisch.", "hs.dtitle": "Home Assistant · Beispielansicht", "hs.t1": "Wohnzimmer", "hs.t1v": "An · 40%", "hs.t2": "Heizung Bad", "hs.t3": "Storen Süd", "hs.t3v": "Zu", "hs.t4": "Kamera Eingang", "hs.t4v": "Ruhig", "hs.ah": "Automation · Beispiel", "hs.s1k": "Wenn", "hs.s1": "alle aus dem Haus sind", "hs.s2k": "Und", "hs.s2": "das zehn Minuten so bleibt", "hs.s3k": "Dann", "hs.s3": "Licht aus, Heizung auf Sparbetrieb, Kameras scharf", "hs.pw": "jetzt", "hs.pb": "Terrassentür seit 20 Minuten offen, draussen sind es 7 °C.", "hs.pa1": "Erinnere mich in 10 Min.", "hs.pa2": "Passt so", "hs.dnote": "Beispielansicht. Keine echten Geräte, nur das Wetter ist live (Daten: MET Norway).", "hs.w": "Draussen", "hs.w.clear": "Klar", "hs.w.fair": "Heiter", "hs.w.partly": "Teils bewölkt", "hs.w.cloudy": "Bewölkt", "hs.w.fog": "Nebel", "hs.w.rain": "Regen", "hs.w.snow": "Schnee", "hs.w.thunder": "Gewitter", "hs.kh": "Du bist Apple gewohnt?", "hs.kp": "Deine Geräte tauchen in der Apple Home App auf, auch die, die das von sich aus nicht können. Siri schaltet weiterhin.","st.lbl":"04 / Stack","st.h2":"Womit ich täglich arbeite.","st.c1":"Netzwerk","st.c2":"Automation","st.c3":"Developer","dv.lbl":"05 / RayStudio Developer Tools","dv.h2":"Eigene Tools. Konkrete Probleme gelöst.","dv.sub":"Kleine, eigenständige Apps. Jede löst ein konkretes Problem, das mir selbst begegnet ist.","dv.desc":"Netzwerk- & Mail-Toolkit für Windows. DNS-Abfragen, Mail-Server-Erkennung via DNS, Verbindungstest und vollständige Systeminfo.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"Mein System","dv.gh":"Auf GitHub ansehen","nd.ti":"NetDashboard · Live Preview","nd.t1":"Mein System","nd.t2":"DNS-Check","nd.t3":"Mail-Check","nd.q":"Abfragen","nd.ck":"Prüfen","nd.de":"Domain eingeben und Abfragen klicken.","nd.me":"E-Mail-Adresse oder Domain eingeben.","mt.h":"Weitere Tools aus dem Studio","mt1.p":"Lokaler KI-Mail-Organizer: IMAP-Sync, automatische Kategorisierung, Review-Workflow.","mt2.p":"Offline KI-Lebensplaner: Termine, Aufgaben und Fristen, lokal und privat.","mt3.p":"Speicher-Audit & Cleanup für NAS, SharePoint, OneDrive for Business und DFS.","mt4.p":"KI-gestützte Log-Suche und Root-Cause-Analyse, lokal und ohne Cloud.","mt.all":"Alle Projekte auf GitHub","mt.std":"Alle Repos folgen öffentlichen Engineering-Standards","mt.sec":"CodeQL & Dependabot aktiv auf allen Repos","sy.ip":"Öffentliche IP","sy.os":"Betriebssystem","sy.br":"Browser","sy.sc":"Bildschirm","sy.tz":"Zeitzone","sy.la":"Sprache","sy.cp":"CPU-Kerne","sy.cn":"Verbindung","sy.dv":"Geräteart","sy.note":"Alles lokal aus deinem Browser gelesen. Nichts wird gesendet oder gespeichert.","rl.nobk":"Kein Backend","dv.desc2":"NetDashboard: Netzwerk- &amp; Mail-Toolkit für Windows. RepoLedger: kostenloses GitHub-Portfolio-Dashboard für alle, CI-Status, offene PRs und Lizenzierung auf einen Blick, komplett im Browser, ohne eigenen Server.","rl.f1":"CI &amp; Security","rl.f2":"Lizenzierung","rl.ghnd":"NetDashboard auf GitHub","rl.ghrl":"RepoLedger auf GitHub","rl.tab1":"Übersicht","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Qualitätscheck","rl.lic":"Lizenz","rl.note1":"Live aus der öffentlichen GitHub-API, direkt im Browser des Besuchers.","rl.note2":"Erkennt MIT + Commercial-Zusatz pro Repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"06 / Ablauf","pr.h2":"Kein Verkaufsgespräch. Kein Aufwand.","p1h":"Anfrage","p1p":"Beschreib dein Anliegen ausführlich: Was hast du, was willst du erreichen, was funktioniert nicht. Je mehr Details, desto besser.","p2h":"Prüfung","p2p":"Ich analysiere deine Situation. Sind alle Infos da, bekommst du direkt eine kostenlose Einschätzung. Fehlt etwas, melde ich mich kurz.","p3h":"Empfehlung","p3p":"Du bekommst eine klare, unverbindliche Empfehlung: Welches Setup passt, was sinnvoll ist. Komplett kostenlos, ohne Verpflichtung.","p4h":"Offerte","p4p":"Optional: Wenn du willst, erstelle ich ein konkretes Angebot über <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal-l);text-decoration:underline\">novoSYS.ch</a>.","co.lbl":"07 / Kontakt","co.h2":"Kontaktaufnahme. Kein Aufwand.","co.p":"Beschreib kurz, was du vorhast: Netzwerk, Smart Home, NAS oder eine Frage zu meinen Tools.","co.msg":"Nachricht via GitHub","co.gh":"GitHub Profil","co.fn":"Name","co.fe":"E-Mail für die Antwort","co.fm":"Deine Nachricht","co.send":"Nachricht senden","co.sending":"Wird gesendet","co.ok":"Danke, deine Nachricht ist angekommen. Ich melde mich bei dir.","co.err":"Das hat leider nicht geklappt. Bitte versuche es später nochmal.","co.cap":"Bitte bestätige zuerst kurz, dass du kein Roboter bist.","co.inv":"Bitte fülle Name, gültige E-Mail und Nachricht aus.","co.mail":"Diese E-Mail-Adresse kann ich nicht annehmen. Bitte nimm deine echte Adresse, keine Wegwerf-Adresse.","co.note":"Deine Angaben nutze ich nur, um dir zu antworten.","co.or":"Oder, wenn du ein GitHub-Konto hast:","ft.s":"Systeme laufen","ft.pv":"Datenschutz"},en:{"topo.gw":"ROUTER","topo.isp":"INTERNET","topo.sw":"SWITCH","topo.ap":"WI-FI","topo.nas":"STORAGE","topo.ha":"SMART HOME","nav.ict":"ICT","nav.st":"Stack","nav.dev":"Developer","nav.pr":"Process","nav.contact":"Contact","nav.cta":"Enquire","hero.ey":"Microsoft 365 · Cloud · Developer Tools","h1a":"Built clean.","h1b":"Simply works.","hero.lead":"Network, smart home, storage, Microsoft 365. Set up properly, well secured, explained in plain words.","hero.c1":"ICT Services","hero.c2":"Developer Tools","hm1b":"Tools","hm1":"built with purpose","hm2b":"Swiss","hm2":"quality","ict.lbl":"01 / ICT Services","ict.h2":"Three disciplines.\nOne contact.","ict.sub":"From the socket in the wall to the far corner of the garden.","c1.tag":"Network · WLAN","c1.h":"Internet & Network","c1.p":"Stable network from basement to garden. Guests and smart devices get their own.","c1.l1":"UniFi Cloud Gateway, Switch & APs","c1.l2":"Full WiFi 6/7 coverage","c1.l3":"Guest & IoT VLANs","c1.l4":"WireGuard VPN remote access","c2.tag":"Home Automation · HomeKit","c2.h":"Smart Home","c2.p":"Lights, heating, blinds. One app instead of five, no subscription.","c2.l1":"Lights, heating, blinds centralised","c2.l2":"Apple HomeKit & Siri","c2.l3":"Zigbee · Matter · Z-Wave","c2.l4":"Runs at home, not in the cloud","c3.tag":"NAS · Microsoft 365","c3.h":"Storage & Cloud","c3.p":"Photos and documents stored at home, backed up automatically.","c3.l1":"Synology / UGREEN / UNAS4","c3.l2":"Auto photo & document sync","c3.l3":"Exchange Online, Entra ID, MFA","c3.l4":"3rd-party backup","pl.label":"Device support included","pl.win":"Set up, secure, M365 & Entra ID","pl.mac":"Migrate, integrate, support","pl.lin":"Servers, Docker & automations","nav.sec": "Security", "nav.ha": "Smart Home", "pl.k": "In plain words", "ict.plain": "Guests on the WiFi without handing out your password. See what your devices send to the internet. A quieter internet for the kids. I set that up, using UniFi.", "st.plain": "I do not recommend anything I do not use myself every day.", "dv.plain": "The two windows below are not pictures. They really run, in your browser.", "pr.plain": "You tell me what bothers you. You get an honest assessment, free. Only then do we talk about money.", "sf.lbl": "02 / Network & Internet Security", "sf.h2": "A cleaner internet. On every device in the house.", "sf.sub": "Ads and scam sites never make it inside. On every device, without an app.", "sf.plain": "A small box at your home checks every request to the internet. Ads and scams do not get through.", "sf1.tag": "AdGuard Home · Pi-hole", "sf1.h": "The filter sits at your place", "sf1.p": "A Raspberry Pi or your NAS does this for the whole house. Preferably with AdGuard Home.", "sf1.l1": "At your place, not at some company", "sf1.l2": "Curated block lists", "sf1.l3": "Exceptions for everyday use", "sf1.l4": "Encrypted on the way out", "sf2.tag": "UniFi Gateway · VLAN", "sf2.h": "The rule applies at the front door", "sf2.p": "The router is the door to the internet. What applies there applies to every device.", "sf2.l1": "Intrusion detection active", "sf2.l2": "Own rules for kids and guests", "sf2.l3": "No device gets around the filter", "sf2.l4": "Separate networks", "sf3.tag": "Übersicht · Fernzugriff", "sf3.h": "You can see what is going on", "sf3.p": "One glance shows which device talks where.", "sf3.l1": "Cameras without a subscription", "sf3.l2": "Recordings stay at home", "sf3.l3": "Secure access from outside", "sf3.l4": "Updates stay maintained", "sf.dtitle": "DNS filter · example view", "sf.dblocked": "blocked", "sf.k1": "Queries per day", "sf.k2": "Stopped", "sf.k3": "Devices on the network", "sf.b1": "Ad networks", "sf.b2": "Device usage data", "sf.b3": "Web tracking", "sf.b4": "Scam & malware sites", "sf.b5": "Adult content", "sf.dnote": "Example view with typical figures. No live data.", "sf.hb": "Honestly", "sf.honest": "This is not antivirus. It removes what grates every day: ads, data collectors, known scam sites. The router from your provider lets all of it through.", "hs.lbl": "03 / Smart Home with Home Assistant", "hs.h2": "A home that thinks along.<br>Everything stays with you.", "hs.sub": "One app instead of five. Lights, heating, blinds, cameras. All at your home, without a subscription.", "hs.plain": "Every smart device brings its own app. Home Assistant puts one surface on top. Everyone leaves, the heating goes down.", "hs1.h": "Everything in one place", "hs1.p": "Lamps, blinds, heating, sockets, cameras. Even when every device is from a different company.", "hs2.h": "It happens at the right moment", "hs2.p": "Not rigidly at six, but when somebody is actually there.", "hs3.h": "One message, one tap, done", "hs3.p": "The notification arrives on your iPhone with buttons on it. You never have to open the app.", "hs4.h": "One view for everyone", "hs4.p": "A simple page for the family, a detailed one for you.", "hs5.h": "Still working tomorrow", "hs5.p": "After a power cut everything comes back by itself. Backups run automatically.", "hs.dtitle": "Home Assistant · example view", "hs.t1": "Living room", "hs.t1v": "On · 40%", "hs.t2": "Bathroom heating", "hs.t3": "Blinds south", "hs.t3v": "Closed", "hs.t4": "Camera entrance", "hs.t4v": "Quiet", "hs.ah": "Automation · example", "hs.s1k": "When", "hs.s1": "everyone is out of the house", "hs.s2k": "And", "hs.s2": "it stays that way for ten minutes", "hs.s3k": "Then", "hs.s3": "lights off, heating to eco, cameras armed", "hs.pw": "now", "hs.pb": "Terrace door open for 20 minutes, it is 7 °C outside.", "hs.pa1": "Remind me in 10 min.", "hs.pa2": "That is fine", "hs.dnote": "Example view. No real devices, only the weather is live (data: MET Norway).", "hs.w": "Outside", "hs.w.clear": "Clear", "hs.w.fair": "Fair", "hs.w.partly": "Partly cloudy", "hs.w.cloudy": "Cloudy", "hs.w.fog": "Fog", "hs.w.rain": "Rain", "hs.w.snow": "Snow", "hs.w.thunder": "Thunderstorm", "hs.kh": "And if you are used to Apple?", "hs.kp": "Your devices show up in the Apple Home app, even the ones that cannot do that on their own. Siri keeps working.","st.lbl":"04 / Stack","st.h2":"What I work with daily.","st.c1":"Network","st.c2":"Automation","st.c3":"Developer","dv.lbl":"05 / RayStudio Developer Tools","dv.h2":"Own tools. Real problems solved.","dv.sub":"Small standalone apps. Each one fixes a specific problem I ran into myself.","dv.desc":"Network & mail toolkit for Windows. DNS queries, mail server detection via DNS, connection test and full system info.","df1":"Mail-Check via DNS","df2":"DNS A/MX/TXT/NS","df3":"Ping · Port · Trace","df4":"My System","dv.gh":"View on GitHub","nd.ti":"NetDashboard · Live Preview","nd.t1":"My System","nd.t2":"DNS Check","nd.t3":"Mail Check","nd.q":"Query","nd.ck":"Check","nd.de":"Enter a domain and click Query.","nd.me":"Enter an email address or domain.","mt.h":"More tools from the studio","mt1.p":"Local AI email organizer: IMAP sync, automatic categorization, review workflow.","mt2.p":"Offline AI life planner: events, tasks and deadlines, local and private.","mt3.p":"Storage audit & cleanup for NAS, SharePoint, OneDrive for Business and DFS.","mt4.p":"AI-powered log search and root-cause analysis, local and cloud-free.","mt.all":"All projects on GitHub","mt.std":"All repos follow public engineering standards","mt.sec":"CodeQL & Dependabot active across all repos","sy.ip":"Public IP","sy.os":"Operating System","sy.br":"Browser","sy.sc":"Screen","sy.tz":"Timezone","sy.la":"Language","sy.cp":"CPU Cores","sy.cn":"Connection","sy.dv":"Device type","sy.note":"All read locally in your browser. Nothing is sent or stored.","rl.nobk":"No backend","dv.desc2":"NetDashboard: network &amp; mail toolkit for Windows. RepoLedger: free GitHub portfolio dashboard for everyone, CI status, open PRs and licensing at a glance, entirely in the browser, no server of its own.","rl.f1":"CI &amp; Security","rl.f2":"Licensing","rl.ghnd":"NetDashboard on GitHub","rl.ghrl":"RepoLedger on GitHub","rl.tab1":"Overview","rl.tab2":"Licensing","rl.repo":"Repo Name","rl.ghcheck":"GitHub Quality Check","rl.lic":"License","rl.note1":"Live from the public GitHub API, directly in the visitor's browser.","rl.note2":"Detects MIT + a commercial add-on per repo.","rl.ci":"CI passing","rl.dual":"Dual License","pr.lbl":"06 / How it works","pr.h2":"No sales pitch. No hassle.","p1h":"Request","p1p":"Describe your situation in detail: what you have, what you want to achieve, what isn't working. The more detail, the better.","p2h":"Review","p2p":"I analyse your situation. If all info is there, you get a free assessment straight away. If something is missing, I'll reach out.","p3h":"Recommendation","p3p":"You get a clear, non-binding recommendation: which setup fits, what makes sense. Completely free, no obligation.","p4h":"Quote","p4p":"Optional: if you want, I can provide a concrete offer via <a href=\"https://www.novosys.ch\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--teal-l);text-decoration:underline\">novoSYS.ch</a>.","co.lbl":"07 / Contact","co.h2":"Get in touch. No hassle.","co.p":"Tell me what you have in mind: network, Smart Home, NAS, or just a question about one of my tools.","co.msg":"Message via GitHub","co.gh":"GitHub Profile","co.fn":"Name","co.fe":"Email for the reply","co.fm":"Your message","co.send":"Send message","co.sending":"Sending","co.ok":"Thank you, your message has arrived. I will get back to you.","co.err":"That did not work. Please try again later.","co.cap":"Please confirm first that you are not a robot.","co.inv":"Please fill in your name, a valid email and a message.","co.mail":"I cannot accept this email address. Please use your real address, not a disposable one.","co.note":"I only use your details to reply to you.","co.or":"Or, if you have a GitHub account:","ft.s":"systems operational","ft.pv":"Privacy"}};
 
 var lang=(navigator.language||'de').toLowerCase().startsWith('en')?'en':'de';
 function applyLang(l){
@@ -1253,6 +1273,7 @@ function applyLang(l){
   };
   Object.keys(ph).forEach(function(id){var e=document.getElementById(id);if(e)e.placeholder=ph[id];});
   if(window.renderWeather) window.renderWeather();
+  document.documentElement.classList.remove('lang-wait');
 }
 applyLang(lang);
 document.getElementById('lang-toggle').addEventListener('click',function(){applyLang(lang==='de'?'en':'de');});
@@ -1482,7 +1503,7 @@ window.runMail=function(){
     .then(function(d){
       out.innerHTML='';
       if(d.Status!==0||!d.Answer||!d.Answer.length){out.innerHTML='<p class="nd-err">'+(lang==='de'?'Keine MX-Einträge für ':'No MX records for ')+esc(dom)+'</p>';return;}
-      var h=document.createElement('p');h.style.cssText='font-family:var(--fm);font-size:.65rem;color:rgba(239,233,221,.35);margin-bottom:7px;letter-spacing:.08em;text-transform:uppercase';h.textContent='MX · '+dom;out.appendChild(h);
+      var h=document.createElement('p');h.style.cssText='font-family:var(--fm);font-size:.65rem;color:rgba(239,233,221,.58);margin-bottom:7px;letter-spacing:.08em;text-transform:uppercase';h.textContent='MX · '+dom;out.appendChild(h);
       d.Answer.sort(function(a,b){return(parseInt((a.data||'').split(' ')[0])||0)-(parseInt((b.data||'').split(' ')[0])||0);})
         .forEach(function(r){var p=r.data.split(' ');var pr=p[0]||'…';var hs=(p[1]||'').replace(/\.$/,'');var row=document.createElement('div');row.className='nres';row.innerHTML='<span class="nrtype">'+esc('P'+pr)+'</span><span class="nrdata">'+esc(hs)+'</span><span class="nrttl">TTL '+r.TTL+'s</span>';out.appendChild(row);});
       var hosts=d.Answer.map(function(r){return(r.data||'').toLowerCase();}).join(' ');
@@ -1751,7 +1772,7 @@ document.querySelectorAll('.nzone').forEach(function(zone){
     a.style.width=(7.6*L)+"px";a.style.left=(p.x-4.6*L)+"px";a.style.top=(p.y-2.6*L)+"px";
     var g=1280/720*L,o=280/720*L;b.style.width=g+"px";b.style.left=(p.x-o)+"px";b.style.top=(p.y-o)+"px";
   }
-  place();addEventListener("resize",place);addEventListener("load",place);
+  place();hero.classList.add("vready");addEventListener("resize",place);addEventListener("load",place);
   if(window.ResizeObserver)new ResizeObserver(place).observe(hero);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(place);
 

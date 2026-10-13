@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.1] - 2026-10-13
+
+### Removed
+
+- The six service cards (three in "ICT-Leistungen", three in "Netzwerk & Internetsicherheit") no longer zoom their icon to 2.5 times its size on hover, and the pictures and videos shown inside that zoom are gone (about 1 MB less to ship). What stays is the small hover animation: the card lifts a little, the icon tilts, and the teal line runs along the bottom edge. The topology highlight for the first three cards is unchanged.
+
 ## [0.10.0] - 2026-10-13
 
 ### Added

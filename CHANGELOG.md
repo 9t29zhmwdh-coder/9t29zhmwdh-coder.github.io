@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.7] - 2026-10-27
+
+### Added
+
+- IndexNow: the key file `3e5ff667b15e7299c1e16fc9dc2f41c1.txt` lets Bing and other search engines that support IndexNow (not Google) learn about changes at once. The key is public by design and proves only that the site belongs to me. I send the notification by hand after a change; nothing on the page itself talks to a search engine, so visitors are not affected.
+
 ## [0.10.6] - 2026-10-27
 
 ### Changed

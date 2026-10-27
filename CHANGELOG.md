@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.8] - 2026-10-27
+
+### Added
+
+- `BingSiteAuth.xml`, the file Bing Webmaster Tools uses to confirm that the site belongs to me. It holds only a verification token and nothing else.
+
 ## [0.10.7] - 2026-10-27
 
 ### Added

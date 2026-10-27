@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
+<!--CSP-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-QHoGagS9c5Zm0a3NLYK57LpW65nkmKG5b74XGR1651s=' 'sha256-A98yJ2w/oeUQ9kBriu2yTUQ/LLi6tOcVqURb0Ql913M=' 'sha256-2c7Uq8NXo7OXDjDQP+D8eFl9QKIR7gbzhSBfbXkhTSQ=' 'sha256-0UISXzYDNTEFxipy2uNtYML7H2qpx5Yz7Z90gL3S+Rs=' 'sha256-oZ1AnVb3iv6kN67eWWM3nkugshlyegca5oABbwniDXI=' 'sha256-VV1A3QD6XLHoxtnpVpHlcBoLtom6JJcIQNmJyOQLpyk=' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self' https://raystudio-contact.raystudio.workers.dev https://dns.google https://cloudflare-dns.com https://api.github.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'none'"/>
+<meta name="referrer" content="strict-origin-when-cross-origin"/>
 <title>RayStudio · Microsoft 365, Cloud &amp; Developer Tools</title>
 <meta name="description" content="Microsoft 365, Entra ID and cloud, set up properly and secured. Network, Smart Home, NAS and open-source developer tools by RayStudio. Swiss quality."/>
 <meta property="og:type" content="website"/>
@@ -1114,14 +1117,14 @@ footer a:hover{color:var(--teal)}
             <div class="nd-row">
               <input class="ndi" id="d-dom" type="text" placeholder="raystudio.ch" value="raystudio.ch"/>
               <select class="nds" id="d-typ"><option>A</option><option>AAAA</option><option selected>MX</option><option>TXT</option><option>NS</option><option>CNAME</option></select>
-              <button class="ndr" id="d-btn" onclick="runDns()"><span data-i18n="nd.q">Abfragen</span></button>
+              <button class="ndr" id="d-btn"><span data-i18n="nd.q">Abfragen</span></button>
             </div>
             <div class="nd-out" id="d-out"><p class="nd-empty" data-i18n="nd.de">Domain eingeben und Abfragen klicken.</p></div>
           </div>
           <div class="nd-panel" id="nd-mail">
             <div class="nd-row">
               <input class="ndi" id="m-inp" type="text" placeholder="benutzer@domain.ch"/>
-              <button class="ndr" id="m-btn" onclick="runMail()"><span data-i18n="nd.ck">Prüfen</span></button>
+              <button class="ndr" id="m-btn"><span data-i18n="nd.ck">Prüfen</span></button>
             </div>
             <div class="nd-out" id="m-out"><p class="nd-empty" data-i18n="nd.me">E-Mail-Adresse oder Domain eingeben.</p></div>
           </div>
@@ -1494,6 +1497,7 @@ window.runDns=function(){
     .catch(function(e){out.innerHTML='<p class="nd-err">'+esc(e.message)+'</p>';})
     .finally(function(){btn.disabled=false;});
 };
+document.getElementById('d-btn').addEventListener('click',runDns);
 document.getElementById('d-dom').addEventListener('keydown',function(e){if(e.key==='Enter')runDns();});
 
 /* ══ MAIL ══ */
@@ -1521,6 +1525,7 @@ window.runMail=function(){
     .catch(function(e){out.innerHTML='<p class="nd-err">'+esc(e.message)+'</p>';})
     .finally(function(){btn.disabled=false;});
 };
+document.getElementById('m-btn').addEventListener('click',runMail);
 document.getElementById('m-inp').addEventListener('keydown',function(e){if(e.key==='Enter')runMail();});
 
 /* ══ REPOLEDGER WIDGET ══ */

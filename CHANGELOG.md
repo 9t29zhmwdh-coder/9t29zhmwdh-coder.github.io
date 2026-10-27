@@ -5,6 +5,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.5] - 2026-10-27
+
+### Security
+
+- The page now carries a Content Security Policy as a meta tag. Scripts may only come from this site, from Cloudflare Turnstile (loaded when the contact form is first touched), and from the six inline scripts, which are allowed by their SHA-256 hash instead of `unsafe-inline`. Connections are limited to the contact worker, the two DNS-over-HTTPS resolvers and the GitHub API; plugins, foreign base URLs and form posts are blocked.
+- `Referrer-Policy: strict-origin-when-cross-origin` is set as a meta tag.
+- The two inline `onclick` handlers of the DNS and mail check are now event listeners, so the policy needs no `unsafe-inline` for scripts.
+- `scripts/update-csp.py` rewrites the policy after any change to an inline script (`--check` only verifies). Without it, a changed inline script would be blocked by the browser.
+
+### Notes
+
+- GitHub Pages cannot send HTTP headers. `Strict-Transport-Security`, `X-Frame-Options`, `X-Content-Type-Options` and `frame-ancestors` therefore stay missing in scanners until a proxy such as Cloudflare sits in front. `style-src` still allows `unsafe-inline` because the markup uses `style` attributes.
+
 ## [0.10.4] - 2026-10-13
 
 ### Changed

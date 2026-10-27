@@ -5,6 +5,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.6] - 2026-10-27
+
+### Changed
+
+- Findability: the title and the description now name what the site is about (Home Assistant, UniFi, Matter, NAS, Microsoft 365) and are German like the page itself; before, the description was English and Home Assistant and UniFi appeared in neither. The navigation list now reads "UniFi (Ubiquiti)", because the word Ubiquiti appeared nowhere on the page.
+
+### Added
+
+- `robots.txt` and `sitemap.xml`, a canonical link and a Schema.org block (`ProfessionalService`: name, URL, logo, description, country, GitHub profile; no address and no contact data).
+
 ## [0.10.5] - 2026-10-27
 
 ### Security

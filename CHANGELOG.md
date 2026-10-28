@@ -5,6 +5,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.10.9] - 2026-10-28
+
+### Fixed
+
+- English page: the tag above the third network card still read "Übersicht · Fernzugriff" in German. It now says "Overview · Remote access".
+- The headline "Einfach genutzt." was translated as "Simply works.", which says something else. It now reads "Easy to use."
+- German: "Sicherungen laufen automatisch" could be read as fuses in the fuse box, so it now says "Backups". Several list items were ungrammatical ("Foto & Dokument-Sync", "Gast & IoT VLANs", "WireGuard VPN Fernzugang", "3rd-Party-Backup") and were reworded.
+- Spelling of Wi-Fi and WLAN is now consistent: WLAN in German text, Wi-Fi in English text and for the standard name.
+- English: a few phrases that sounded translated were reworded, contractions and capitalisation made consistent.
+
+### Changed
+
+- The line above the main headline now names what the page is about: "Netzwerk · Smart Home · Microsoft 365".
+- Contact heading: "Schreib mir. Ohne Aufwand." instead of "Kontaktaufnahme. Kein Aufwand."
+- The inline-script hash in the content security policy was regenerated, because the text lives in that script.
+
 ## [0.10.8] - 2026-10-27
 
 ### Added

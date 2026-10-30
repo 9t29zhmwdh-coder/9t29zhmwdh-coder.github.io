@@ -5,6 +5,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.11.1] - 2026-10-30
+
+### Changed
+
+- Legal notice: it now says that I am employed by novoSYS Informatik GmbH, next to the note that quotes, contracts and invoices run through that company.
+- Privacy policy and `PRIVACY.md`: the transfer basis is stated per provider. Cloudflare relies on the Swiss-U.S. Data Privacy Framework, Resend on standard contractual clauses with a Swiss addendum, as both state in their own documents.
+
 ## [0.11.0] - 2026-10-30
 
 ### Added

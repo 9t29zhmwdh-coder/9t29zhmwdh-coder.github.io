@@ -5,6 +5,21 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-10-30
+
+### Added
+
+- `impressum.html`: legal notice in German and English. It names the operator and the contact route, and says that quotes, contracts, invoices and payments currently run only through novoSYS Informatik GmbH.
+- `datenschutz.html`: privacy policy in German and English on the domain itself. It now names the controller, the countries data is passed to, the retention of contact messages and the rights of visitors.
+
+### Changed
+
+- The footer links to both pages. The privacy link no longer leads to the GitHub copy.
+- The note under the contact form links to the privacy policy.
+- The quote step says that a concrete quote comes from novoSYS Informatik GmbH, not from me.
+- `PRIVACY.md` points to the new page and carries the missing items.
+- `sitemap.xml` lists both new pages.
+
 ## [0.10.9] - 2026-10-28
 
 ### Fixed

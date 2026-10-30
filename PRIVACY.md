@@ -14,6 +14,6 @@ This is a static website hosted on GitHub Pages. The controller is Rafael Yilmaz
 - **Tool lookups:** The DNS and mail checks run only when you click them. They query public DNS-over-HTTPS resolvers (Google 8.8.8.8, Cloudflare 1.1.1.1) with the domain you enter; those providers' privacy policies apply.
 - **Web fonts:** The fonts (Space Grotesk, Inter, JetBrains Mono) are served from this site itself. Since 0.10.2 there is no request to Google Fonts any more, so Google does not receive your IP address for them.
 - **External links:** Links to third-party sites are subject to those sites' privacy policies.
-- **Transfers abroad:** GitHub/Microsoft, Cloudflare, Resend and Google are based in the USA, MET Norway in Norway. The providers rely on the Swiss-U.S. Data Privacy Framework or standard contractual clauses.
+- **Transfers abroad:** GitHub/Microsoft, Cloudflare, Resend and Google are based in the USA, MET Norway in Norway. Cloudflare relies on the Swiss-U.S. Data Privacy Framework, Resend (Plus Five Five, Inc.) on standard contractual clauses with a Swiss addendum; for the other providers the framework or standard contractual clauses apply.
 - **Retention:** Contact form messages are kept while the request lasts and deleted afterwards, after twelve months at the latest, unless a legal duty requires otherwise.
 - **Your rights:** You can ask for access, correction, deletion, restriction or handover of your data through the contact form, and complain to the Swiss Federal Data Protection and Information Commissioner (edoeb.admin.ch).

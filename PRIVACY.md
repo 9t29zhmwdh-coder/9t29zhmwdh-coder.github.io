@@ -1,6 +1,8 @@
 # Privacy Policy
 
-This is a static website hosted on GitHub Pages.
+The maintained version, in German and English, is on the site itself: [raystudio.ch/datenschutz.html](https://raystudio.ch/datenschutz.html). This file is a summary of it.
+
+This is a static website hosted on GitHub Pages. The controller is Rafael Yilmaz (RayStudio, Switzerland), reachable through the contact form on raystudio.ch.
 
 - **No tracking:** The site does not use cookies, analytics scripts, or user tracking.
 - **GitHub Pages hosting:** GitHub may collect server logs (IP addresses, access times) as part of their hosting service. See [GitHub's Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement).
@@ -12,3 +14,6 @@ This is a static website hosted on GitHub Pages.
 - **Tool lookups:** The DNS and mail checks run only when you click them. They query public DNS-over-HTTPS resolvers (Google 8.8.8.8, Cloudflare 1.1.1.1) with the domain you enter; those providers' privacy policies apply.
 - **Web fonts:** The fonts (Space Grotesk, Inter, JetBrains Mono) are served from this site itself. Since 0.10.2 there is no request to Google Fonts any more, so Google does not receive your IP address for them.
 - **External links:** Links to third-party sites are subject to those sites' privacy policies.
+- **Transfers abroad:** GitHub/Microsoft, Cloudflare, Resend and Google are based in the USA, MET Norway in Norway. The providers rely on the Swiss-U.S. Data Privacy Framework or standard contractual clauses.
+- **Retention:** Contact form messages are kept while the request lasts and deleted afterwards, after twelve months at the latest, unless a legal duty requires otherwise.
+- **Your rights:** You can ask for access, correction, deletion, restriction or handover of your data through the contact form, and complain to the Swiss Federal Data Protection and Information Commissioner (edoeb.admin.ch).
